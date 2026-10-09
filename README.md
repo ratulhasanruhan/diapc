@@ -40,8 +40,8 @@ We use a modern and highly optimized stack to ensure the best developer and user
 To run this project locally:
 
 ```bash
-git clone https://github.com/your-username/diapc-website.git
-cd diapc-website
+git clone https://github.com/ratulhasanruhan/diapc.git
+cd diapc
 pnpm install
 pnpm dev
 ```
