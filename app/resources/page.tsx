@@ -53,7 +53,7 @@ export default function ResourcesPage() {
 
       <section className="max-w-7xl mx-auto px-6 pb-24">
         <div className="space-y-16">
-          {resourceCategories.map((cat, ci) => (
+          {resourceCategories.map((cat) => (
             <div key={cat.title}>
               <ScrollReveal>
                 <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">

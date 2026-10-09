@@ -1,6 +1,5 @@
 import ScrollReveal from "@/components/motion/ScrollReveal";
-import { Scale, FileText, ChevronRight } from "lucide-react";
-import Link from "next/link";
+import { Scale, ChevronRight } from "lucide-react";
 
 export const metadata = { title: "Constitution" };
 

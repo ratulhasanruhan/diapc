@@ -1,8 +1,7 @@
 "use client";
 
 import ScrollReveal from "@/components/motion/ScrollReveal";
-import SectionWrapper from "@/components/motion/SectionWrapper";
-import { CalendarDays, MapPin, Filter, Search, Clock } from "lucide-react";
+import { CalendarDays, MapPin, Search, Clock } from "lucide-react";
 import { useState } from "react";
 
 const sampleEvents = [
