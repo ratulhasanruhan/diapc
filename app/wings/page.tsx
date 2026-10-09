@@ -48,7 +48,7 @@ export default function WingsPage() {
           {techWings.map((wing, i) => (
             <ScrollReveal key={wing.slug} delay={i * 0.06}>
               <Link
-                href={wing.status === "active" ? `/wings/${wing.slug}` : `/join?wing=${wing.slug}`}
+                href={wing.status === "active" ? "/aws" : `/join?wing=${wing.slug}`}
                 className="block h-full p-6 rounded-xl border transition-all duration-300 hover:scale-[1.02] group"
                 style={{
                   borderColor: wing.status === "active" ? `${wing.accent}40` : "var(--color-border)",

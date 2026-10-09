@@ -24,7 +24,7 @@ const sections = [
     title: "Organization",
     links: [
       { label: "Wings", href: "/wings" },
-      { label: "AWS wing", href: "/wings/aws" },
+      { label: "AWS wing", href: "/aws" },
       { label: "Constitution", href: "/constitution" },
       { label: "Contact", href: "/contact" },
     ],
@@ -41,6 +41,15 @@ export default function Footer() {
           </Link>
           <p className="mt-4 max-w-xs text-sm leading-6 text-[#667085]">DIA Programming Club at Daffodil International Academy, Dhaka.</p>
           <code className="mt-4 block text-xs text-[#c23b91]">= new instance of future();</code>
+          <a
+            href="https://www.facebook.com/diadpc"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#2454d7] transition-colors hover:text-[#c23b91]"
+          >
+            <span className="flex h-4 w-4 items-center justify-center rounded-sm bg-[#2454d7] text-[11px] font-bold text-white" aria-hidden="true">f</span>
+            Follow DPC on Facebook
+          </a>
         </div>
         <div className="grid grid-cols-2 gap-x-10 gap-y-8 sm:grid-cols-3">
           {sections.map((section) => (

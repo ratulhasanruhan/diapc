@@ -7,7 +7,7 @@ import { ArrowUpRight, Code2, Cloud, Compass, Sparkles } from "lucide-react";
 import AstronautVector from "@/components/illustrations/AstronautVector";
 
 const destinations = [
-  { label: "AWS Student Builders", note: "Cloud + certifications", href: "/wings/aws", accent: "#f59e0b", icon: Cloud, active: true },
+  { label: "AWS Student Builders", note: "Cloud + certifications", href: "/aws", accent: "#f59e0b", icon: Cloud, active: true },
   { label: "Competitive Programming", note: "Algorithms + problem solving", href: "/join?wing=competitive-programming", accent: "#2454d7", icon: Code2, active: false },
   { label: "AI & Data Science", note: "A proposed learning path", href: "/join?wing=ai-ml", accent: "#8b5cf6", icon: Sparkles, active: false },
 ];
