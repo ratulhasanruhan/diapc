@@ -1,0 +1,39 @@
+{
+  "slug": "aws",
+  "name": "AWS Student Builder Group at DIA",
+  "tagline": "Master the cloud. Build the future.",
+  "status": "active",
+  "accentColor": "#FF9900",
+  "planetStyle": {
+    "palette": ["#FF9900", "#FFB347", "#FFCC80"],
+    "rings": true,
+    "moons": 2,
+    "noiseSeed": 42
+  },
+  "icon": "Cloud",
+  "lead": "Ratul Hasan Ruhan",
+  "coreTeam": ["Tech Lead", "Event Coordinator"],
+  "about": "Join the official AWS community at DIA. We host cloud computing workshops, study groups for AWS certifications, and provide exclusive resources for students to master the cloud. Open to every discipline, all years, free.",
+  "activities": [
+    "Hands-on workshops",
+    "Build sessions",
+    "Certification study circles",
+    "Tech talks with the AWS community",
+    "Hackathons and challenges"
+  ],
+  "tracks": [
+    { "name": "Cloud basics", "url": "https://skillbuilder.aws" },
+    { "name": "Compute & Networking", "url": "https://skillbuilder.aws" },
+    { "name": "Storage & Databases", "url": "https://skillbuilder.aws" },
+    { "name": "Build and deploy", "url": "https://skillbuilder.aws" }
+  ],
+  "resources": [],
+  "upcomingEventFilter": "aws",
+  "joinLink": "/join?wing=aws",
+  "officialAffiliation": {
+    "name": "Part of the AWS Student Builder Groups program",
+    "disclaimer": "Student community; not an official AWS site; AWS marks belong to Amazon.",
+    "logoUsageNote": "AWS accent used only around AWS-branded elements."
+  },
+  "founded": "2026-01-01"
+}

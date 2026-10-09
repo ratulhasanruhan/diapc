@@ -1,0 +1,18 @@
+{
+  "slug": "competitive-programming",
+  "name": "Competitive Programming",
+  "tagline": "Algorithmic thinking and problem solving.",
+  "status": "proposed",
+  "accentColor": "#0A6BC9",
+  "planetStyle": {
+    "palette": ["#0A6BC9", "#3b82f6", "#60a5fa"],
+    "rings": false,
+    "moons": 0,
+    "noiseSeed": 10
+  },
+  "icon": "Terminal",
+  "about": "A proposed wing for those who want to master data structures, algorithms, and compete in ICPC, Codeforces, and LeetCode contests.",
+  "activities": [],
+  "tracks": [],
+  "resources": []
+}

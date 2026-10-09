@@ -1,0 +1,11 @@
+[
+  { "id": "co-host", "label": "Co-host an event" },
+  { "id": "sponsor", "label": "Sponsor" },
+  { "id": "speaker", "label": "Speaker or workshop host" },
+  { "id": "hackathon", "label": "Hackathon or contest partner" },
+  { "id": "media", "label": "Media partner" },
+  { "id": "venue", "label": "Venue or resource partner" },
+  { "id": "project", "label": "Project or open-source collaboration" },
+  { "id": "internship", "label": "Internship, mentorship or job opportunities" },
+  { "id": "exchange", "label": "Inter-club exchange" }
+]

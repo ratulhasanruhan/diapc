@@ -1,0 +1,17 @@
+{
+  "id": "mission-001",
+  "sample": true,
+  "title": "National Hackathon 2026",
+  "category": "hackathon",
+  "result": "1st place",
+  "eventName": "TechFest National",
+  "organizer": "National Tech Council",
+  "date": "2026-03-15",
+  "scope": "national",
+  "wing": "web-app-dev",
+  "teamMembers": ["John Doe", "Jane Smith"],
+  "description": "Built a scalable web application for rural healthcare.",
+  "evidence": [{"type": "certificate", "url": "#"}],
+  "featured": true,
+  "patchStyle": "blue"
+}

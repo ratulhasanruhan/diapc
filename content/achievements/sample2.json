@@ -1,0 +1,17 @@
+{
+  "id": "mission-002",
+  "sample": true,
+  "title": "AWS Certified Solutions Architect",
+  "category": "certification",
+  "result": "Certified",
+  "eventName": "AWS Certification",
+  "organizer": "Amazon Web Services",
+  "date": "2026-01-20",
+  "scope": "international",
+  "wing": "aws",
+  "teamMembers": ["Ratul Hasan Ruhan"],
+  "description": "Achieved the AWS SAA-C03 certification.",
+  "evidence": [{"type": "link", "url": "#"}],
+  "featured": false,
+  "patchStyle": "orange"
+}

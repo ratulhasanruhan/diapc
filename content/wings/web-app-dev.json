@@ -1,0 +1,18 @@
+{
+  "slug": "web-app-dev",
+  "name": "Web & App Development",
+  "tagline": "Build products that scale.",
+  "status": "proposed",
+  "accentColor": "#9A2A92",
+  "planetStyle": {
+    "palette": ["#9A2A92", "#c026d3", "#e879f9"],
+    "rings": true,
+    "moons": 1,
+    "noiseSeed": 20
+  },
+  "icon": "MonitorSmartphone",
+  "about": "A proposed wing dedicated to modern web and mobile application development using Next.js, React Native, and robust backend technologies.",
+  "activities": [],
+  "tracks": [],
+  "resources": []
+}
