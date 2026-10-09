@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-purple: var(--brand-purple);
+  --color-ink: var(--ink);
+  --color-electric: var(--electric);
+  --color-paper: var(--paper);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+:root {
+  --brand-blue: #0A6BC9;
+  --brand-purple: #9A2A92;
+  --ink: #1B2437;
+  --electric: #2563EB;
+  --paper: #FAFAFC;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+}
+
+.dark {
+  --ink: #E2E8F0;
+  --paper: #0B1120;
+  --background: var(--paper);
+  --foreground: var(--ink);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), sans-serif;
+  cursor: auto;
+}
+
+::selection {
+  background: var(--electric);
+  color: white;
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(to right, var(--brand-blue), var(--brand-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
