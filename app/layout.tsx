@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/navigation/Footer";
+import RoamingAstronaut from "@/components/motion/RoamingAstronaut";
+import OrbitalBackground from "@/components/backgrounds/OrbitalBackground";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -13,6 +15,12 @@ const inter = Inter({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space",
   display: "swap",
 });
 
@@ -44,12 +52,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
+        className={`${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} antialiased`}
       >
-        <div className="starfield" aria-hidden="true" />
+        <OrbitalBackground />
         <Navbar />
+        <RoamingAstronaut />
         <div className="relative z-10">{children}</div>
         <Footer />
       </body>

@@ -1,114 +1,84 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { label: "Explore", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Wings", href: "/wings" },
+  { label: "Explore", href: "/#universe" },
   { label: "Events", href: "/events" },
-  { label: "Crew", href: "/crew" },
-  { label: "Projects", href: "/projects" },
-  { label: "Resources", href: "/resources" },
+  { label: "Community", href: "/crew" },
+  { label: "About", href: "/about" },
+];
+
+const wingLinks = [
+  { label: "All wings", href: "/wings" },
+  { label: "AWS Student Builders", href: "/wings/aws" },
+  { label: "Competitive Programming", href: "/join?wing=competitive-programming" },
+  { label: "AI & Data Science", href: "/join?wing=ai-ml" },
+  { label: "Web & Mobile Dev", href: "/join?wing=web-app-dev" },
 ];
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-glass">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <Image
-            src="/brand/classic_logo.png"
-            alt="DPC Logo"
-            width={28}
-            height={28}
-            className="group-hover:scale-110 transition-transform duration-300"
-          />
-          <span className="font-bold text-lg tracking-tight text-text-primary">
-            DPC
-          </span>
+    <nav className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between border border-[#dfe4ee] bg-[#fbfaf7]/90 px-4 shadow-[0_12px_35px_rgba(23,33,61,0.08)] backdrop-blur-md sm:px-5">
+        <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
+          <Image src="/brand/modern_logo.png" alt="DPC logo" width={142} height={48} className="h-10 w-auto object-contain" priority />
         </Link>
 
-        {/* Desktop links */}
-        <div className="hidden lg:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="px-3 py-2 text-sm text-text-secondary hover:text-text-primary transition-colors rounded-lg hover:bg-white/5"
-            >
+        <div className="hidden items-center gap-7 md:flex">
+          {navLinks.slice(0, 1).map((link) => (
+            <Link key={link.href} href={link.href} className="text-sm font-medium text-[#667085] transition-colors hover:text-[#2454d7]">
               {link.label}
             </Link>
           ))}
-        </div>
-
-        {/* CTA + Mobile toggle */}
-        <div className="flex items-center gap-3">
-          <Link
-            href="/join"
-            className="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-brand-blue text-white hover:bg-brand-blue/90 transition-colors"
-          >
-            Join DPC
-          </Link>
-
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-lg hover:bg-white/5 transition-colors"
-            aria-label="Toggle menu"
-          >
-            <motion.span
-              animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-              className="block w-5 h-0.5 bg-text-primary"
-            />
-            <motion.span
-              animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
-              className="block w-5 h-0.5 bg-text-primary"
-            />
-            <motion.span
-              animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-              className="block w-5 h-0.5 bg-text-primary"
-            />
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-glass border-t border-border overflow-hidden"
-          >
-            <div className="px-6 py-4 space-y-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="block px-4 py-3 text-text-secondary hover:text-text-primary hover:bg-white/5 rounded-lg transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <Link
-                href="/join"
-                onClick={() => setMobileOpen(false)}
-                className="block px-4 py-3 mt-2 text-center font-semibold rounded-lg bg-brand-blue text-white"
-              >
-                Join DPC
-              </Link>
+          <div className="group relative">
+            <Link href="/wings" className="inline-flex items-center gap-1 text-sm font-medium text-[#667085] transition-colors hover:text-[#2454d7]">
+              Wings <span className="text-[10px] transition-transform group-hover:rotate-180">▾</span>
+            </Link>
+            <div className="invisible absolute right-1/2 top-full z-50 w-64 translate-x-1/2 pt-4 opacity-0 transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+              <div className="border border-[#dfe4ee] bg-white p-2 shadow-[0_18px_45px_rgba(23,33,61,0.14)]">
+                <p className="px-3 pb-2 pt-1 font-mono text-[10px] uppercase tracking-widest text-[#98a2b3]">Choose an orbit</p>
+                {wingLinks.map((wing) => <Link key={wing.href} href={wing.href} className="block px-3 py-2.5 text-sm text-[#667085] hover:bg-[#eef2ff] hover:text-[#2454d7]">{wing.label}</Link>)}
+              </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+          {navLinks.slice(1).map((link) => (
+            <Link key={link.href} href={link.href} className="text-sm font-medium text-[#667085] transition-colors hover:text-[#2454d7]">
+              {link.label}
+            </Link>
+          ))}
+          <Link href="/join" className="bg-[#2454d7] px-4 py-2 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5">
+            Join the mission
+          </Link>
+        </div>
+
+        <button type="button" className="p-2 text-[#17213d] md:hidden" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
+          {open ? <X size={21} /> : <Menu size={21} />}
+        </button>
+      </div>
+      {open && (
+        <div className="mx-auto mt-2 max-w-6xl border border-[#dfe4ee] bg-[#fbfaf7] p-3 shadow-lg md:hidden">
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="block px-3 py-3 text-sm font-medium text-[#667085] hover:bg-[#eef2ff] hover:text-[#2454d7]">
+              {link.label}
+            </Link>
+          ))}
+          <p className="px-3 pb-1 pt-3 font-mono text-[10px] uppercase tracking-widest text-[#98a2b3]">Wings</p>
+          {wingLinks.map((wing) => (
+            <Link key={wing.href} href={wing.href} onClick={() => setOpen(false)} className="block px-3 py-2 text-sm font-medium text-[#667085] hover:bg-[#eef2ff] hover:text-[#2454d7]">
+              {wing.label}
+            </Link>
+          ))}
+          <Link href="/join" onClick={() => setOpen(false)} className="mt-2 block bg-[#2454d7] px-3 py-3 text-center text-sm font-semibold text-white">
+            Join the mission
+          </Link>
+        </div>
+      )}
     </nav>
   );
 }

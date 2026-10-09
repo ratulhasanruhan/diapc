@@ -1,13 +1,14 @@
+import Image from "next/image";
 import Link from "next/link";
 
-const footerSections = [
+const sections = [
   {
     title: "Explore",
     links: [
       { label: "About DPC", href: "/about" },
-      { label: "Wings", href: "/wings" },
       { label: "Events", href: "/events" },
       { label: "Projects", href: "/projects" },
+      { label: "Gallery", href: "/gallery" },
     ],
   },
   {
@@ -15,66 +16,44 @@ const footerSections = [
     links: [
       { label: "Crew", href: "/crew" },
       { label: "Resources", href: "/resources" },
-      { label: "Gallery", href: "/gallery" },
+      { label: "Join DPC", href: "/join" },
       { label: "Collaborate", href: "/collaborate" },
     ],
   },
   {
     title: "Organization",
     links: [
+      { label: "Wings", href: "/wings" },
+      { label: "AWS wing", href: "/wings/aws" },
       { label: "Constitution", href: "/constitution" },
-      { label: "Join DPC", href: "/join" },
       { label: "Contact", href: "/contact" },
-      { label: "FAQ", href: "/contact#faq" },
     ],
   },
 ];
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 border-t border-border bg-midnight/80 backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
-          {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
-            <div className="font-bold text-xl tracking-tight mb-3">DPC</div>
-            <p className="text-sm text-text-muted leading-relaxed mb-4">
-              DIA Programming Club at Daffodil International Academy, Dhaka.
-            </p>
-            <code className="text-xs text-text-muted font-mono">
-              = new instance of future();
-            </code>
-          </div>
-
-          {footerSections.map((section) => (
+    <footer className="border-t border-[#dfe4ee] bg-white">
+      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-12 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/brand/modern_logo.png" alt="DPC logo" width={140} height={47} className="h-11 w-auto object-contain" />
+          </Link>
+          <p className="mt-4 max-w-xs text-sm leading-6 text-[#667085]">DIA Programming Club at Daffodil International Academy, Dhaka.</p>
+          <code className="mt-4 block text-xs text-[#c23b91]">= new instance of future();</code>
+        </div>
+        <div className="grid grid-cols-2 gap-x-10 gap-y-8 sm:grid-cols-3">
+          {sections.map((section) => (
             <div key={section.title}>
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-text-muted mb-4">
-                {section.title}
-              </h4>
-              <ul className="space-y-2.5">
-                {section.links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-text-secondary hover:text-text-primary transition-colors"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-[#98a2b3]">{section.title}</p>
+              <div className="space-y-2">
+                {section.links.map((link) => <Link key={link.href} href={link.href} className="block text-sm text-[#667085] hover:text-[#2454d7]">{link.label}</Link>)}
+              </div>
             </div>
           ))}
         </div>
-
-        <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-text-muted">
-          <p>© {new Date().getFullYear()} DIA Programming Club. All rights reserved.</p>
-          <p>
-            Not an official Amazon Web Services site. AWS and related marks
-            belong to Amazon.com, Inc.
-          </p>
-        </div>
       </div>
+      <div className="border-t border-[#dfe4ee] px-6 py-4 text-center text-xs text-[#98a2b3]">DIA Programming Club · Student-run and community-led.</div>
     </footer>
   );
 }

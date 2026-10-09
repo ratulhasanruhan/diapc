@@ -1,46 +1,42 @@
 @import "tailwindcss";
 
-/* ============================================
-   DPC — THE DEVELOPER UNIVERSE
-   Design System & Global Styles
-   ============================================ */
-
 @theme {
-  --color-brand-blue: #0A6BC9;
-  --color-brand-magenta: #9A2A92;
-  --color-midnight: #070B14;
-  --color-deep-navy: #0B1120;
-  --color-surface: #111827;
-  --color-surface-raised: #1F2937;
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-hover: rgba(255, 255, 255, 0.16);
-  --color-text-primary: #F1F5F9;
-  --color-text-secondary: #94A3B8;
-  --color-text-muted: #64748B;
-  --color-electric: #3B82F6;
-  --color-cyan: #06B6D4;
-  --color-violet: #8B5CF6;
-  --color-lavender: #C4B5FD;
-  --color-success: #10B981;
-  --color-warning: #F59E0B;
-  --color-error: #EF4444;
-  --color-aws-orange: #FF9900;
-
+  --color-brand-blue: #2454d7;
+  --color-brand-magenta: #c23b91;
+  --color-ink: #17213d;
+  --color-muted: #667085;
+  --color-paper: #fbfaf7;
+  --color-line: #dfe4ee;
+  --color-border: #dfe4ee;
+  --color-border-hover: #b7c3e2;
+  --color-text-primary: #17213d;
+  --color-text-secondary: #667085;
+  --color-text-muted: #98a2b3;
+  --color-surface: #ffffff;
+  --color-surface-raised: #eef2ff;
+  --color-midnight: #17213d;
+  --color-deep-navy: #eef2ff;
+  --color-electric: #2454d7;
+  --color-cyan: #0891b2;
+  --color-violet: #8b5cf6;
+  --color-lavender: #c7d2fe;
+  --color-success: #16845b;
+  --color-warning: #f59e0b;
   --font-display: "Inter", system-ui, sans-serif;
+  --font-space: "Space Grotesk", "Inter", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
-/* ---- Base ---- */
 :root {
-  --bg-gradient-start: #070B14;
-  --bg-gradient-end: #0B1120;
-  color-scheme: dark;
+  color-scheme: light;
+  --paper: #fbfaf7;
+  --ink: #17213d;
+  --muted: #667085;
+  --line: #dfe4ee;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -52,143 +48,132 @@ html {
 }
 
 body {
-  background: var(--bg-gradient-start);
-  color: var(--color-text-primary);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-::selection {
-  background: var(--color-brand-blue);
-  color: white;
-}
+::selection { background: #d9e4ff; color: var(--ink); }
 
-/* ---- Typography ---- */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
+  font-family: var(--font-space);
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
 }
 
-.font-mono {
-  font-family: var(--font-mono);
+.font-mono { font-family: var(--font-mono); }
+
+.orbit-line {
+  border: 1px solid rgba(36, 84, 215, 0.16);
+  border-radius: 999px;
+  transform: rotate(-14deg);
 }
 
-/* ---- Utilities ---- */
-.text-gradient {
-  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-magenta));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+.float-slow { animation: float 8s ease-in-out infinite; }
+.float-delayed { animation: float 9s ease-in-out 1.4s infinite; }
 
-.text-gradient-cyan {
-  background: linear-gradient(135deg, var(--color-cyan), var(--color-electric));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.bg-glass {
-  background: rgba(11, 17, 32, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--color-border);
-}
-
-.bg-glass-light {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--color-border);
-}
-
-.glow-blue {
-  box-shadow: 0 0 40px rgba(10, 107, 201, 0.15), 0 0 80px rgba(10, 107, 201, 0.05);
-}
-
-.glow-magenta {
-  box-shadow: 0 0 40px rgba(154, 42, 146, 0.15), 0 0 80px rgba(154, 42, 146, 0.05);
-}
-
-/* ---- Star Field ---- */
-.starfield {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.starfield::before,
-.starfield::after {
-  content: '';
-  position: absolute;
-  inset: -50%;
-  background-image:
-    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8) 0%, transparent 100%),
-    radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,0.6) 0%, transparent 100%),
-    radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.7) 0%, transparent 100%),
-    radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
-    radial-gradient(1px 1px at 90% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 15% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 45% 85%, rgba(255,255,255,0.5) 0%, transparent 100%),
-    radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.7) 0%, transparent 100%),
-    radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,0.3) 0%, transparent 100%),
-    radial-gradient(1px 1px at 60% 60%, rgba(255,255,255,0.5) 0%, transparent 100%);
-  background-size: 200px 200px;
-  animation: drift 120s linear infinite;
-}
-
-.starfield::after {
-  background-size: 300px 300px;
-  animation: drift 180s linear infinite reverse;
-  opacity: 0.5;
+@keyframes float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-2deg); }
+  50% { transform: translate3d(0, -14px, 0) rotate(2deg); }
 }
 
 @keyframes drift {
-  from { transform: translateY(0); }
-  to { transform: translateY(-50%); }
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(8px, -10px); }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-8px) rotate(1deg); }
-  75% { transform: translateY(8px) rotate(-1deg); }
+.star-dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--color-brand-magenta);
+  animation: drift 6s ease-in-out infinite;
 }
 
-@keyframes orbit {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.editorial-rule {
+  height: 1px;
+  background: var(--line);
 }
 
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
+.bg-glass,
+.bg-glass-light {
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(14px);
 }
 
-@keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-magenta));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* ---- Scrollbar ---- */
-::-webkit-scrollbar {
-  width: 6px;
+.paper-grid {
+  background-image: linear-gradient(rgba(36, 84, 215, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 84, 215, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--color-midnight);
+.orbital-ring {
+  position: absolute;
+  border: 1px solid rgba(36, 84, 215, 0.08);
+  border-radius: 999px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--color-surface-raised);
-  border-radius: 3px;
+.orbital-ring-one {
+  width: 620px;
+  height: 260px;
+  right: -170px;
+  top: 18%;
+  transform: rotate(-28deg);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
+.orbital-ring-two {
+  width: 500px;
+  height: 180px;
+  left: -190px;
+  top: 65%;
+  transform: rotate(24deg);
 }
+
+.orbital-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(1px);
+  opacity: 0.4;
+}
+
+.orbital-orb-one {
+  width: 13px;
+  height: 13px;
+  right: 12%;
+  top: 32%;
+  background: #c23b91;
+  box-shadow: 0 0 0 7px rgba(194, 59, 145, 0.08), 0 0 30px rgba(194, 59, 145, 0.25);
+}
+
+.orbital-orb-two {
+  width: 8px;
+  height: 8px;
+  left: 9%;
+  top: 72%;
+  background: #2454d7;
+  box-shadow: 0 0 0 7px rgba(36, 84, 215, 0.08), 0 0 28px rgba(36, 84, 215, 0.2);
+}
+
+.orbital-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #f59e0b;
+}
+
+.orbital-star-one { left: 22%; top: 18%; }
+.orbital-star-two { right: 28%; top: 76%; }
+.orbital-star-three { right: 7%; top: 58%; }
