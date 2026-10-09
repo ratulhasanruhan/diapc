@@ -1,92 +1,132 @@
-"use client";
+import ScrollReveal from "@/components/motion/ScrollReveal";
+import SectionWrapper from "@/components/motion/SectionWrapper";
+import Link from "next/link";
+import { Cloud, CheckCircle, ExternalLink, ArrowRight } from "lucide-react";
 
-import { Cloud, CheckCircle, ExternalLink } from "lucide-react";
-import MagneticButton from "@/components/cursor/MagneticButton";
+export const metadata = { title: "AWS Student Builder Group at DIA" };
 
-export default function AWSWing() {
+const tracks = [
+  { name: "Cloud Foundations", desc: "Core AWS services, pricing, and architecture.", url: "https://skillbuilder.aws" },
+  { name: "Compute & Networking", desc: "EC2, Lambda, VPC, and load balancing.", url: "https://skillbuilder.aws" },
+  { name: "Storage & Databases", desc: "S3, DynamoDB, RDS, and data management.", url: "https://skillbuilder.aws" },
+  { name: "DevOps & CI/CD", desc: "CodePipeline, CloudFormation, and deployment.", url: "https://skillbuilder.aws" },
+  { name: "Build & Deploy", desc: "Real-world projects using AWS services.", url: "https://skillbuilder.aws" },
+];
+
+const programs = [
+  "Hands-on workshops with live AWS console demos",
+  "Build sessions: deploy real applications to the cloud",
+  "Certification study circles for Cloud Practitioner and SAA",
+  "Tech talks with the wider AWS community",
+  "Hackathons and cloud challenge events",
+];
+
+export default function AWSWingPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground selection:bg-orange-500 selection:text-white">
+    <main className="pt-20">
       {/* Hero */}
-      <section className="relative pt-32 pb-24 px-8 bg-gradient-to-b from-orange-500/10 to-background overflow-hidden border-b border-orange-500/20">
-        <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 text-orange-500 font-mono text-sm font-bold border border-orange-500/30">
-            Part of the AWS Student Builder Groups program
-          </div>
-          <h1 className="text-5xl md:text-7xl font-display font-bold tracking-tight">AWS Student Builder Group at DIA</h1>
-          <p className="text-xl opacity-80 max-w-2xl mx-auto">
-            Master the cloud. Build the future. Open to every discipline, all years, free.
-          </p>
-          <div className="pt-8">
-             <MagneticButton className="bg-orange-500 text-white font-bold px-8 py-4 shadow-lg shadow-orange-500/20">
-               Join this wing
-             </MagneticButton>
-          </div>
-        </div>
-        {/* Abstract Cloud Motif */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-5xl opacity-5 pointer-events-none flex justify-center items-center">
-           <Cloud className="w-full h-full text-orange-500" />
+      <section className="relative py-24 md:py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-aws-orange/8 to-transparent pointer-events-none" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <ScrollReveal>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-aws-orange/10 border border-aws-orange/30 text-aws-orange text-xs font-mono font-bold mb-6">
+              <Cloud className="w-3.5 h-3.5" /> Part of the AWS Student Builder Groups program
+            </div>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6">
+              AWS Student Builder Group
+              <span className="block text-text-secondary text-2xl md:text-3xl font-normal mt-2">at DIA</span>
+            </h1>
+            <p className="text-xl text-text-secondary leading-relaxed max-w-2xl mb-8">
+              Master the cloud. Build the future. Open to every discipline, all years, free.
+            </p>
+            <Link
+              href="/join?wing=aws"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-aws-orange text-white font-bold rounded-lg hover:bg-aws-orange/90 transition-colors"
+            >
+              Join this wing <ArrowRight className="w-4 h-4" />
+            </Link>
+          </ScrollReveal>
         </div>
       </section>
 
-      <section className="py-24 px-8 max-w-6xl mx-auto space-y-24">
-        {/* Programs */}
-        <div className="space-y-8">
-          <h2 className="text-3xl font-display font-bold flex items-center gap-3">
-             <span className="w-8 h-1 bg-orange-500 rounded-full"></span> Programs
-          </h2>
-          <div className="grid md:grid-cols-2 gap-4">
-             {["Hands-on workshops", "Build sessions", "Certification study circles", "Tech talks", "Hackathons"].map((program) => (
-                <div key={program} className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-orange-500/50 transition-colors">
-                  <h3 className="font-bold text-lg">{program}</h3>
+      {/* Programs */}
+      <SectionWrapper label="Programs" number="01" className="border-t border-border">
+        <ScrollReveal>
+          <h2 className="text-3xl font-bold mb-8">What we do</h2>
+        </ScrollReveal>
+        <div className="grid md:grid-cols-2 gap-4">
+          {programs.map((p, i) => (
+            <ScrollReveal key={i} delay={i * 0.06}>
+              <div className="p-5 rounded-xl bg-glass-light flex items-start gap-4">
+                <CheckCircle className="w-5 h-5 text-aws-orange mt-0.5 shrink-0" />
+                <span className="text-text-secondary">{p}</span>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </SectionWrapper>
+
+      {/* Learning Roadmap */}
+      <SectionWrapper label="Learning Roadmap" number="02" className="border-t border-border">
+        <ScrollReveal>
+          <h2 className="text-3xl font-bold mb-4">Your path to the cloud</h2>
+          <p className="text-text-muted mb-8 text-sm">Roadmap tracks link to official AWS Skill Builder resources.</p>
+        </ScrollReveal>
+        <div className="relative max-w-2xl">
+          <div className="absolute left-5 top-0 bottom-0 w-px bg-aws-orange/20" />
+          {tracks.map((track, i) => (
+            <ScrollReveal key={track.name} delay={i * 0.08}>
+              <a
+                href={track.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative flex items-start gap-6 pl-2 mb-6 group"
+              >
+                <div className="w-7 h-7 rounded-full bg-midnight border-2 border-aws-orange/40 flex items-center justify-center z-10 group-hover:bg-aws-orange group-hover:border-aws-orange transition-colors shrink-0 mt-1">
+                  <span className="text-[10px] font-mono font-bold text-aws-orange group-hover:text-white transition-colors">{i + 1}</span>
                 </div>
-             ))}
-          </div>
+                <div className="flex-1 p-4 rounded-xl bg-glass-light group-hover:bg-aws-orange/5 transition-colors">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="font-bold">{track.name}</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-text-muted" />
+                  </div>
+                  <p className="text-sm text-text-muted">{track.desc}</p>
+                </div>
+              </a>
+            </ScrollReveal>
+          ))}
         </div>
+      </SectionWrapper>
 
-        {/* Learning Roadmap */}
-        <div className="space-y-8">
-          <h2 className="text-3xl font-display font-bold flex items-center gap-3">
-             <span className="w-8 h-1 bg-orange-500 rounded-full"></span> Learning Roadmap
-          </h2>
-          <div className="p-8 rounded-3xl bg-black/20 border border-white/5 relative">
-             <div className="absolute left-12 top-8 bottom-8 w-0.5 bg-orange-500/30" />
-             <div className="space-y-8">
-                {["Cloud basics", "Compute & Networking", "Storage & Databases", "Build and deploy"].map((track, i) => (
-                   <div key={track} className="relative flex items-center gap-6 pl-4 cursor-pointer group">
-                      <div className="w-6 h-6 rounded-full bg-orange-500/20 border-2 border-orange-500 flex items-center justify-center z-10 group-hover:bg-orange-500 transition-colors">
-                        <CheckCircle className="w-3 h-3 text-white opacity-0 group-hover:opacity-100" />
-                      </div>
-                      <div className="flex-1 bg-white/5 border border-white/10 p-4 rounded-xl flex justify-between items-center group-hover:bg-white/10 transition-colors">
-                         <span className="font-bold">{track}</span>
-                         <ExternalLink className="w-4 h-4 opacity-50" />
-                      </div>
-                   </div>
-                ))}
-             </div>
-             <div className="mt-8 pt-8 border-t border-white/10 text-center text-sm opacity-60">
-                Roadmap tracks link to official AWS Skill Builder resources.
-             </div>
-          </div>
-        </div>
-
-        {/* Leader & Team */}
-        <div className="space-y-8">
-          <h2 className="text-3xl font-display font-bold flex items-center gap-3">
-             <span className="w-8 h-1 bg-orange-500 rounded-full"></span> Wing Leader
-          </h2>
-          <div className="p-8 rounded-3xl bg-white/5 border border-white/10 max-w-md">
-             <div className="w-16 h-16 rounded-full bg-orange-500/20 border border-orange-500 flex items-center justify-center text-orange-500 text-xl font-bold mb-4">
+      {/* Wing Leader */}
+      <SectionWrapper label="Leadership" number="03" className="border-t border-border">
+        <ScrollReveal>
+          <h2 className="text-3xl font-bold mb-8">Wing Leader</h2>
+          <div className="p-8 rounded-2xl bg-glass-light max-w-lg">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-aws-orange to-yellow-500 flex items-center justify-center text-white font-bold text-lg">
                 R
-             </div>
-             <h3 className="font-bold text-2xl">Ratul Hasan Ruhan</h3>
-             <p className="opacity-70 text-sm mt-1">AWS Student Builder Group Leader at DIA</p>
+              </div>
+              <div>
+                <h3 className="font-bold text-lg">Ratul Hasan Ruhan</h3>
+                <p className="text-sm text-text-muted">AWS Student Builder Group Leader at DIA</p>
+              </div>
+            </div>
           </div>
+        </ScrollReveal>
+      </SectionWrapper>
+
+      {/* Disclaimer */}
+      <section className="py-12 px-6 border-t border-border">
+        <div className="max-w-7xl mx-auto">
+          <p className="text-xs text-text-muted leading-relaxed max-w-2xl">
+            The AWS Student Builder Group at DIA is a student community. This page is not
+            an official Amazon Web Services site. AWS and related marks belong to Amazon.com,
+            Inc. or its affiliates. No AWS credits, vouchers, or specific program benefits
+            are claimed unless explicitly verified.
+          </p>
         </div>
       </section>
-
-      <footer className="py-12 px-8 border-t border-white/10 text-center font-mono text-sm opacity-50 bg-black/20">
-         <p>Student community; not an official AWS site; AWS marks belong to Amazon.</p>
-      </footer>
     </main>
   );
 }

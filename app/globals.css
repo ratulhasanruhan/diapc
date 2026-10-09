@@ -1,51 +1,194 @@
 @import "tailwindcss";
 
+/* ============================================
+   DPC — THE DEVELOPER UNIVERSE
+   Design System & Global Styles
+   ============================================ */
+
 @theme {
-  --color-brand-blue: var(--brand-blue);
-  --color-brand-purple: var(--brand-purple);
-  --color-ink: var(--ink);
-  --color-electric: var(--electric);
-  --color-paper: var(--paper);
+  --color-brand-blue: #0A6BC9;
+  --color-brand-magenta: #9A2A92;
+  --color-midnight: #070B14;
+  --color-deep-navy: #0B1120;
+  --color-surface: #111827;
+  --color-surface-raised: #1F2937;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.16);
+  --color-text-primary: #F1F5F9;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+  --color-electric: #3B82F6;
+  --color-cyan: #06B6D4;
+  --color-violet: #8B5CF6;
+  --color-lavender: #C4B5FD;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-aws-orange: #FF9900;
 
-  --font-display: var(--font-display);
-  --font-body: var(--font-body);
-  --font-mono: var(--font-mono);
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
+/* ---- Base ---- */
 :root {
-  --brand-blue: #0A6BC9;
-  --brand-purple: #9A2A92;
-  --ink: #1B2437;
-  --electric: #2563EB;
-  --paper: #FAFAFC;
-
-  --background: var(--paper);
-  --foreground: var(--ink);
+  --bg-gradient-start: #070B14;
+  --bg-gradient-end: #0B1120;
+  color-scheme: dark;
 }
 
-.dark {
-  --ink: #E2E8F0;
-  --paper: #0B1120;
-  --background: var(--paper);
-  --foreground: var(--ink);
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-body), sans-serif;
-  cursor: auto;
+  background: var(--bg-gradient-start);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--electric);
+  background: var(--color-brand-blue);
   color: white;
 }
 
-@layer utilities {
-  .text-gradient {
-    background: linear-gradient(to right, var(--brand-blue), var(--brand-purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+/* ---- Typography ---- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* ---- Utilities ---- */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-magenta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, var(--color-cyan), var(--color-electric));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-glass {
+  background: rgba(11, 17, 32, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border);
+}
+
+.bg-glass-light {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+}
+
+.glow-blue {
+  box-shadow: 0 0 40px rgba(10, 107, 201, 0.15), 0 0 80px rgba(10, 107, 201, 0.05);
+}
+
+.glow-magenta {
+  box-shadow: 0 0 40px rgba(154, 42, 146, 0.15), 0 0 80px rgba(154, 42, 146, 0.05);
+}
+
+/* ---- Star Field ---- */
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.starfield::before,
+.starfield::after {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 15% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 45% 85%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 60%, rgba(255,255,255,0.5) 0%, transparent 100%);
+  background-size: 200px 200px;
+  animation: drift 120s linear infinite;
+}
+
+.starfield::after {
+  background-size: 300px 300px;
+  animation: drift 180s linear infinite reverse;
+  opacity: 0.5;
+}
+
+@keyframes drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-8px) rotate(1deg); }
+  75% { transform: translateY(8px) rotate(-1deg); }
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-midnight);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-raised);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
 }
