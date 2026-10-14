@@ -5,7 +5,7 @@ import { articles, preamble, constitutionMeta } from "@/content/constitution";
 
 export const metadata = pageMeta({
   title: "Constitution",
-  description: "Draft constitution of DIA Programming Club - DPC (founded 21 June 2015): name, aims, membership, structure, wings, elections, conduct and amendments.",
+  description: "Constitution of DIA Programming Club - DPC (founded 21 June 2015): name, aims, membership, structure, wings, elections, conduct and amendments.",
   path: "/constitution"
 });
 
@@ -13,9 +13,6 @@ export default function ConstitutionPage() {
   return (
     <main>
       <PageHero eyebrow="Governance" title="Constitution" intro={`The governing document of ${site.fullName}. ${site.tagline}.`}>
-        <p className="mt-6 inline-flex items-center gap-2 border border-dashed border-[#f59e0b] bg-[#fffbeb] px-3 py-1.5 font-mono text-xs font-semibold text-[#b45309]">
-          {constitutionMeta.status}
-        </p>
         <p className="mt-3 font-mono text-xs text-muted">Founded {site.foundingDateLabel} · Last updated {constitutionMeta.lastUpdated}</p>
       </PageHero>
       <div className="section grid gap-12 lg:grid-cols-[220px_1fr]">
@@ -43,7 +40,7 @@ export default function ConstitutionPage() {
               </ol>
             </section>
           ))}
-          <p className="mt-10 font-mono text-xs text-muted">This draft has no legal force until adopted by the DPC committee and approved by the DIA authority. Suggestions: <a className="text-brand-blue" href={`mailto:${site.email}?subject=Constitution%20feedback`}>{site.email}</a></p>
+          <p className="mt-10 font-mono text-xs text-muted">Questions or suggestions: <a className="text-brand-blue" href={`mailto:${site.email}?subject=Constitution%20feedback`}>{site.email}</a></p>
         </article>
       </div>
     </main>

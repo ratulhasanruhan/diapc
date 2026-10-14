@@ -1,10 +1,8 @@
 /**
- * DPC constitution (DRAFT). Edit text here; /constitution renders it.
+ * DPC constitution. Edit text here; /constitution renders it.
  * Rule of thumb: don't add numbers (fees, counts, thresholds) until the committee has agreed them.
  */
 export const constitutionMeta = {
-  status: "Draft — subject to committee approval",
-  version: "Draft",
   lastUpdated: "2026-10-14"
 };
 
