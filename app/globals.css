@@ -230,5 +230,5 @@ html:not(.js) .space-layer * { animation-play-state: running; }
 
 @media (prefers-reduced-motion: reduce) {
   .bob, .twinkle, .drift-sat, .orbit-spin, .orbit-spin > *, .drift-float, .float-slow, .float-delayed, .star-dot { animation: none !important; }
-  .drift-x, .drift-x-rev, .drift-x-slow { animation: none !important; left: 70%; }
+  .drift-x, .drift-x-rev, .drift-x-slow { animation: none !important; left: 38%; }
 }

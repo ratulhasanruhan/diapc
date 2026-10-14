@@ -43,7 +43,7 @@ export default async function Home() {
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
           <div className="relative z-10">
             <p className="inline-flex flex-wrap items-center gap-2 border border-line bg-white/80 px-3 py-1.5 font-mono text-[10px] font-semibold tracking-[0.16em] text-muted shadow-sm sm:text-[11px]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#16845b]" aria-hidden="true" /> EST. {site.foundingDateLabel.toUpperCase()} · {site.institution.toUpperCase()}
+              <span className="h-1.5 w-1.5 rounded-full bg-[#16845b]" aria-hidden="true" /> EST. {site.foundingDateLabel.toUpperCase()}<span className="hidden sm:inline"> · {site.institution.toUpperCase()}</span>
             </p>
             <h1 className="mt-7 max-w-3xl text-[44px] leading-[1.02] text-ink sm:text-7xl lg:text-[84px]">
               We turn <span className="text-gradient">curiosity</span> into code<span className="text-brand-magenta">.</span>
@@ -64,7 +64,7 @@ export default async function Home() {
           <div data-space className="space-layer relative mx-auto h-[340px] w-full max-w-[480px] sm:h-[460px]" aria-hidden="true">
             <div className="orbit-line absolute left-1/2 top-1/2 h-[220px] w-[400px] -translate-x-1/2 -translate-y-1/2 sm:h-[270px] sm:w-[500px]" />
             <div className="orbit-line absolute left-1/2 top-1/2 h-[320px] w-[230px] -translate-x-1/2 -translate-y-1/2 rotate-[62deg] sm:h-[400px] sm:w-[280px]" />
-            <div className="orbit-spin absolute left-1/2 top-1/2 -ml-[170px] -mt-[170px] h-[340px] w-[340px] sm:-ml-[215px] sm:-mt-[215px] sm:h-[430px] sm:w-[430px]">
+            <div className="orbit-spin absolute z-20 left-1/2 top-1/2 -ml-[170px] -mt-[170px] h-[340px] w-[340px] sm:-ml-[215px] sm:-mt-[215px] sm:h-[430px] sm:w-[430px]">
               <Satellite className="absolute left-1/2 top-0 w-16 -translate-x-1/2 sm:w-20" />
             </div>
             <span className="twinkle absolute left-[6%] top-[40%] h-1.5 w-1.5 rounded-full bg-brand-blue" />

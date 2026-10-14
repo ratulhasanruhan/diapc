@@ -187,7 +187,10 @@ export function LogoWall({ items }: { items: Collaboration[] }) {
         const inner = (
           <div className={`flex h-32 flex-col items-center justify-center gap-2 bg-white p-5 text-center transition-colors hover:bg-[#f7f8fc] ${c.sample ? "opacity-70" : ""}`}>
             {c.logo ? (
-              <Image src={c.logo} alt={c.name} width={120} height={48} className="h-12 w-auto max-w-[140px] object-contain" />
+              <>
+                <Image src={c.logo} alt="" width={120} height={48} className="h-10 w-auto max-w-[140px] object-contain" />
+                <span className="text-xs font-semibold text-ink">{c.name}</span>
+              </>
             ) : (
               <span className={`text-sm font-semibold ${c.sample ? "text-muted" : "text-ink"}`}>{c.name}</span>
             )}
