@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { FIELDS, validateSubmission, type SubmissionKind } from "@/lib/submissions";
 
@@ -9,8 +9,6 @@ const inputCls = "mt-1.5 w-full border border-line bg-white px-3.5 py-2.5 text-s
 
 export default function SubmissionForm({ kind }: { kind: SubmissionKind }) {
   const [state, setState] = useState<State>({ status: "idle" });
-  const startedAt = useRef(0);
-  useEffect(() => { startedAt.current = Date.now(); }, []);
   const fields = FIELDS[kind];
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -18,7 +16,7 @@ export default function SubmissionForm({ kind }: { kind: SubmissionKind }) {
     const form = e.currentTarget;
     const payload: Record<string, unknown> = Object.fromEntries(new FormData(form).entries());
     payload.kind = kind;
-    payload.startedAt = startedAt.current;
+    payload.elapsed = Math.round(performance.now());
     const check = validateSubmission(payload);
     if (!check.ok) return setState({ status: "error", errors: check.errors, message: "Please fix the highlighted fields." });
     setState({ status: "sending" });
@@ -38,7 +36,7 @@ export default function SubmissionForm({ kind }: { kind: SubmissionKind }) {
         <CheckCircle2 className="mx-auto text-[#16845b]" size={40} aria-hidden="true" />
         <h2 className="mt-4 text-2xl text-ink">Thanks! Your {kind} is in the review queue.</h2>
         <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted">A committee member will check it before it appears on the site. We may email you if we need anything else.</p>
-        <button type="button" onClick={() => { startedAt.current = Date.now(); setState({ status: "idle" }); }} className="btn-ghost mt-6">Submit another</button>
+        <button type="button" onClick={() => setState({ status: "idle" })} className="btn-ghost mt-6">Submit another</button>
       </div>
     );
   }

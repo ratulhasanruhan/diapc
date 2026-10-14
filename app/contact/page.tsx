@@ -3,6 +3,7 @@
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { Mail, MapPin, MessageCircle, ArrowRight, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { postForm } from "@/lib/postForm";
 
 const faqs = [
   { q: "Who can join DPC?", a: "Any currently enrolled student at Daffodil International Academy, regardless of program, year, or experience level." },
@@ -22,11 +23,10 @@ export default function ContactPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const [{ db }, { collection, addDoc, serverTimestamp }] = await Promise.all([import("@/lib/firebase"), import("firebase/firestore")]);
-      await addDoc(collection(db, "contacts"), { ...formData, createdAt: serverTimestamp() });
+      await postForm("contact", formData, e.currentTarget as HTMLFormElement);
       setSubmitted(true);
-    } catch {
-      alert("Something went wrong. Please try again.");
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -110,6 +110,8 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-glass-light space-y-6">
+              {/* Honeypot (spam guard) */}
+              <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden"><label>Website<input type="text" name="website" tabIndex={-1} autoComplete="off" /></label></div>
                 <h2 className="text-2xl font-bold">Send a message</h2>
                 <div>
                   <label className="block text-xs font-mono text-text-muted mb-2 uppercase tracking-wider">Name *</label>
