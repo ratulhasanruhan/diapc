@@ -3,8 +3,6 @@
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { Rocket, Shield, Handshake, ArrowRight } from "lucide-react";
 import { useState } from "react";
-import { db } from "@/lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const collabTypes = [
   "Co-host an event",
@@ -43,6 +41,7 @@ export default function CollaboratePage() {
     e.preventDefault();
     setSubmitting(true);
     try {
+      const [{ db }, { collection, addDoc, serverTimestamp }] = await Promise.all([import("@/lib/firebase"), import("firebase/firestore")]);
       await addDoc(collection(db, "collaborations"), {
         ...formData,
         createdAt: serverTimestamp(),

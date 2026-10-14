@@ -60,7 +60,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-x-10 gap-y-8 sm:grid-cols-3">
           {sections.map((section) => (
             <div key={section.title}>
-              <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-[#98a2b3]">{section.title}</p>
+              <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-[#667085]">{section.title}</p>
               <div className="space-y-2">
                 {section.links.map((link) => link.href.startsWith("http") ? <a key={link.href} href={link.href} target="_blank" rel="noopener" className="block text-sm text-[#667085] hover:text-[#2454d7]">{link.label} ↗</a> : <Link key={link.href} href={link.href} className="block text-sm text-[#667085] hover:text-[#2454d7]">{link.label}</Link>)}
               </div>
@@ -68,7 +68,7 @@ export default function Footer() {
           ))}
         </div>
       </div>
-      <div className="border-t border-[#dfe4ee] px-6 py-4 text-center text-xs text-[#98a2b3]">© DIA Programming Club - DPC · Student-run and community-led.</div>
+      <div className="border-t border-[#dfe4ee] px-6 py-4 text-center text-xs text-[#667085]">© DIA Programming Club - DPC · Student-run and community-led.</div>
     </footer>
   );
 }

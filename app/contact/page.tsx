@@ -3,8 +3,6 @@
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { Mail, MapPin, MessageCircle, ArrowRight, ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { db } from "@/lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const faqs = [
   { q: "Who can join DPC?", a: "Any currently enrolled student at Daffodil International Academy, regardless of program, year, or experience level." },
@@ -24,6 +22,7 @@ export default function ContactPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
+      const [{ db }, { collection, addDoc, serverTimestamp }] = await Promise.all([import("@/lib/firebase"), import("firebase/firestore")]);
       await addDoc(collection(db, "contacts"), { ...formData, createdAt: serverTimestamp() });
       setSubmitted(true);
     } catch {
