@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight, Mail, CalendarDays } from "lucide-react";
 import AstronautVector from "@/components/illustrations/AstronautVector";
 import ScrollReveal from "@/components/motion/ScrollReveal";
-import { SectionHeading, EventCard, EventGallery, AchievementCard, ProjectCard, MemberCard, LogoWall, WingCard, EmptyState } from "@/components/sections/blocks";
+import { SectionHeading, EventCard, EventGallery, AchievementCard, ProjectCard, CommitteeShowcase, MeetupLiveLabel, LogoWall, WingCard, EmptyState } from "@/components/sections/blocks";
 import { site } from "@/content/site";
 import { collaborations } from "@/content/collaborations";
 import { achievements } from "@/content/achievements";
@@ -28,12 +28,11 @@ const pillars = [
 export default async function Home() {
   const { upcoming, past } = await getEvents();
   const featuredProjects = [...projects].sort((a, b) => Number(!!b.featured) - Number(!!a.featured)).slice(0, 3);
-  const leaders = committee.filter((m) => m.group === "advisor" || m.group === "executive").slice(0, 6);
 
   return (
     <main className="overflow-hidden">
       <MotionGate />
-      <JsonLd data={upcoming.filter((e) => !e.sample).slice(0, 5).map(eventJsonLd)} />
+      <JsonLd data={[...upcoming, ...past].filter((e) => !e.sample && e.date).slice(0, 8).map(eventJsonLd)} />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-paper px-4 pb-16 pt-28 sm:px-6 sm:pb-24 sm:pt-40">
@@ -116,6 +115,7 @@ export default async function Home() {
       <section id="events" className="border-y border-line bg-[#eef2ff]/60">
         <div className="section">
           <SectionHeading index="03" eyebrow="Upcoming events" title="Missions in the making." action={{ label: "All events", href: "/events" }} />
+          <MeetupLiveLabel className="-mt-4 mb-8" />
           {upcoming.length ? (
             <div className="grid gap-4 lg:grid-cols-2">
               {upcoming.slice(0, 4).map((e, i) => <ScrollReveal key={e.id} delay={i * 0.06}><EventCard event={e} /></ScrollReveal>)}
@@ -175,10 +175,8 @@ export default async function Home() {
       {/* COMMITTEE */}
       <section id="committee" className="cv-auto border-y border-line bg-white">
         <div className="section">
-          <SectionHeading index="07" eyebrow="Committee" title="The crew behind DPC." action={{ label: "Full committee", href: "/committee" }} />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {leaders.map((m, i) => <ScrollReveal key={`${m.role}-${i}`} delay={i * 0.05}><MemberCard m={m} /></ScrollReveal>)}
-          </div>
+          <SectionHeading index="07" eyebrow="Committee" title="The crew behind DPC." intro="Our advisor and the executive members who keep the club running." action={{ label: "Full committee", href: "/committee" }} />
+          <CommitteeShowcase members={committee} limit={8} />
         </div>
       </section>
 

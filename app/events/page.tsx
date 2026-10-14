@@ -1,19 +1,19 @@
 import { ArrowUpRight } from "lucide-react";
 import PageHero from "@/components/sections/PageHero";
 import ScrollReveal from "@/components/motion/ScrollReveal";
-import { EventCard, EmptyState, SectionHeading } from "@/components/sections/blocks";
+import { EventCard, EmptyState, SectionHeading, MeetupLiveLabel } from "@/components/sections/blocks";
 import { getEvents } from "@/lib/events";
 import { eventJsonLd } from "@/lib/jsonld";
 import { pageMeta, JsonLd } from "@/lib/seo";
 import { site } from "@/content/site";
 
-export const metadata = pageMeta({ title: "Events", description: "Upcoming and past DIA Programming Club events: workshops, contests, builder sessions and AWS Student Builders Group meetups.", path: "/events" });
+export const metadata = pageMeta({ title: "Events", description: "Upcoming and past DIA Programming Club events: workshops, contests, builder sessions and AWS Student Builders Group meetups.", path: "/events", image: "/events/ict-fest-2025-devops-workshop/cover.webp" });
 
 export default async function EventsPage() {
   const { upcoming, past } = await getEvents();
   return (
     <main>
-      <JsonLd data={upcoming.filter((e) => !e.sample).map(eventJsonLd)} />
+      <JsonLd data={[...upcoming, ...past].filter((e) => !e.sample && e.date).map(eventJsonLd)} />
       <PageHero eyebrow="Events" title="Workshops, contests and meetups" intro="Everything DPC and its wings are running. AWS Student Builders Group events sync automatically from Meetup.">
         <div className="mt-8 flex flex-wrap gap-3">
           <a href={site.facebook} target="_blank" rel="noopener noreferrer" className="btn-primary">Follow on Facebook <ArrowUpRight size={16} aria-hidden="true" /></a>
@@ -22,6 +22,7 @@ export default async function EventsPage() {
       </PageHero>
       <section className="section">
         <SectionHeading eyebrow="Upcoming" title="Next up" />
+        <MeetupLiveLabel className="-mt-4 mb-8" />
         {upcoming.length ? (
           <div className="grid gap-4 lg:grid-cols-2">{upcoming.map((e) => <ScrollReveal key={e.id}><EventCard event={e} /></ScrollReveal>)}</div>
         ) : (

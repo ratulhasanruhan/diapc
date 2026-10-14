@@ -232,3 +232,7 @@ html:not(.js) .space-layer * { animation-play-state: running; }
   .bob, .twinkle, .drift-sat, .orbit-spin, .orbit-spin > *, .drift-float, .float-slow, .float-delayed, .star-dot { animation: none !important; }
   .drift-x, .drift-x-rev, .drift-x-slow { animation: none !important; left: 38%; }
 }
+
+@keyframes live-ping { 75%, 100% { transform: scale(2.2); opacity: 0; } }
+.live-ping { animation: live-ping 1.6s cubic-bezier(0,0,.2,1) infinite; }
+@media (prefers-reduced-motion: reduce) { .live-ping { animation: none; } }

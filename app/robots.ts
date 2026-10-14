@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
+import { site } from "@/content/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: "*", allow: "/" }],
-    sitemap: "https://diapc.dev/sitemap.xml",
-    host: "https://diapc.dev"
+    rules: [{ userAgent: "*", allow: "/", disallow: ["/api/", "/submit/"] }],
+    sitemap: `${site.url}/sitemap.xml`,
+    host: site.url
   };
 }

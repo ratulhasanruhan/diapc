@@ -1,33 +1,24 @@
 import PageHero from "@/components/sections/PageHero";
-import ScrollReveal from "@/components/motion/ScrollReveal";
-import { MemberCard, SectionHeading } from "@/components/sections/blocks";
-import { committee, type CommitteeMember } from "@/content/committee";
-import { pageMeta } from "@/lib/seo";
+import { CommitteeShowcase } from "@/components/sections/blocks";
+import { committee } from "@/content/committee";
+import { committeeJsonLd } from "@/lib/jsonld";
+import { pageMeta, JsonLd } from "@/lib/seo";
 
-export const metadata = pageMeta({ title: "Committee", description: "The students and advisors who lead DIA Programming Club.", path: "/committee" });
-
-const groups: { key: CommitteeMember["group"]; title: string }[] = [
-  { key: "advisor", title: "Advisors" },
-  { key: "executive", title: "Executive committee" },
-  { key: "lead", title: "Wing & team leads" },
-  { key: "member", title: "Members" }
-];
+export const metadata = pageMeta({
+  title: "Committee",
+  description: "Meet the DIA Programming Club committee: advisor Rakibul Hasan Prince and the executive members who run DPC events, tech, content and community.",
+  path: "/committee",
+  image: "/committee/rakibul-hasan-prince.webp"
+});
 
 export default function CommitteePage() {
   return (
     <main>
-      <PageHero eyebrow="Committee" title="The crew behind DPC" intro="The students and advisors who lead, organize and build the club." />
-      {groups.map((g) => {
-        const list = committee.filter((m) => m.group === g.key);
-        if (!list.length) return null;
-        return (
-          <section key={g.key} className="section pb-0">
-            <SectionHeading eyebrow="DPC" title={g.title} />
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{list.map((m, i) => <ScrollReveal key={`${m.role}-${i}`}><MemberCard m={m} /></ScrollReveal>)}</div>
-          </section>
-        );
-      })}
-      <p className="section text-center font-mono text-xs text-muted">Committee positions are pending the first election under the DPC Constitution.</p>
+      <JsonLd data={committeeJsonLd(committee)} />
+      <PageHero eyebrow="Committee" title="The crew behind DPC" intro="The advisor and executive members who organize events, run the tech, tell the club's story and look after the community." />
+      <section className="section">
+        <CommitteeShowcase members={committee} />
+      </section>
     </main>
   );
 }
