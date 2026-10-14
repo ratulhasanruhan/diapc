@@ -1,7 +1,7 @@
 /* Server-rendered building blocks shared by the homepage and the listing pages. */
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, CalendarDays, MapPin, Trophy, Github, ExternalLink, Users, ImageIcon } from "lucide-react";
+import { ArrowUpRight, CalendarDays, MapPin, Trophy, Code2, ExternalLink, Users, ImageIcon } from "lucide-react";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import type { EventItem } from "@/lib/events";
 import { formatDate } from "@/lib/events";
@@ -148,7 +148,7 @@ export function ProjectCard({ p }: { p: Project }) {
         {p.tags && <ul className="mt-4 flex flex-wrap gap-1.5">{p.tags.map((t) => <li key={t} className="border border-line px-2 py-0.5 font-mono text-[10px] text-muted">{t}</li>)}</ul>}
         {(p.repo || p.demo) && (
           <div className="mt-auto flex gap-4 pt-5 text-sm font-bold">
-            {p.repo && <a href={p.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-ink hover:text-brand-blue"><Github size={15} aria-hidden="true" /> Code</a>}
+            {p.repo && <a href={p.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-ink hover:text-brand-blue"><Code2 size={15} aria-hidden="true" /> Code</a>}
             {p.demo && <a href={p.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-brand-blue"><ExternalLink size={15} aria-hidden="true" /> Live</a>}
           </div>
         )}

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Mail, Facebook, CalendarDays } from "lucide-react";
+import { ArrowUpRight, Mail, CalendarDays } from "lucide-react";
 import AstronautVector from "@/components/illustrations/AstronautVector";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { SectionHeading, EventCard, EventGallery, AchievementCard, ProjectCard, MemberCard, LogoWall, WingCard, EmptyState } from "@/components/sections/blocks";
@@ -175,7 +175,7 @@ export default async function Home() {
           </ScrollReveal>
           <ScrollReveal delay={0.1} className="flex flex-col gap-3">
             <a href={`mailto:${site.email}`} className="inline-flex items-center gap-2 bg-white px-5 py-3.5 text-sm font-bold text-brand-magenta transition-transform hover:-translate-y-0.5"><Mail size={17} aria-hidden="true" /> {site.email}</a>
-            <a href={site.facebook} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-white/50 px-5 py-3.5 text-sm font-bold text-white hover:bg-white/10"><Facebook size={17} aria-hidden="true" /> facebook.com/diadpc</a>
+            <a href={site.facebook} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-white/50 px-5 py-3.5 text-sm font-bold text-white hover:bg-white/10"><span className="flex h-4 w-4 items-center justify-center bg-white text-[11px] font-bold text-brand-magenta" aria-hidden="true">f</span> facebook.com/diadpc</a>
             <Link href="/join" className="inline-flex items-center gap-2 px-1 py-2 text-sm font-bold text-white underline-offset-4 hover:underline">Join DPC <ArrowUpRight size={16} aria-hidden="true" /></Link>
           </ScrollReveal>
         </div>
