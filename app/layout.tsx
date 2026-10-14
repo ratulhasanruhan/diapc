@@ -46,17 +46,28 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://diapc.dev",
     siteName: "DIA Programming Club",
-    images: [{ url: "/brand/cover.png", width: 1200, height: 630, alt: "DIA Programming Club" }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "DIA Programming Club" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "DIA Programming Club",
     description: "= new instance of future();",
-    images: ["/brand/cover.png"]
+    images: ["/og.png"]
   },
   alternates: {
     canonical: "https://diapc.dev"
   }
+};
+
+const orgJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "DIA Programming Club",
+  alternateName: "DPC",
+  url: "https://diapc.dev",
+  logo: "https://diapc.dev/brand/classic_logo.png",
+  sameAs: ["https://www.facebook.com/diadpc"],
+  subOrganization: { "@type": "Organization", name: "AWS Student Builders Group at Daffodil International Academy", url: "https://aws.diapc.dev" }
 };
 
 export default function RootLayout({
@@ -69,10 +80,12 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} antialiased`}
       >
+        <a href="#content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-[#2454d7] focus:px-4 focus:py-2 focus:font-bold focus:text-white">Skip to content</a>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
         <OrbitalBackground />
         <Navbar />
         <RoamingAstronaut />
-        <div className="relative z-10">{children}</div>
+        <div id="content" className="relative z-10">{children}</div>
         <Footer />
       </body>
     </html>

@@ -177,3 +177,5 @@ h1, h2, h3, h4, h5, h6 {
 .orbital-star-one { left: 22%; top: 18%; }
 .orbital-star-two { right: 28%; top: 76%; }
 .orbital-star-three { right: 7%; top: 58%; }
+
+:focus-visible { outline: 2px solid #2454d7; outline-offset: 2px; }

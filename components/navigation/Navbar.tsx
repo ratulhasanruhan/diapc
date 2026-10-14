@@ -14,7 +14,7 @@ const navLinks = [
 
 const wingLinks = [
   { label: "All wings", href: "/wings" },
-  { label: "AWS Student Builders", href: "https://aws.diapc.dev" },
+  { label: "AWS Student Builders Group ↗", href: "https://aws.diapc.dev" },
   { label: "Competitive Programming", href: "/join?wing=competitive-programming" },
   { label: "AI & Data Science", href: "/join?wing=ai-ml" },
   { label: "Web & Mobile Dev", href: "/join?wing=web-app-dev" },
@@ -24,10 +24,10 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6">
+    <nav aria-label="Primary" className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between border border-[#dfe4ee] bg-[#fbfaf7]/90 px-4 shadow-[0_12px_35px_rgba(23,33,61,0.08)] backdrop-blur-md sm:px-5">
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <Image src="/brand/modern_logo.png" alt="DPC logo" width={142} height={48} className="h-10 w-auto object-contain" priority />
+          <Image src="/brand/modern_logo.png" alt="DIA Programming Club home" width={142} height={48} className="h-10 w-auto object-contain" priority />
         </Link>
 
         <div className="hidden items-center gap-7 md:flex">
@@ -38,7 +38,7 @@ export default function Navbar() {
           ))}
           <div className="group relative">
             <Link href="/wings" className="inline-flex items-center gap-1 text-sm font-medium text-[#667085] transition-colors hover:text-[#2454d7]">
-              Wings <span className="text-[10px] transition-transform group-hover:rotate-180">▾</span>
+              Wings <span aria-hidden="true" className="text-[10px] transition-transform group-hover:rotate-180">▾</span>
             </Link>
             <div className="invisible absolute right-1/2 top-full z-50 w-64 translate-x-1/2 pt-4 opacity-0 transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
               <div className="border border-[#dfe4ee] bg-white p-2 shadow-[0_18px_45px_rgba(23,33,61,0.14)]">

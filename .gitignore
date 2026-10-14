@@ -44,3 +44,4 @@ next-env.d.ts
 awssbg/.next
 awssbg/.vercel
 awssbg/.env*
+**/.next

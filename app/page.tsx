@@ -37,14 +37,14 @@ export default function Home() {
 
   return (
     <main className="overflow-hidden">
-      <section className="relative min-h-[720px] bg-[#fbfaf7] px-6 pb-24 pt-36 sm:pt-44">
+      <section className="relative min-h-[640px] bg-[#fbfaf7] px-4 pb-24 pt-32 sm:min-h-[720px] sm:px-6 sm:pt-44">
         <div className="paper-grid absolute inset-0 opacity-60" aria-hidden="true" />
         <span className="star-dot left-[11%] top-[27%]" aria-hidden="true" />
         <span className="star-dot right-[16%] top-[22%] bg-[#2454d7]" aria-hidden="true" />
         <div className="relative mx-auto grid max-w-6xl items-center gap-16 lg:grid-cols-[1.02fr_0.98fr]">
           <Reveal className="relative z-10">
             <p className="mb-6 font-mono text-[11px] font-semibold tracking-[0.18em] text-[#667085]">DAFFODIL INTERNATIONAL ACADEMY · DHAKA, BANGLADESH</p>
-            <h1 className="max-w-3xl text-6xl text-[#17213d] sm:text-7xl lg:text-[88px]">
+            <h1 className="max-w-3xl text-5xl text-[#17213d] sm:text-7xl lg:text-[88px]">
               We turn <span className="text-[#2454d7]">curiosity</span> into code<span className="text-[#c23b91]">.</span>
             </h1>
             <p className="mt-8 max-w-md text-lg leading-8 text-[#667085]">A community of builders, thinkers, and future-shapers. Find your orbit, learn out loud, and make something that matters.</p>
@@ -54,7 +54,7 @@ export default function Home() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.15} className="relative mx-auto h-[420px] w-full max-w-[500px]">
+          <Reveal delay={0.15} className="relative mx-auto hidden h-[420px] w-full max-w-[500px] sm:block">
             <div className="orbit-line absolute left-1/2 top-1/2 h-[270px] w-[520px] -translate-x-1/2 -translate-y-1/2" aria-hidden="true" />
             <div className="orbit-line absolute left-1/2 top-1/2 h-[390px] w-[280px] -translate-x-1/2 -translate-y-1/2 rotate-[62deg]" aria-hidden="true" />
             <div className="absolute left-[8%] top-[8%] h-16 w-16 rounded-full bg-[#c23b91] shadow-[10px_12px_0_#f4c6e2] float-delayed" aria-hidden="true" />
@@ -70,7 +70,7 @@ export default function Home() {
             <div className="absolute bottom-0 left-0 bg-white px-3 py-2 font-mono text-[10px] tracking-wider text-[#667085] shadow-sm">MISSION 01 / BEGIN</div>
           </Reveal>
         </div>
-        <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 items-center gap-3 font-mono text-[10px] tracking-[0.15em] text-[#98a2b3]"><span className="h-8 w-px bg-[#c23b91]" /> SCROLL TO EXPLORE</div>
+        <div aria-hidden="true" className="absolute bottom-8 left-1/2 hidden sm:flex -translate-x-1/2 items-center gap-3 font-mono text-[10px] tracking-[0.15em] text-[#98a2b3]"><span className="h-8 w-px bg-[#c23b91]" /> SCROLL TO EXPLORE</div>
       </section>
 
       <section id="universe" className="relative bg-white px-6 py-24 sm:py-32">
@@ -92,6 +92,23 @@ export default function Home() {
             })}
           </div>
           <Reveal delay={0.15} className="mt-6 flex items-center justify-between border-t border-[#dfe4ee] pt-5"><span className="font-mono text-xs text-[#98a2b3]">MORE DESTINATIONS ARE WAITING TO BE STARTED</span><Link href="/wings" className="text-sm font-bold text-[#2454d7]">View all wings ↗</Link></Reveal>
+        </div>
+      </section>
+
+<section aria-labelledby="aws-sbg-heading" className="relative border-y border-[#dfe4ee] bg-[#f7f8fc] px-4 py-20 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <a href="https://aws.diapc.dev" className="group grid items-center gap-10 border border-[#dfe4ee] bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#ff9900] hover:shadow-[12px_14px_0_#ffe8c2] sm:p-10 md:grid-cols-[auto_1fr]">
+              <Image src="/brand/awssbg-logo.webp" alt="AWS Student Builders Group, Daffodil International Academy" width={480} height={480} sizes="(min-width: 768px) 240px, 200px" className="mx-auto h-48 w-48 object-contain sm:h-60 sm:w-60" />
+              <div>
+                <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#d97706]">Featured wing / Active</p>
+                <h2 id="aws-sbg-heading" className="mt-4 text-4xl text-[#17213d] sm:text-5xl">AWS Student Builders Group</h2>
+                <p className="mt-3 font-mono text-sm text-[#667085]">Learn · Build · Connect · Create Impact</p>
+                <p className="mt-5 max-w-xl leading-7 text-[#667085]">Our cloud wing at Daffodil International Academy, part of a global network of student-led groups connected to AWS Builder Center. Workshops, projects, and events for every skill level.</p>
+                <span className="mt-7 inline-flex items-center gap-2 bg-[#ff9900] px-5 py-3 text-sm font-bold text-[#17213d] transition-transform group-hover:-translate-y-0.5">Visit aws.diapc.dev <ArrowUpRight size={17} aria-hidden="true" /></span>
+              </div>
+            </a>
+          </Reveal>
         </div>
       </section>
 
