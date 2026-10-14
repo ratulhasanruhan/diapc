@@ -1,7 +1,8 @@
+import { pageMeta } from "@/lib/seo";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { BookOpen, ExternalLink } from "lucide-react";
 
-export const metadata = { title: "Resources" };
+export const metadata = pageMeta({ title: "Resources", description: "Curated learning resources from DIA Programming Club.", path: "/resources" });
 
 const resourceCategories = [
   {

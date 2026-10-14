@@ -3,8 +3,7 @@
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { Rocket, Shield, Handshake, ArrowRight } from "lucide-react";
 import { useState } from "react";
-import { db } from "@/lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { postForm } from "@/lib/postForm";
 
 const collabTypes = [
   "Co-host an event",
@@ -43,14 +42,10 @@ export default function CollaboratePage() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await addDoc(collection(db, "collaborations"), {
-        ...formData,
-        createdAt: serverTimestamp(),
-        status: "received",
-      });
+      await postForm("collaborate", formData, e.currentTarget as HTMLFormElement);
       setSubmitted(true);
-    } catch {
-      alert("Something went wrong. Please try again.");
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -87,6 +82,8 @@ export default function CollaboratePage() {
       <section className="max-w-3xl mx-auto px-6 pb-24">
         <ScrollReveal>
           <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-glass-light space-y-6">
+              {/* Honeypot (spam guard) */}
+              <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden"><label>Website<input type="text" name="website" tabIndex={-1} autoComplete="off" /></label></div>
             <h2 className="text-2xl font-bold">Request collaboration</h2>
             
             <div className="grid sm:grid-cols-2 gap-4">

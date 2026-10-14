@@ -1,83 +1,48 @@
-import ScrollReveal from "@/components/motion/ScrollReveal";
-import { Scale, ChevronRight } from "lucide-react";
+import PageHero from "@/components/sections/PageHero";
+import { pageMeta } from "@/lib/seo";
+import { site } from "@/content/site";
+import { articles, preamble, constitutionMeta } from "@/content/constitution";
 
-export const metadata = { title: "Constitution" };
-
-const articles = [
-  { num: 1, title: "Name and Nature", summary: "Official name, non-profit and non-political nature, tagline, website." },
-  { num: 2, title: "Aims and Objectives", summary: "Promote programming, organize events, prepare for industry, represent DIA." },
-  { num: 3, title: "Membership", summary: "General, Associate, Alumni, and Honorary membership types and rights." },
-  { num: 4, title: "Governance Structure", summary: "Faculty Advisor, Executive Council positions, Department Leads." },
-  { num: 5, title: "Wings", summary: "Technical sub-communities, founding wing (AWS), creating new wings." },
-  { num: 6, title: "Elections and Tenure", summary: "Terms, eligibility, Election Commission, voting procedures." },
-  { num: 7, title: "Meetings and Decisions", summary: "Meeting frequency, quorum, voting rules, minutes." },
-  { num: 8, title: "Finance", summary: "Non-profit funds, sources, approvals, transparency." },
-  { num: 9, title: "Collaborations and Partnerships", summary: "Partnership rules, credit, MoU guidelines." },
-  { num: 10, title: "Code of Conduct and Discipline", summary: "Respect, anti-harassment, complaint process." },
-  { num: 11, title: "Digital Assets and IP", summary: "Club assets, credential handover, member IP rights." },
-  { num: 12, title: "Amendments", summary: "Proposal, circulation, two-thirds vote, DIA approval." },
-  { num: 13, title: "Dissolution", summary: "Three-quarters vote, asset distribution." },
-];
+export const metadata = pageMeta({
+  title: "Constitution",
+  description: "Constitution of DIA Programming Club - DPC (founded 21 June 2015): name, aims, membership, structure, wings, elections, conduct and amendments.",
+  path: "/constitution"
+});
 
 export default function ConstitutionPage() {
   return (
-    <main className="pt-20">
-      <section className="py-24 px-6 text-center relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-blue/5 to-transparent pointer-events-none" />
-        <div className="relative z-10 max-w-3xl mx-auto">
-          <ScrollReveal>
-            <Scale className="w-12 h-12 text-brand-blue mx-auto mb-4" />
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">Constitution</h1>
-            <p className="text-xl text-text-secondary leading-relaxed mb-4">
-              The governing document of the DIA Programming Club.
-            </p>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-warning/10 text-warning text-xs font-mono rounded-full border border-warning/30">
-              DRAFT v0.1 — Subject to approval by DIA authority
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      <section className="max-w-4xl mx-auto px-6 pb-24">
-        {/* Preamble */}
-        <ScrollReveal>
-          <div className="p-8 rounded-2xl bg-glass-light mb-12">
-            <h2 className="text-xl font-bold mb-4 text-brand-blue">Preamble</h2>
-            <p className="text-text-secondary leading-relaxed">
-              We, the students of Daffodil International Academy, establish the DIA Programming
-              Club to build a community where students learn to code, build real things, compete,
-              and grow together. We commit to curiosity, collaboration, integrity, and open
-              learning for every student regardless of program, year, or skill level.
-            </p>
-          </div>
-        </ScrollReveal>
-
-        {/* Article index */}
-        <div className="space-y-3">
+    <main>
+      <PageHero eyebrow="Governance" title="Constitution" intro={`The governing document of ${site.fullName}. ${site.tagline}.`}>
+        <p className="mt-3 font-mono text-xs text-muted">Founded {site.foundingDateLabel} · Last updated {constitutionMeta.lastUpdated}</p>
+      </PageHero>
+      <div className="section grid gap-12 lg:grid-cols-[220px_1fr]">
+        <nav aria-label="Articles" className="lg:sticky lg:top-28 lg:self-start">
+          <p className="eyebrow mb-3">Contents</p>
+          <ol className="space-y-1.5 text-sm">
+            <li><a href="#preamble" className="text-muted hover:text-brand-blue">Preamble</a></li>
+            {articles.map((a, i) => (
+              <li key={a.id}><a href={`#${a.id}`} className="text-muted hover:text-brand-blue"><span className="font-mono text-xs text-brand-blue">{i + 1}.</span> {a.title}</a></li>
+            ))}
+          </ol>
+        </nav>
+        <article className="max-w-3xl">
+          <section id="preamble" className="card scroll-mt-28 p-7">
+            <h2 className="text-2xl text-ink">Preamble</h2>
+            <p className="mt-3 leading-7 text-muted">{preamble}</p>
+          </section>
           {articles.map((a, i) => (
-            <ScrollReveal key={a.num} delay={i * 0.04}>
-              <div className="p-5 rounded-xl bg-glass-light hover:bg-white/[0.06] transition-colors group cursor-pointer flex items-start gap-4">
-                <span className="font-mono text-sm text-brand-blue font-bold shrink-0 mt-0.5">
-                  Art. {a.num}
-                </span>
-                <div className="flex-1">
-                  <h3 className="font-bold mb-1 group-hover:text-brand-blue transition-colors">
-                    {a.title}
-                  </h3>
-                  <p className="text-sm text-text-muted">{a.summary}</p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-text-muted mt-1 shrink-0" />
-              </div>
-            </ScrollReveal>
+            <section key={a.id} id={a.id} className="scroll-mt-28 border-b border-line py-9">
+              <h2 className="text-2xl text-ink"><span className="font-mono text-base text-brand-blue">Article {i + 1}.</span> {a.title}</h2>
+              <ol className="mt-4 space-y-3">
+                {a.clauses.map((c, j) => (
+                  <li key={j} className="flex gap-3 leading-7 text-muted"><span className="shrink-0 font-mono text-xs leading-7 text-[#98a2b3]">{i + 1}.{j + 1}</span><span>{c}</span></li>
+                ))}
+              </ol>
+            </section>
           ))}
-        </div>
-
-        <ScrollReveal className="mt-12 text-center">
-          <p className="text-xs text-text-muted font-mono">
-            Full text available in content/constitution.mdx. PDF download pending ratification.
-          </p>
-        </ScrollReveal>
-      </section>
+          <p className="mt-10 font-mono text-xs text-muted">Questions or suggestions: <a className="text-brand-blue" href={`mailto:${site.email}?subject=Constitution%20feedback`}>{site.email}</a></p>
+        </article>
+      </div>
     </main>
   );
 }

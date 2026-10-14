@@ -177,3 +177,62 @@ h1, h2, h3, h4, h5, h6 {
 .orbital-star-one { left: 22%; top: 18%; }
 .orbital-star-two { right: 28%; top: 76%; }
 .orbital-star-three { right: 7%; top: 58%; }
+
+:focus-visible { outline: 2px solid #2454d7; outline-offset: 2px; }
+
+/* Scroll reveal (progressive enhancement: content visible without JS) */
+.reveal { transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+.js .reveal:not(.is-visible) { opacity: 0; transform: translateY(18px); }
+@media (prefers-reduced-motion: reduce) { .js .reveal:not(.is-visible) { opacity: 1; transform: none; } }
+
+@layer components {
+  .section { position: relative; z-index: 1; margin-inline: auto; max-width: 72rem; padding: 5.5rem 1.5rem; }
+  .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--color-brand-magenta); }
+  .card { background: rgba(255,255,255,.88); border: 1px solid var(--color-line); box-shadow: 0 1px 0 rgba(23,33,61,.03), 0 18px 40px -28px rgba(23,33,61,.25); transition: border-color .2s, transform .2s, box-shadow .2s; }
+  .card-hover:hover { border-color: #b7c3e2; transform: translateY(-2px); box-shadow: 0 24px 50px -28px rgba(36,84,215,.35); }
+  .badge-sample { display: inline-block; border: 1px dashed #f59e0b; background: #fffbeb; color: #b45309; font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; padding: 2px 6px; }
+  .btn-primary { display: inline-flex; align-items: center; gap: .5rem; background: var(--color-brand-blue); color: #fff; font-weight: 600; font-size: .875rem; padding: .8rem 1.25rem; transition: transform .2s, background .2s; }
+  .btn-primary:hover { transform: translateY(-2px); background: #1d46b8; }
+  .btn-ghost { display: inline-flex; align-items: center; gap: .5rem; border: 1px solid var(--color-line); background: rgba(255,255,255,.8); color: var(--color-ink); font-weight: 600; font-size: .875rem; padding: .8rem 1.25rem; transition: border-color .2s; }
+  .btn-ghost:hover { border-color: var(--color-brand-blue); }
+}
+
+/* Long lists below the fold: let the browser skip layout/paint until needed */
+.cv-auto { content-visibility: auto; contain-intrinsic-size: auto 800px; }
+
+/* ---------- Space decorations: transform/opacity-only CSS animations ----------
+   - run only while their [data-space] layer is on screen (.is-playing, set by MotionGate)
+   - no animation at all for prefers-reduced-motion */
+.space-layer .anim, .space-layer .bob, .space-layer .twinkle, .space-layer .orbit-spin { animation-play-state: paused; will-change: transform; }
+.space-layer.is-playing .anim, .space-layer.is-playing .bob, .space-layer.is-playing .twinkle, .space-layer.is-playing .orbit-spin { animation-play-state: running; }
+html:not(.js) .space-layer * { animation-play-state: running; }
+
+.bob { animation: bob 6s ease-in-out infinite; }
+.bob-slow { animation-duration: 9s; }
+.twinkle { animation: twinkle 3.6s ease-in-out infinite; will-change: opacity; }
+.delay-2 { animation-delay: -1.2s; } .delay-3 { animation-delay: -2.4s; }
+.drift-x { left: 0; animation: drift-x 38s linear infinite; }
+.drift-x-rev { left: 0; animation: drift-x-rev 46s linear infinite; }
+.drift-x-slow { left: 0; animation: drift-x 60s linear infinite; animation-delay: -20s; }
+.drift-sat { animation: drift-sat 14s ease-in-out infinite; }
+.orbit-spin { animation: orbit-spin 28s linear infinite; }
+.orbit-spin > * { animation: counter-spin 28s linear infinite; animation-play-state: inherit; }
+.drift-float { animation: drift-float 11s ease-in-out infinite; }
+
+@keyframes bob { 0%,100% { transform: translate3d(0,0,0) rotate(-6deg); } 50% { transform: translate3d(0,-10px,0) rotate(6deg); } }
+@keyframes twinkle { 0%,100% { opacity: .25; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.2); } }
+@keyframes drift-x { from { transform: translate3d(-120px,0,0) rotate(-8deg); } to { transform: translate3d(calc(100vw + 40px),0,0) rotate(18deg); } }
+@keyframes drift-x-rev { from { transform: translate3d(calc(100vw + 40px),0,0) rotate(12deg); } to { transform: translate3d(-120px,0,0) rotate(-14deg); } }
+@keyframes drift-sat { 0%,100% { transform: translate3d(0,0,0) rotate(-8deg); } 50% { transform: translate3d(40px,-8px,0) rotate(6deg); } }
+@keyframes orbit-spin { to { transform: rotate(360deg); } }
+@keyframes counter-spin { to { transform: rotate(-360deg); } }
+@keyframes drift-float { 0%,100% { transform: translate3d(0,0,0) rotate(-4deg); } 33% { transform: translate3d(14px,-18px,0) rotate(5deg); } 66% { transform: translate3d(-10px,-6px,0) rotate(-2deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bob, .twinkle, .drift-sat, .orbit-spin, .orbit-spin > *, .drift-float, .float-slow, .float-delayed, .star-dot { animation: none !important; }
+  .drift-x, .drift-x-rev, .drift-x-slow { animation: none !important; left: 38%; }
+}
+
+@keyframes live-ping { 75%, 100% { transform: scale(2.2); opacity: 0; } }
+.live-ping { animation: live-ping 1.6s cubic-bezier(0,0,.2,1) infinite; }
+@media (prefers-reduced-motion: reduce) { .live-ping { animation: none; } }

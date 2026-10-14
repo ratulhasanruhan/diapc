@@ -1,8 +1,9 @@
+import { pageMeta } from "@/lib/seo";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import Link from "next/link";
 import { Cloud, Code2, Brain, Globe2, Lock, Beaker, Palette, Megaphone, Users, FileText } from "lucide-react";
 
-export const metadata = { title: "Wings" };
+export const metadata = pageMeta({ title: "Wings", description: "DPC wings: focused sub-communities, including the AWS Student Builders Group.", path: "/wings" });
 
 const techWings = [
   { name: "AWS Student Builder Group", slug: "aws", status: "active", accent: "#FF9900", icon: Cloud, desc: "Cloud computing workshops, certification study circles, and hands-on build sessions." },
@@ -48,7 +49,7 @@ export default function WingsPage() {
           {techWings.map((wing, i) => (
             <ScrollReveal key={wing.slug} delay={i * 0.06}>
               <Link
-                href={wing.status === "active" ? "/aws" : `/join?wing=${wing.slug}`}
+                href={wing.status === "active" ? "https://aws.diapc.dev" : `/join?wing=${wing.slug}`}
                 className="block h-full p-6 rounded-xl border transition-all duration-300 hover:scale-[1.02] group"
                 style={{
                   borderColor: wing.status === "active" ? `${wing.accent}40` : "var(--color-border)",

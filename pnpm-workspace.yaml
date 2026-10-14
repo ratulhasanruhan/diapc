@@ -2,4 +2,4 @@ allowBuilds:
   '@firebase/util': true
   protobufjs: true
   sharp: false
-  unrs-resolver: false
+  unrs-resolver: true

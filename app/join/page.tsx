@@ -3,8 +3,7 @@
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { Rocket, ArrowRight, CheckCircle } from "lucide-react";
 import { useState } from "react";
-import { db } from "@/lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { postForm } from "@/lib/postForm";
 
 const wings = [
   { id: "aws", label: "AWS Student Builders" },
@@ -51,14 +50,10 @@ export default function JoinPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await addDoc(collection(db, "applications"), {
-        ...formData,
-        createdAt: serverTimestamp(),
-        status: "pending",
-      });
+      await postForm("join", formData, e.currentTarget as HTMLFormElement);
       setSubmitted(true);
-    } catch {
-      alert("Something went wrong. Please try again.");
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -117,6 +112,8 @@ export default function JoinPage() {
           <div className="lg:col-span-3">
             <ScrollReveal>
               <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-glass-light space-y-6">
+              {/* Honeypot (spam guard) */}
+              <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden"><label>Website<input type="text" name="website" tabIndex={-1} autoComplete="off" /></label></div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-mono text-text-muted mb-2 uppercase tracking-wider">Full Name *</label>

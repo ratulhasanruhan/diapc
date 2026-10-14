@@ -3,8 +3,7 @@
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { Mail, MapPin, MessageCircle, ArrowRight, ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { db } from "@/lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { postForm } from "@/lib/postForm";
 
 const faqs = [
   { q: "Who can join DPC?", a: "Any currently enrolled student at Daffodil International Academy, regardless of program, year, or experience level." },
@@ -24,10 +23,10 @@ export default function ContactPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await addDoc(collection(db, "contacts"), { ...formData, createdAt: serverTimestamp() });
+      await postForm("contact", formData, e.currentTarget as HTMLFormElement);
       setSubmitted(true);
-    } catch {
-      alert("Something went wrong. Please try again.");
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -64,7 +63,14 @@ export default function ContactPage() {
                   <Mail className="w-5 h-5 text-brand-blue mt-0.5 shrink-0" />
                   <div>
                     <h3 className="font-bold text-sm">Email</h3>
-                    <p className="text-sm text-text-muted">TODO: Official email to be configured</p>
+                    <a href="mailto:hi@diapc.dev" className="text-sm font-semibold text-brand-blue hover:underline">hi@diapc.dev</a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-5 rounded-xl bg-glass-light">
+                  <MessageCircle className="w-5 h-5 text-brand-blue mt-0.5 shrink-0" />
+                  <div>
+                    <h3 className="font-bold text-sm">Facebook</h3>
+                    <a href="https://www.facebook.com/diadpc" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-brand-blue hover:underline">facebook.com/diadpc</a>
                   </div>
                 </div>
               </div>
@@ -104,6 +110,8 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-glass-light space-y-6">
+              {/* Honeypot (spam guard) */}
+              <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden"><label>Website<input type="text" name="website" tabIndex={-1} autoComplete="off" /></label></div>
                 <h2 className="text-2xl font-bold">Send a message</h2>
                 <div>
                   <label className="block text-xs font-mono text-text-muted mb-2 uppercase tracking-wider">Name *</label>
