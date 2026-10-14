@@ -199,3 +199,36 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Long lists below the fold: let the browser skip layout/paint until needed */
 .cv-auto { content-visibility: auto; contain-intrinsic-size: auto 800px; }
+
+/* ---------- Space decorations: transform/opacity-only CSS animations ----------
+   - run only while their [data-space] layer is on screen (.is-playing, set by MotionGate)
+   - no animation at all for prefers-reduced-motion */
+.space-layer .anim, .space-layer .bob, .space-layer .twinkle, .space-layer .orbit-spin { animation-play-state: paused; will-change: transform; }
+.space-layer.is-playing .anim, .space-layer.is-playing .bob, .space-layer.is-playing .twinkle, .space-layer.is-playing .orbit-spin { animation-play-state: running; }
+html:not(.js) .space-layer * { animation-play-state: running; }
+
+.bob { animation: bob 6s ease-in-out infinite; }
+.bob-slow { animation-duration: 9s; }
+.twinkle { animation: twinkle 3.6s ease-in-out infinite; will-change: opacity; }
+.delay-2 { animation-delay: -1.2s; } .delay-3 { animation-delay: -2.4s; }
+.drift-x { left: 0; animation: drift-x 38s linear infinite; }
+.drift-x-rev { left: 0; animation: drift-x-rev 46s linear infinite; }
+.drift-x-slow { left: 0; animation: drift-x 60s linear infinite; animation-delay: -20s; }
+.drift-sat { animation: drift-sat 14s ease-in-out infinite; }
+.orbit-spin { animation: orbit-spin 28s linear infinite; }
+.orbit-spin > * { animation: counter-spin 28s linear infinite; animation-play-state: inherit; }
+.drift-float { animation: drift-float 11s ease-in-out infinite; }
+
+@keyframes bob { 0%,100% { transform: translate3d(0,0,0) rotate(-6deg); } 50% { transform: translate3d(0,-10px,0) rotate(6deg); } }
+@keyframes twinkle { 0%,100% { opacity: .25; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.2); } }
+@keyframes drift-x { from { transform: translate3d(-120px,0,0) rotate(-8deg); } to { transform: translate3d(calc(100vw + 40px),0,0) rotate(18deg); } }
+@keyframes drift-x-rev { from { transform: translate3d(calc(100vw + 40px),0,0) rotate(12deg); } to { transform: translate3d(-120px,0,0) rotate(-14deg); } }
+@keyframes drift-sat { 0%,100% { transform: translate3d(0,0,0) rotate(-8deg); } 50% { transform: translate3d(40px,-8px,0) rotate(6deg); } }
+@keyframes orbit-spin { to { transform: rotate(360deg); } }
+@keyframes counter-spin { to { transform: rotate(-360deg); } }
+@keyframes drift-float { 0%,100% { transform: translate3d(0,0,0) rotate(-4deg); } 33% { transform: translate3d(14px,-18px,0) rotate(5deg); } 66% { transform: translate3d(-10px,-6px,0) rotate(-2deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bob, .twinkle, .drift-sat, .orbit-spin, .orbit-spin > *, .drift-float, .float-slow, .float-delayed, .star-dot { animation: none !important; }
+  .drift-x, .drift-x-rev, .drift-x-slow { animation: none !important; left: 70%; }
+}

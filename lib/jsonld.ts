@@ -8,6 +8,8 @@ export const organizationJsonLd = {
   name: site.name,
   alternateName: [site.shortName, site.fullName],
   slogan: site.tagline,
+  foundingDate: site.foundingDate,
+  foundingLocation: { "@type": "Place", name: `${site.institution}, ${site.location}` },
   description: site.description,
   url: site.url,
   logo: `${site.url}/brand/classic_logo.png`,

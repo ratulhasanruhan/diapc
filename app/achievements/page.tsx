@@ -14,8 +14,9 @@ export default function AchievementsPage() {
         {achievements.length ? (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{achievements.map((a) => <ScrollReveal key={a.id}><AchievementCard a={a} /></ScrollReveal>)}</div>
         ) : (
-          <EmptyState title="The trophy shelf is waiting" body="Achievements will be listed here as members compete and win." />
+          <EmptyState title="The trophy shelf is waiting" body="Achievements will be listed here as members compete and win." action={{ label: "Submit an achievement", href: "/submit/achievement" }} />
         )}
+        <p className="mt-10 text-center"><a href="/submit/achievement" className="btn-primary">Submit an achievement</a></p>
       </section>
     </main>
   );

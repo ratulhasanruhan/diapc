@@ -13,6 +13,9 @@ import { wings } from "@/content/wings";
 import { getEvents } from "@/lib/events";
 import { pageMeta, JsonLd } from "@/lib/seo";
 import { eventJsonLd } from "@/lib/jsonld";
+import { MiniAstronaut, Satellite, RingedPlanet } from "@/components/space/Art";
+import SpaceDivider from "@/components/space/SpaceDivider";
+import MotionGate from "@/components/space/MotionGate";
 
 export const metadata = pageMeta({ description: site.description, path: "/" });
 
@@ -29,36 +32,54 @@ export default async function Home() {
 
   return (
     <main className="overflow-hidden">
+      <MotionGate />
       <JsonLd data={upcoming.filter((e) => !e.sample).slice(0, 5).map(eventJsonLd)} />
 
       {/* HERO */}
-      <section className="relative bg-paper px-4 pb-20 pt-32 sm:px-6 sm:pb-28 sm:pt-40">
-        <div className="paper-grid absolute inset-0 opacity-60" aria-hidden="true" />
-        <span className="star-dot left-[11%] top-[27%]" aria-hidden="true" />
-        <span className="star-dot right-[16%] top-[22%] bg-[#2454d7]" aria-hidden="true" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
+      <section className="relative overflow-hidden bg-paper px-4 pb-16 pt-28 sm:px-6 sm:pb-24 sm:pt-40">
+        <div className="paper-grid absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_at_center,#000_40%,transparent_80%)]" aria-hidden="true" />
+        <div className="absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,#dfe6ff_0%,transparent_65%)]" aria-hidden="true" />
+        <div className="absolute -bottom-48 -left-40 h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle,#fbe3f1_0%,transparent_65%)]" aria-hidden="true" />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
           <div className="relative z-10">
-            <p className="mb-6 font-mono text-[11px] font-semibold tracking-[0.18em] text-muted">{site.institution.toUpperCase()} · DHAKA</p>
-            <h1 className="max-w-3xl text-5xl text-ink sm:text-7xl lg:text-[84px]">
-              We turn <span className="text-brand-blue">curiosity</span> into code<span className="text-brand-magenta">.</span>
+            <p className="inline-flex flex-wrap items-center gap-2 border border-line bg-white/80 px-3 py-1.5 font-mono text-[10px] font-semibold tracking-[0.16em] text-muted shadow-sm sm:text-[11px]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#16845b]" aria-hidden="true" /> EST. {site.foundingDateLabel.toUpperCase()} · {site.institution.toUpperCase()}
+            </p>
+            <h1 className="mt-7 max-w-3xl text-[44px] leading-[1.02] text-ink sm:text-7xl lg:text-[84px]">
+              We turn <span className="text-gradient">curiosity</span> into code<span className="text-brand-magenta">.</span>
             </h1>
-            <p className="mt-6 font-mono text-sm font-semibold tracking-[0.3em] text-brand-magenta">{site.tagline}</p>
-            <p className="mt-5 max-w-md text-lg leading-8 text-muted">{site.fullName} is the student-led programming and technology community at {site.institution}.</p>
+            <p className="mt-6 font-mono text-xs font-semibold tracking-[0.32em] text-brand-magenta sm:text-sm">{site.tagline}</p>
+            <p className="mt-5 max-w-md text-lg leading-8 text-muted">{site.fullName} is the student-led programming and technology community at {site.institution}, Dhaka.</p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Link href="/join" className="btn-primary">Join DPC <ArrowUpRight size={17} aria-hidden="true" /></Link>
               <Link href="#events" className="btn-ghost"><CalendarDays size={16} aria-hidden="true" /> Upcoming events</Link>
             </div>
+            <dl className="mt-10 grid max-w-md grid-cols-3 divide-x divide-line border-y border-line py-4 text-center">
+              <div><dt className="font-mono text-[10px] uppercase tracking-widest text-muted">Since</dt><dd className="mt-1 text-lg font-bold sm:text-2xl text-ink">2015</dd></div>
+              <div><dt className="font-mono text-[10px] uppercase tracking-widest text-muted">Active wing</dt><dd className="mt-1 text-lg font-bold sm:text-2xl text-[#d97706]">AWS SBG</dd></div>
+              <div><dt className="font-mono text-[10px] uppercase tracking-widest text-muted">Open to</dt><dd className="mt-1 text-lg font-bold sm:text-2xl text-ink">All levels</dd></div>
+            </dl>
           </div>
-          <div className="relative mx-auto hidden h-[420px] w-full max-w-[480px] sm:block" aria-hidden="true">
-            <div className="orbit-line absolute left-1/2 top-1/2 h-[260px] w-[500px] -translate-x-1/2 -translate-y-1/2" />
-            <div className="orbit-line absolute left-1/2 top-1/2 h-[380px] w-[270px] -translate-x-1/2 -translate-y-1/2 rotate-[62deg]" />
-            <div className="float-delayed absolute left-[8%] top-[8%] h-16 w-16 rounded-full bg-brand-magenta shadow-[10px_12px_0_#f4c6e2]" />
-            <div className="absolute bottom-[13%] right-[6%] h-7 w-7 rounded-full bg-brand-blue" />
-            <div className="float-slow relative z-10 mx-auto h-full w-[290px] overflow-hidden rounded-[48%_48%_42%_42%] border-[10px] border-white bg-[#e8edff] shadow-[20px_24px_0_#d8def2]">
+
+          <div data-space className="space-layer relative mx-auto h-[340px] w-full max-w-[480px] sm:h-[460px]" aria-hidden="true">
+            <div className="orbit-line absolute left-1/2 top-1/2 h-[220px] w-[400px] -translate-x-1/2 -translate-y-1/2 sm:h-[270px] sm:w-[500px]" />
+            <div className="orbit-line absolute left-1/2 top-1/2 h-[320px] w-[230px] -translate-x-1/2 -translate-y-1/2 rotate-[62deg] sm:h-[400px] sm:w-[280px]" />
+            <div className="orbit-spin absolute left-1/2 top-1/2 -ml-[170px] -mt-[170px] h-[340px] w-[340px] sm:-ml-[215px] sm:-mt-[215px] sm:h-[430px] sm:w-[430px]">
+              <Satellite className="absolute left-1/2 top-0 w-16 -translate-x-1/2 sm:w-20" />
+            </div>
+            <span className="twinkle absolute left-[6%] top-[40%] h-1.5 w-1.5 rounded-full bg-brand-blue" />
+            <span className="twinkle delay-2 absolute right-[4%] top-[14%] h-2 w-2 rounded-full bg-[#f59e0b]" />
+            <span className="twinkle delay-3 absolute bottom-[8%] left-[40%] h-1.5 w-1.5 rounded-full bg-brand-magenta" />
+            <div className="bob absolute left-[2%] top-[4%] h-12 w-12 rounded-full bg-brand-magenta shadow-[8px_10px_0_#f4c6e2] sm:h-16 sm:w-16" />
+            <RingedPlanet className="bob bob-slow absolute bottom-[4%] right-[0%] w-24 sm:w-28" color="#c7d2fe" />
+            <div className="anim drift-float relative z-10 mx-auto h-full w-[230px] overflow-hidden rounded-[48%_48%_42%_42%] border-[10px] border-white bg-[linear-gradient(180deg,#e8edff,#f5f0ff)] shadow-[18px_22px_0_#d8def2] sm:w-[290px]">
               <AstronautVector className="relative z-10 h-full w-full p-5" />
               <div className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-white p-2 shadow-lg"><Image src="/brand/classic_logo.png" alt="" width={32} height={32} /></div>
             </div>
-            <div className="absolute bottom-0 left-0 bg-white px-3 py-2 font-mono text-[10px] tracking-wider text-muted shadow-sm">{site.motto}</div>
+            <div className="anim drift-float absolute -right-2 top-[18%] z-20 w-14 [animation-delay:-4s] sm:right-[-4%] sm:w-20">
+              <MiniAstronaut className="bob h-auto w-full" visor="#8b5cf6" accent="#2454d7" />
+            </div>
+            <div className="absolute bottom-0 left-0 z-20 bg-white px-3 py-2 font-mono text-[10px] tracking-wider text-muted shadow-sm">{site.motto}</div>
           </div>
         </div>
       </section>
@@ -80,6 +101,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <SpaceDivider variant={0} />
 
       {/* COLLABORATIONS */}
       <section id="collaborations" className="cv-auto">
@@ -117,16 +140,19 @@ export default async function Home() {
         </div>
       </section>
 
+      <SpaceDivider variant={1} />
+
       {/* ACHIEVEMENTS */}
       <section id="achievements" className="cv-auto border-y border-line bg-white">
         <div className="section">
           <SectionHeading index="05" eyebrow="Achievements" title="Wins worth celebrating." action={{ label: "All achievements", href: "/achievements" }} />
+          <p className="-mt-6 mb-8 text-sm text-muted">Won something as a DPC member? <Link href="/submit/achievement" className="font-semibold text-brand-blue">Submit an achievement →</Link></p>
           {achievements.length ? (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {achievements.slice(0, 3).map((a, i) => <ScrollReveal key={a.id} delay={i * 0.06}><AchievementCard a={a} /></ScrollReveal>)}
             </div>
           ) : (
-            <EmptyState title="The trophy shelf is waiting" body="Contest results and recognitions earned by DPC members will be listed here." />
+            <EmptyState title="The trophy shelf is waiting" body="Contest results and recognitions earned by DPC members will be listed here." action={{ label: "Submit an achievement", href: "/submit/achievement" }} />
           )}
         </div>
       </section>
@@ -135,12 +161,13 @@ export default async function Home() {
       <section id="projects" className="cv-auto">
         <div className="section">
           <SectionHeading index="06" eyebrow="Projects" title="Things our members ship." action={{ label: "All projects", href: "/projects" }} />
+          <p className="-mt-6 mb-8 text-sm text-muted">Built something? <Link href="/submit/project" className="font-semibold text-brand-blue">Submit a project →</Link></p>
           {featuredProjects.length ? (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {featuredProjects.map((p, i) => <ScrollReveal key={p.id} delay={i * 0.06}><ProjectCard p={p} /></ScrollReveal>)}
             </div>
           ) : (
-            <EmptyState title="First projects are in the works" body="Built something with DPC? Tell us and we'll feature it." action={{ label: "Submit a project", href: `mailto:${site.email}?subject=Project%20submission` }} />
+            <EmptyState title="First projects are in the works" body="Built something with DPC? Tell us and we'll feature it." action={{ label: "Submit a project", href: "/submit/project" }} />
           )}
         </div>
       </section>
@@ -155,6 +182,8 @@ export default async function Home() {
         </div>
       </section>
 
+      <SpaceDivider variant={2} />
+
       {/* WINGS */}
       <section id="wings" className="cv-auto">
         <div className="section">
@@ -166,7 +195,11 @@ export default async function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="bg-brand-magenta text-white">
+      <section id="contact" data-space className="space-layer relative overflow-hidden bg-[linear-gradient(135deg,#c23b91,#8b3fb8_60%,#2454d7)] text-white">
+        <span className="twinkle absolute left-[12%] top-[18%] h-1.5 w-1.5 rounded-full bg-white" aria-hidden="true" />
+        <span className="twinkle delay-2 absolute right-[30%] top-[12%] h-1 w-1 rounded-full bg-white" aria-hidden="true" />
+        <span className="twinkle delay-3 absolute bottom-[14%] left-[44%] h-1.5 w-1.5 rounded-full bg-[#ffd27a]" aria-hidden="true" />
+        <div className="anim drift-float pointer-events-none absolute right-[4%] top-8 hidden w-24 opacity-90 md:block lg:right-[38%]" aria-hidden="true"><MiniAstronaut className="bob h-auto w-full" visor="#17213d" accent="#ffd27a" /></div>
         <div className="section grid items-end gap-10 md:grid-cols-[1fr_auto]">
           <ScrollReveal>
             <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#f8d9ed]">09 / Contact</p>

@@ -7,11 +7,10 @@ import { ArrowRight, Target, Eye, Heart, Users } from "lucide-react";
 export const metadata = pageMeta({ title: "About DPC", description: "What DIA Programming Club is, why it exists and how it is run.", path: "/about" });
 
 const milestones = [
-  { year: "2026", event: "DPC founded at Daffodil International Academy", status: "verified" },
-  { year: "2026", event: "AWS Student Builder Group established as founding wing", status: "verified" },
-  { year: "2026", event: "Constitution drafted (v0.1)", status: "verified" },
-  { year: "TBD", event: "First inter-university contest", status: "planned" },
-  { year: "TBD", event: "First hackathon hosted", status: "planned" },
+  { year: "21 Jun 2015", event: "DIA Programming Club (DPC) founded at Daffodil International Academy, Dhaka", status: "done" },
+  { year: "Today", event: "AWS Student Builders Group runs as a DPC wing (aws.diapc.dev)", status: "done" },
+  { year: "Today", event: "Constitution draft published for committee review", status: "done" },
+  { year: "Next", event: "More wings, contests and hackathons", status: "planned" },
 ];
 
 export default function AboutPage() {
@@ -27,9 +26,9 @@ export default function AboutPage() {
               About <span className="text-gradient">DPC</span>
             </h1>
             <p className="text-xl text-text-secondary leading-relaxed">
-              DIA Programming Club is a student-led, non-profit, non-political club at Daffodil
-              International Academy, Dhaka. We exist to promote programming, software development,
-              and emerging technology among students of all skill levels.
+              DIA Programming Club - DPC is a student-led, non-profit, non-political club at Daffodil
+              International Academy, Dhaka, founded on 21 June 2015. It brings together DIA students who want to code,
+              create and connect, at every skill level.
             </p>
           </ScrollReveal>
         </div>
@@ -78,7 +77,8 @@ export default function AboutPage() {
       {/* Timeline */}
       <SectionWrapper label="Timeline" number="02" className="border-t border-border">
         <ScrollReveal>
-          <h2 className="text-3xl font-bold mb-12">Our Journey</h2>
+          <h2 className="text-3xl font-bold mb-4">Our Journey</h2>
+          <p className="text-text-secondary max-w-2xl mb-12 leading-relaxed">DPC was founded at Daffodil International Academy on 21 June 2015. Today it is organized into wings, starting with the AWS Student Builders Group, under a draft <Link href="/constitution" className="text-brand-blue underline">constitution</Link>. Its motto stays the same: CODE · CREATE · CONNECT.</p>
         </ScrollReveal>
         <div className="relative">
           <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border" />
