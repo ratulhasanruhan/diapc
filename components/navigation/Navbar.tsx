@@ -14,7 +14,7 @@ const navLinks = [
 
 const wingLinks = [
   { label: "All wings", href: "/wings" },
-  { label: "AWS Student Builders", href: "/aws" },
+  { label: "AWS Student Builders", href: "https://aws.diapc.dev" },
   { label: "Competitive Programming", href: "/join?wing=competitive-programming" },
   { label: "AI & Data Science", href: "/join?wing=ai-ml" },
   { label: "Web & Mobile Dev", href: "/join?wing=web-app-dev" },

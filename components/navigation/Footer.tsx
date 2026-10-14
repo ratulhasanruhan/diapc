@@ -24,7 +24,7 @@ const sections = [
     title: "Organization",
     links: [
       { label: "Wings", href: "/wings" },
-      { label: "AWS wing", href: "/aws" },
+      { label: "AWS wing", href: "https://aws.diapc.dev" },
       { label: "Constitution", href: "/constitution" },
       { label: "Contact", href: "/contact" },
     ],

@@ -25,6 +25,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://diapc.dev"),
   title: {
     default: "DIA Programming Club — = new instance of future();",
     template: "%s | DPC",
@@ -43,7 +44,19 @@ export const metadata: Metadata = {
     title: "DIA Programming Club",
     description: "= new instance of future();",
     type: "website",
+    url: "https://diapc.dev",
+    siteName: "DIA Programming Club",
+    images: [{ url: "/brand/cover.png", width: 1200, height: 630, alt: "DIA Programming Club" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "DIA Programming Club",
+    description: "= new instance of future();",
+    images: ["/brand/cover.png"]
+  },
+  alternates: {
+    canonical: "https://diapc.dev"
+  }
 };
 
 export default function RootLayout({

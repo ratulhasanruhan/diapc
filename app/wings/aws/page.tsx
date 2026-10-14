@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-
 export default function LegacyAWSRoute() {
-  redirect("/aws");
+  redirect("https://aws.diapc.dev");
 }

@@ -2,13 +2,13 @@ import { initializeApp, getApps } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC4_VAWEOEFGehwtOj7DUZU3zt_VNcMa74",
-  authDomain: "diadpc.firebaseapp.com",
-  projectId: "diadpc",
-  storageBucket: "diadpc.firebasestorage.app",
-  messagingSenderId: "431368218029",
-  appId: "1:431368218029:web:93f1c531cf89276938ad24",
-  measurementId: "G-0H8V0WJ5W0",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "",
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "",
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "",
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "",
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];

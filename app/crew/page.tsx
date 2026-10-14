@@ -1,11 +1,8 @@
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { Users, UserCog } from "lucide-react";
+import { executiveCouncil } from "@/content/committee";
 
 export const metadata = { title: "Crew" };
-
-const executiveCouncil = [
-  { name: "Ratul Hasan Ruhan", role: "Founding Convener", extra: "AWS Student Builder Group Leader at DIA", initials: "RH" },
-];
 
 export default function CrewPage() {
   return (

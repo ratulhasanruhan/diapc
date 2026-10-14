@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --color-aws-orange: #ff9900;
+  --color-ink: #0b1220;
+  --color-muted: #667085;
+  --color-paper: #ffffff;
+  --color-line: #e5e7eb;
+  --color-border: #e5e7eb;
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-space: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root {
+  color-scheme: light;
+  --paper: var(--color-paper);
+  --ink: var(--color-ink);
+}
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: #ffe0ae; color: var(--ink); }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-space);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.font-mono { font-family: var(--font-mono); }
+
+.spotlight-card {
+  position: relative;
+  border: 1px solid var(--color-border);
+  background: #fff;
+  overflow: hidden;
+}
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: -200%;
+  background: radial-gradient(200px 200px at var(--x, 50%) var(--y, 50%), rgba(255,153,0,0.08), transparent 60%);
+  transition: opacity .2s ease;
+  opacity: 0;
+}
+.spotlight-card:hover::before { opacity: 1; }
