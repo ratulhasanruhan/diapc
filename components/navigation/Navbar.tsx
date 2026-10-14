@@ -6,10 +6,12 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
 const navLinks = [
-  { label: "Explore", href: "/#universe" },
-  { label: "Events", href: "/events" },
-  { label: "Community", href: "/crew" },
   { label: "About", href: "/about" },
+  { label: "Events", href: "/events" },
+  { label: "Projects", href: "/projects" },
+  { label: "Achievements", href: "/achievements" },
+  { label: "Committee", href: "/committee" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const wingLinks = [
@@ -27,10 +29,10 @@ export default function Navbar() {
     <nav aria-label="Primary" className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between border border-[#dfe4ee] bg-[#fbfaf7]/90 px-4 shadow-[0_12px_35px_rgba(23,33,61,0.08)] backdrop-blur-md sm:px-5">
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <Image src="/brand/modern_logo.png" alt="DIA Programming Club home" width={142} height={48} className="h-10 w-auto object-contain" priority />
+          <Image src="/brand/modern_logo.png" alt="DIA Programming Club - DPC, home" width={142} height={48} className="h-10 w-auto object-contain" priority />
         </Link>
 
-        <div className="hidden items-center gap-7 md:flex">
+        <div className="hidden items-center gap-5 lg:flex">
           {navLinks.slice(0, 1).map((link) => (
             <Link key={link.href} href={link.href} className="text-sm font-medium text-[#667085] transition-colors hover:text-[#2454d7]">
               {link.label}
@@ -53,16 +55,16 @@ export default function Navbar() {
             </Link>
           ))}
           <Link href="/join" className="bg-[#2454d7] px-4 py-2 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5">
-            Join the mission
+            Join DPC
           </Link>
         </div>
 
-        <button type="button" className="p-2 text-[#17213d] md:hidden" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
+        <button type="button" className="p-2 text-[#17213d] lg:hidden" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
           {open ? <X size={21} /> : <Menu size={21} />}
         </button>
       </div>
       {open && (
-        <div className="mx-auto mt-2 max-w-6xl border border-[#dfe4ee] bg-[#fbfaf7] p-3 shadow-lg md:hidden">
+        <div className="mx-auto mt-2 max-w-6xl border border-[#dfe4ee] bg-[#fbfaf7] p-3 shadow-lg lg:hidden">
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="block px-3 py-3 text-sm font-medium text-[#667085] hover:bg-[#eef2ff] hover:text-[#2454d7]">
               {link.label}
@@ -75,7 +77,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link href="/join" onClick={() => setOpen(false)} className="mt-2 block bg-[#2454d7] px-3 py-3 text-center text-sm font-semibold text-white">
-            Join the mission
+            Join DPC
           </Link>
         </div>
       )}

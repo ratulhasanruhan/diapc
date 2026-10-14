@@ -64,7 +64,14 @@ export default function ContactPage() {
                   <Mail className="w-5 h-5 text-brand-blue mt-0.5 shrink-0" />
                   <div>
                     <h3 className="font-bold text-sm">Email</h3>
-                    <p className="text-sm text-text-muted">TODO: Official email to be configured</p>
+                    <a href="mailto:hi@diapc.dev" className="text-sm font-semibold text-brand-blue hover:underline">hi@diapc.dev</a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-5 rounded-xl bg-glass-light">
+                  <MessageCircle className="w-5 h-5 text-brand-blue mt-0.5 shrink-0" />
+                  <div>
+                    <h3 className="font-bold text-sm">Facebook</h3>
+                    <a href="https://www.facebook.com/diadpc" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-brand-blue hover:underline">facebook.com/diadpc</a>
                   </div>
                 </div>
               </div>

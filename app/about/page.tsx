@@ -1,9 +1,10 @@
+import { pageMeta } from "@/lib/seo";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import SectionWrapper from "@/components/motion/SectionWrapper";
 import Link from "next/link";
 import { ArrowRight, Target, Eye, Heart, Users } from "lucide-react";
 
-export const metadata = { title: "About DPC" };
+export const metadata = pageMeta({ title: "About DPC", description: "What DIA Programming Club is, why it exists and how it is run.", path: "/about" });
 
 const milestones = [
   { year: "2026", event: "DPC founded at Daffodil International Academy", status: "verified" },

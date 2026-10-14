@@ -1,14 +1,19 @@
+/**
+ * DPC committee. Replace the placeholder entries with real members.
+ * Photos go in /public/committee/ (portrait 4:5, e.g. 480x600 WebP).
+ */
 export type CommitteeMember = {
   name: string;
   role: string;
-  initials?: string;
+  /** "advisor" | "executive" | "lead" (wing/team lead) | "member" */
+  group: "advisor" | "executive" | "lead" | "member";
   photo?: string;
   links?: { label: string; url: string }[];
-  extra?: string;
+  placeholder?: boolean;
 };
 
-export const executiveCouncil: CommitteeMember[] = [
-  { name: "To be announced", role: "President", initials: "PR" },
-  { name: "To be announced", role: "Vice President", initials: "VP" },
-  { name: "To be announced", role: "General Secretary", initials: "GS" }
+export const committee: CommitteeMember[] = [
+  { name: "To be announced", role: "President", group: "executive", placeholder: true },
+  { name: "To be announced", role: "Vice President", group: "executive", placeholder: true },
+  { name: "To be announced", role: "General Secretary", group: "executive", placeholder: true }
 ];

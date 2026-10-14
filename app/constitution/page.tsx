@@ -1,7 +1,8 @@
+import { pageMeta } from "@/lib/seo";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { Scale, ChevronRight } from "lucide-react";
 
-export const metadata = { title: "Constitution" };
+export const metadata = pageMeta({ title: "Constitution", description: "The DIA Programming Club constitution: structure, membership and governance.", path: "/constitution" });
 
 const articles = [
   { num: 1, title: "Name and Nature", summary: "Official name, non-profit and non-political nature, tagline, website." },

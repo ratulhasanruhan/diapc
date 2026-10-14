@@ -8,13 +8,14 @@ const sections = [
       { label: "About DPC", href: "/about" },
       { label: "Events", href: "/events" },
       { label: "Projects", href: "/projects" },
+      { label: "Achievements", href: "/achievements" },
       { label: "Gallery", href: "/gallery" },
     ],
   },
   {
     title: "Community",
     links: [
-      { label: "Crew", href: "/crew" },
+      { label: "Committee", href: "/committee" },
       { label: "Resources", href: "/resources" },
       { label: "Join DPC", href: "/join" },
       { label: "Collaborate", href: "/collaborate" },
@@ -39,9 +40,10 @@ export default function Footer() {
           <Link href="/" className="flex items-center gap-2">
             <Image src="/brand/modern_logo.png" alt="DIA Programming Club home" width={140} height={47} className="h-11 w-auto object-contain" />
           </Link>
-          <p className="mt-4 max-w-xs text-sm leading-6 text-[#667085]">DIA Programming Club at Daffodil International Academy, Dhaka.</p>
-          <code className="mt-4 block text-xs text-[#c23b91]">= new instance of future();</code>
-          <a href="https://aws.diapc.dev" className="mt-5 flex w-fit items-center gap-2 border border-[#dfe4ee] px-3 py-2 text-sm font-semibold text-[#17213d] hover:border-[#ff9900]">
+          <p className="mt-4 font-mono text-xs font-semibold tracking-[0.25em] text-[#c23b91]">CODE · CREATE · CONNECT</p>
+          <p className="mt-3 max-w-xs text-sm leading-6 text-[#667085]">DIA Programming Club - DPC at Daffodil International Academy, Dhaka.</p>
+          <a href="mailto:hi@diapc.dev" className="mt-3 block text-sm font-semibold text-[#17213d] hover:text-[#2454d7]">hi@diapc.dev</a>
+          <a href="https://aws.diapc.dev" target="_blank" rel="noopener" className="mt-5 flex w-fit items-center gap-2 border border-[#dfe4ee] px-3 py-2 text-sm font-semibold text-[#17213d] hover:border-[#ff9900]">
             <Image src="/brand/awssbg-mark.svg" alt="" width={20} height={20} className="h-5 w-5" />
             AWS Student Builders Group
           </a>
@@ -60,13 +62,13 @@ export default function Footer() {
             <div key={section.title}>
               <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-[#98a2b3]">{section.title}</p>
               <div className="space-y-2">
-                {section.links.map((link) => <Link key={link.href} href={link.href} className="block text-sm text-[#667085] hover:text-[#2454d7]">{link.label}</Link>)}
+                {section.links.map((link) => link.href.startsWith("http") ? <a key={link.href} href={link.href} target="_blank" rel="noopener" className="block text-sm text-[#667085] hover:text-[#2454d7]">{link.label} ↗</a> : <Link key={link.href} href={link.href} className="block text-sm text-[#667085] hover:text-[#2454d7]">{link.label}</Link>)}
               </div>
             </div>
           ))}
         </div>
       </div>
-      <div className="border-t border-[#dfe4ee] px-6 py-4 text-center text-xs text-[#98a2b3]">DIA Programming Club · Student-run and community-led.</div>
+      <div className="border-t border-[#dfe4ee] px-6 py-4 text-center text-xs text-[#98a2b3]">© DIA Programming Club - DPC · Student-run and community-led.</div>
     </footer>
   );
 }
