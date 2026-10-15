@@ -71,7 +71,7 @@ export function EventCard({ event, past = false }: { event: EventItem; past?: bo
           {event.wing && <span className="font-mono text-[10px] uppercase tracking-widest text-brand-blue">{event.wing}</span>}
           {event.source === "meetup" && <span className="border border-[#fbd5a5] bg-[#fff7ed] px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-widest text-[#b45309]">Meetup</span>}
           <SampleBadge show={event.sample} />
-          {past && <span className="font-mono text-[10px] uppercase tracking-widest text-[#98a2b3]">Past</span>}
+          {past && <span className="font-mono text-[10px] uppercase tracking-widest text-[#5d6679]">Past</span>}
         </div>
         <h3 className="mt-1.5 text-xl text-ink">{event.title}</h3>
         <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
@@ -108,7 +108,7 @@ export function EventGallery({ event }: { event: EventItem }) {
         // eslint-disable-next-line @next/next/no-img-element
         <img src={event.cover} alt={event.coverAlt ?? `Photo from ${event.title}`} loading="lazy" decoding="async" className="aspect-[16/9] w-full object-cover" />
       ) : (
-        <div className="flex aspect-[16/9] items-center justify-center bg-[repeating-linear-gradient(135deg,#eef2ff_0_10px,#f7f8fc_10px_20px)] text-[#98a2b3]">
+        <div className="flex aspect-[16/9] items-center justify-center bg-[repeating-linear-gradient(135deg,#eef2ff_0_10px,#f7f8fc_10px_20px)] text-[#5d6679]">
           <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest"><ImageIcon size={16} aria-hidden="true" /> Photos coming soon</span>
         </div>
       )}
@@ -151,7 +151,7 @@ export function ProjectCard({ p }: { p: Project }) {
       {p.image ? (
         <div className="relative aspect-[16/10] bg-[#eef2ff]"><Image src={p.image} alt={`${p.title} screenshot`} fill sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" className="object-cover" /></div>
       ) : (
-        <div className="flex aspect-[16/10] items-center justify-center bg-[linear-gradient(135deg,#eef2ff,#fdf2f8)] font-mono text-sm text-[#98a2b3]" aria-hidden="true">{"</>"}</div>
+        <div className="flex aspect-[16/10] items-center justify-center bg-[linear-gradient(135deg,#eef2ff,#fdf2f8)] font-mono text-sm text-[#5d6679]" aria-hidden="true">{"</>"}</div>
       )}
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-center justify-between gap-2"><h3 className="text-xl text-ink">{p.title}</h3><SampleBadge show={p.sample} /></div>
@@ -214,7 +214,7 @@ export function MemberCard({ m }: { m: CommitteeMember }) {
           <div className="flex h-full flex-col items-center justify-center" aria-hidden="true">
             <div className="paper-grid absolute inset-0 opacity-60" />
             <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-brand-blue to-brand-magenta text-2xl font-bold text-white shadow-[6px_8px_0_#d8def2] sm:h-24 sm:w-24 sm:text-3xl">{initials(m.name)}</span>
-            <span className="relative mt-3 font-mono text-[9px] uppercase tracking-[0.2em] text-[#98a2b3]">Photo soon</span>
+            <span className="relative mt-3 font-mono text-[9px] uppercase tracking-[0.2em] text-[#5d6679]">Photo soon</span>
           </div>
         )}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#17213d]/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true" />
@@ -274,7 +274,7 @@ export function LogoWall({ items }: { items: Collaboration[] }) {
             ) : (
               <span className={`text-sm font-semibold ${c.sample ? "text-muted" : "text-ink"}`}>{c.name}</span>
             )}
-            <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-[#98a2b3]">{c.type}{c.sample && <SampleBadge show />}</span>
+            <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-[#5d6679]">{c.type}{c.sample && <SampleBadge show />}</span>
           </div>
         );
         return <li key={c.name}>{c.url ? <a href={c.url} target={c.url.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" aria-label={c.name}>{inner}</a> : inner}</li>;
@@ -302,7 +302,7 @@ export function WingCard({ w }: { w: Wing }) {
         ) : (
           <span className="h-11 w-11 rounded-full" style={{ background: `radial-gradient(circle at 30% 30%, #fff, ${w.accent} 70%)` }} aria-hidden="true" />
         )}
-        <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: w.status === "active" ? "#b45309" : "#98a2b3" }}>{w.status === "active" ? "● Active" : "Proposed"}</span>
+        <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: w.status === "active" ? "#b45309" : "#5d6679" }}>{w.status === "active" ? "● Active" : "Proposed"}</span>
       </div>
       <h3 className="mt-6 text-xl text-ink">{w.name}</h3>
       <p className="mt-2 text-sm leading-6 text-muted">{w.description}</p>

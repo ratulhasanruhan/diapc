@@ -69,13 +69,13 @@ export default async function Home() {
             <span className="twinkle absolute left-[6%] top-[40%] h-1.5 w-1.5 rounded-full bg-brand-blue" />
             <span className="twinkle delay-2 absolute right-[4%] top-[14%] h-2 w-2 rounded-full bg-[#f59e0b]" />
             <span className="twinkle delay-3 absolute bottom-[8%] left-[40%] h-1.5 w-1.5 rounded-full bg-brand-magenta" />
-            <div className="bob absolute left-[2%] top-[4%] h-12 w-12 rounded-full bg-brand-magenta shadow-[8px_10px_0_#f4c6e2] sm:h-16 sm:w-16" />
-            <RingedPlanet className="bob bob-slow absolute bottom-[4%] right-[0%] w-24 sm:w-28" color="#c7d2fe" />
+            <div className="bob absolute left-[4%] top-[6%] h-9 w-9 rounded-full bg-brand-magenta shadow-[6px_8px_0_#f4c6e2] sm:left-[2%] sm:top-[4%] sm:h-16 sm:w-16" />
+            <RingedPlanet className="bob bob-slow absolute bottom-[4%] right-[2%] w-16 sm:right-0 sm:w-28" color="#c7d2fe" />
             <div className="anim drift-float relative z-10 mx-auto h-full w-[230px] overflow-hidden rounded-[48%_48%_42%_42%] border-[10px] border-white bg-[linear-gradient(180deg,#e8edff,#f5f0ff)] shadow-[18px_22px_0_#d8def2] sm:w-[290px]">
               <AstronautVector className="relative z-10 h-full w-full p-5" />
               <div className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-white p-2 shadow-lg"><Image src="/brand/classic_logo.png" alt="" width={32} height={32} /></div>
             </div>
-            <div className="anim drift-float absolute -right-2 top-[18%] z-20 w-14 [animation-delay:-4s] sm:right-[-4%] sm:w-20">
+            <div className="anim drift-float absolute -right-2 top-[18%] z-20 hidden w-14 [animation-delay:-4s] sm:block sm:right-[-4%] sm:w-20">
               <MiniAstronaut className="bob h-auto w-full" visor="#8b5cf6" accent="#2454d7" />
             </div>
             <div className="absolute bottom-0 left-0 z-20 bg-white px-3 py-2 font-mono text-[10px] tracking-wider text-muted shadow-sm">{site.motto}</div>
