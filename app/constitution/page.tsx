@@ -35,7 +35,7 @@ export default function ConstitutionPage() {
               <h2 className="text-2xl text-ink"><span className="font-mono text-base text-brand-blue">Article {i + 1}.</span> {a.title}</h2>
               <ol className="mt-4 space-y-3">
                 {a.clauses.map((c, j) => (
-                  <li key={j} className="flex gap-3 leading-7 text-muted"><span className="shrink-0 font-mono text-xs leading-7 text-[#98a2b3]">{i + 1}.{j + 1}</span><span>{c}</span></li>
+                  <li key={j} className="flex gap-3 leading-7 text-muted"><span className="shrink-0 font-mono text-xs leading-7 text-[#5d6679]">{i + 1}.{j + 1}</span><span>{c}</span></li>
                 ))}
               </ol>
             </section>

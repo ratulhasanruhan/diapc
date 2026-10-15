@@ -52,7 +52,7 @@ export default function AboutPage() {
   const aws = wings.find((w) => w.slug === "aws");
 
   return (
-    <main>
+    <main className="overflow-x-clip">
       <JsonLd data={breadcrumbJsonLd([{ name: "About", path: "/about" }])} />
       <PageHero eyebrow={`About / Est. ${site.foundingDateLabel}`} title="Built by students, since 2015" intro={`${site.name} (DPC) is the student-led, non-profit and non-political programming and technology community at ${site.institution}, Dhaka.`} />
 

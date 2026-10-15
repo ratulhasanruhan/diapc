@@ -45,3 +45,9 @@ awssbg/.next
 awssbg/.vercel
 awssbg/.env*
 **/.next
+
+# local audits / screenshots
+diapc-audit/
+/audit/
+*.log
+
