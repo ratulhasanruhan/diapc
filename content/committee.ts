@@ -30,10 +30,11 @@ export const committee: CommitteeMember[] = [
   { id: "ramisa-zahra", name: "Ramisa Zahra", role: "Executive Member", group: "executive", tags: ["Community", "Communications"], photo: "/committee/ramisa-zahra.webp" },
   { id: "abdullah-ibrahim-khan", name: "Abdullah Ibrahim Khan", role: "Executive Member", group: "executive", tags: ["Technical", "Events", "Logistics"], photo: "/committee/abdullah-ibrahim-khan.webp" },
   { id: "rasheduzzaman-shanto", name: "Rasheduzzaman Shanto", role: "Executive Member", group: "executive", tags: ["Technical", "Social Media"], photo: "/committee/rasheduzzaman-shanto.webp" },
-  { id: "md-zijan-mymony", name: "MD Zijan Mymony", role: "Executive Member", group: "executive", tags: ["Events"] },
+  { id: "md-zijan-mymony", name: "MD Zijan Mymony", role: "Executive Member", group: "executive", tags: ["Events"], photo: "/committee/md-zijan-mymony.webp" },
   { id: "lamia-raima-amin", name: "Lamia Raima Amin", role: "Executive Member", group: "executive", tags: ["Events", "Photo & Video"], photo: "/committee/lamia-raima-amin.webp" },
   { id: "masudul-haq-mahair", name: "Masudul Haq Mahair", role: "Executive Member", group: "executive", tags: ["Events", "Social Media"], photo: "/committee/masudul-haq-mahair.webp" },
   { id: "md-nadim-mahamud", name: "MD Nadim Mahamud", role: "Executive Member", group: "executive", tags: ["Technical", "Events", "Social Media", "Community"], photo: "/committee/nadim-mahamud.webp" },
   { id: "md-fahim-shahriar", name: "MD Fahim Shahriar", role: "Executive Member", group: "executive", tags: ["Technical"], photo: "/committee/fahim-shahriar.webp" },
-  { id: "priyata-ruth-pahan", name: "Priyata Ruth Pahan", role: "Executive Member", group: "executive", tags: ["Events", "Social Media"], photo: "/committee/priyata-ruth-pahan.webp" }
+  { id: "priyata-ruth-pahan", name: "Priyata Ruth Pahan", role: "Executive Member", group: "executive", tags: ["Events", "Social Media"], photo: "/committee/priyata-ruth-pahan.webp" },
+  { id: "sidratul-muntaha", name: "Sidratul Muntaha", role: "Executive Member", group: "executive", tags: ["Social Media", "Content"], photo: "/committee/sidratul-muntaha.webp" }
 ];
