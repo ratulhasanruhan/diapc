@@ -4,14 +4,9 @@ import ScrollReveal from "@/components/motion/ScrollReveal";
 import { Mail, MapPin, MessageCircle, ArrowRight, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { postForm } from "@/lib/postForm";
+import { faqs } from "@/content/faq";
 
-const faqs = [
-  { q: "Who can join DPC?", a: "Any currently enrolled student at Daffodil International Academy, regardless of program, year, or experience level." },
-  { q: "Is there a membership fee?", a: "No. DPC membership is free. Some specific activities or events may have a fee, which will be communicated in advance." },
-  { q: "Do I need programming experience?", a: "No! DPC welcomes beginners. We have learning paths and mentorship for every skill level." },
-  { q: "What is a wing?", a: "A wing is a focused sub-community within DPC dedicated to a specific domain like cloud computing, competitive programming, or AI." },
-  { q: "How can my organization collaborate with DPC?", a: "Visit our Docking Bay page to submit a collaboration request. We welcome partnerships with clubs, universities, companies, and communities." },
-];
+const contactFaqs = faqs.filter((f) => ["Who can join DPC?", "Does it cost anything to take part?", "Do I need programming experience?", "What is a wing?", "How can my organization collaborate with DPC?"].includes(f.q));
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", type: "general", message: "" });
@@ -80,7 +75,7 @@ export default function ContactPage() {
             <ScrollReveal>
               <h2 className="text-2xl font-bold mb-6" id="faq">Frequently Asked Questions</h2>
               <div className="space-y-3">
-                {faqs.map((faq, i) => (
+                {contactFaqs.map((faq, i) => (
                   <div key={i} className="rounded-xl bg-glass-light overflow-hidden">
                     <button
                       onClick={() => setOpenFaq(openFaq === i ? null : i)}

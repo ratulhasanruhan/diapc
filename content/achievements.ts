@@ -1,6 +1,7 @@
 /**
  * Contest results, awards and recognitions. Newest first is recommended.
- * Entries with `sample: true` are placeholders shown with a "Sample" badge.
+ * `date` is optional: leave it out (or use just a year, "2026") when the exact date isn't confirmed.
+ * Put images in /public/achievements/ (WebP, ~1600px wide).
  */
 export type Achievement = {
   id: string;
@@ -9,25 +10,25 @@ export type Achievement = {
   result: string;
   /** Contest / event name */
   event: string;
-  date: string;
+  /** ISO date, year only ("2026"), or omit if unknown */
+  date?: string;
   /** e.g. "Inter-school", "National", "International" */
   scope?: string;
   members?: string[];
   description?: string;
   image?: string;
+  imageAlt?: string;
   link?: string;
-  sample?: boolean;
 };
 
 export const achievements: Achievement[] = [
   {
-    id: "sample-achievement",
-    title: "Sample achievement (replace me)",
-    result: "Result",
-    event: "Contest or event name",
-    date: "2026-01-01",
-    scope: "Scope",
-    description: "What the team did and why it mattered.",
-    sample: true
+    id: "national-ai-build-a-thon-champion",
+    title: "National AI Build-a-thon: Champion",
+    result: "Champion",
+    event: "National AI Build-a-thon",
+    description: "Prize-giving photo: the team receiving the trophy and certificates on stage.",
+    image: "/achievements/national-ai-build-a-thon-champion.webp",
+    imageAlt: "Team receiving the National AI Build-a-thon trophy and certificates on stage with guests"
   }
 ];

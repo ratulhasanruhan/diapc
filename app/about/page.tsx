@@ -4,11 +4,11 @@ import { ArrowRight, ArrowUpRight, Code2, Sparkles, Users } from "lucide-react";
 import PageHero from "@/components/sections/PageHero";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { SectionHeading } from "@/components/sections/blocks";
-import { site } from "@/content/site";
 import { wings } from "@/content/wings";
-import { events } from "@/content/events";
+import { site, siteStats } from "@/content/site";
 import { committee } from "@/content/committee";
-import { breadcrumbJsonLd } from "@/lib/jsonld";
+import { faqs } from "@/content/faq";
+import { breadcrumbJsonLd, faqJsonLd } from "@/lib/jsonld";
 import { pageMeta, JsonLd } from "@/lib/seo";
 
 export const metadata = pageMeta({
@@ -36,24 +36,24 @@ const milestones = [
   { when: "21 Jun 2015", what: "DIA Programming Club is founded at Daffodil International Academy, Dhaka." },
   { when: "2025", what: "ICT Fest 2025: a hands-on DevOps workshop." },
   { when: "2026", what: "Coding Fest 2026 Grand Finale." },
-  { when: "Today", what: "Organized into wings under the DPC Constitution, starting with the AWS Student Builders Group." }
+  { when: "Today", what: "Organized into wings under the DPC Constitution, with the AWS Student Builders Group as the first and four active wings today." }
 ];
 
 export default function AboutPage() {
   const activeWings = wings.filter((w) => w.status === "active").length;
-  const archived = events.filter((e) => !e.sample).length;
+  const archived = siteStats.archivedEvents;
   const execs = committee.filter((m) => m.group === "executive").length;
   const stats = [
     { label: "Founded", value: "2015" },
     { label: "Active wings", value: String(activeWings) },
-    { label: "Events in archive", value: String(archived) },
+    { label: "Archived events", value: String(archived) },
     { label: "Executive members", value: String(execs) }
   ];
   const aws = wings.find((w) => w.slug === "aws");
 
   return (
     <main className="overflow-x-clip">
-      <JsonLd data={breadcrumbJsonLd([{ name: "About", path: "/about" }])} />
+      <JsonLd data={[breadcrumbJsonLd([{ name: "About", path: "/about" }]), faqJsonLd(faqs)]} />
       <PageHero eyebrow={`About / Est. ${site.foundingDateLabel}`} title="Built by students, since 2015" intro={`${site.name} (DPC) is the student-led, non-profit and non-political programming and technology community at ${site.institution}, Dhaka.`} />
 
       {/* STORY */}
@@ -157,6 +157,25 @@ export default function AboutPage() {
             </li>
           ))}
         </ol>
+      </section>
+
+      {/* FAQ (mirrors the FAQPage JSON-LD above) */}
+      <section id="faq" className="border-t border-line bg-white">
+        <div className="section">
+          <SectionHeading eyebrow="FAQ" title="Questions, answered." intro="The basics about DPC, how to join and how to reach us." />
+          <div className="max-w-3xl divide-y divide-line border border-line bg-white">
+            {faqs.map((f) => (
+              <details key={f.q} className="group px-5 py-4 open:bg-[#f7f8fc]">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-ink [&::-webkit-details-marker]:hidden">
+                  {f.q}
+                  <span className="shrink-0 font-mono text-lg text-brand-blue transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </summary>
+                <p className="mt-3 text-sm leading-7 text-muted">{f.a}</p>
+              </details>
+            ))}
+          </div>
+          <p className="mt-8 text-sm text-muted">Still curious? Email <a href={`mailto:${site.email}`} className="font-semibold text-brand-blue">{site.email}</a> or visit the <Link href="/contact" className="font-semibold text-brand-blue">contact page</Link>.</p>
+        </div>
       </section>
     </main>
   );

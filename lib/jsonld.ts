@@ -1,13 +1,15 @@
 import { site } from "@/content/site";
 import { committee, type CommitteeMember } from "@/content/committee";
 import type { EventItem } from "@/lib/events";
+import type { Faq } from "@/content/faq";
 
 const ORG_ID = `${site.url}/#org`;
 const AWS_ORG_ID = "https://aws.diapc.dev/#organization";
 /** Shared with the awssbg site so search engines merge both into one entity. */
 export const RATUL_ID = "https://aws.diapc.dev/team#ratul-hasan-ruhan";
 
-export const personId = (m: CommitteeMember) => `${site.url}/committee#${m.id}`;
+/** Ratul keeps the shared cross-site @id so the president entry merges with his personal entity. */
+export const personId = (m: CommitteeMember) => (m.id === "ratul-hasan-ruhan" ? RATUL_ID : `${site.url}/committee#${m.id}`);
 
 /** Ratul Hasan Ruhan: personal-branding Person entity (data only, no visible UI). */
 export const ratulSameAs = [
@@ -18,21 +20,37 @@ export const ratulSameAs = [
   "https://appibrium.com"
 ];
 
+/** Other public profiles listed on Ratul's own site (ratuler.vercel.app). Used for sameAs only, not rel=me. */
+export const ratulMoreProfiles = [
+  "https://ratulruhan.cv/",
+  "https://peerlist.io/ratulhasan",
+  "https://ratulhasanruhan.hashnode.dev",
+  "https://ratulhasanruhan.medium.com",
+  "https://www.youtube.com/@ratulicious"
+];
+
 export const ratulPersonJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   "@id": RATUL_ID,
   name: "Ratul Hasan Ruhan",
-  jobTitle: "AWS Student Builders Group Leader / Software Engineer",
-  description: "AWS Student Builders Group Leader at Daffodil International Academy, software engineer and founder of Appibrium.",
+  jobTitle: ["President, DIA Programming Club", "AWS Student Builders Group Leader", "Software Engineer"],
+  description: "Ratul Hasan Ruhan is a software engineer based in Dhaka, Bangladesh, founder of Appibrium and the AWS Student Builders Group Leader at Daffodil International Academy.",
+  homeLocation: { "@type": "Place", name: "Dhaka, Bangladesh" },
   image: "https://aws.diapc.dev/team/ratul-hasan-ruhan.webp",
   url: "https://ratuler.vercel.app",
-  sameAs: ratulSameAs,
+  sameAs: [...ratulSameAs, ...ratulMoreProfiles],
+  knowsAbout: ["Mobile app development", "Flutter", "Kotlin", "Cloud computing", "Applied AI and machine learning", "Software engineering", "Systems programming", "DevOps"],
+  alumniOf: [
+    { "@type": "CollegeOrUniversity", name: "University of Greenwich", url: "https://www.gre.ac.uk" },
+    { "@type": "CollegeOrUniversity", name: "Daffodil International University", url: "https://daffodilvarsity.edu.bd" }
+  ],
   memberOf: [
     { "@type": "Organization", "@id": ORG_ID, name: site.name, url: site.url },
     { "@type": "Organization", "@id": AWS_ORG_ID, name: "AWS Student Builders Group at Daffodil International Academy", url: site.awsSbg }
   ],
   worksFor: { "@type": "Organization", "@id": "https://appibrium.com/#organization", name: "Appibrium", url: "https://appibrium.com", founder: { "@id": RATUL_ID } },
+  hasOccupation: { "@type": "Occupation", name: "Software Engineer" },
   affiliation: { "@type": "EducationalOrganization", name: site.institution }
 };
 
@@ -53,16 +71,16 @@ export const organizationJsonLd = {
   sameAs: [site.facebook, site.meetup, site.awsSbg],
   parentOrganization: { "@type": "EducationalOrganization", name: site.institution, address: { "@type": "PostalAddress", addressLocality: "Dhaka", addressCountry: "BD" } },
   subOrganization: { "@type": "Organization", "@id": AWS_ORG_ID, name: "AWS Student Builders Group at Daffodil International Academy", url: site.awsSbg },
-  member: [{ "@type": "Person", "@id": RATUL_ID, name: "Ratul Hasan Ruhan" }, ...committee.map((m) => ({ "@type": "Person", "@id": personId(m), name: m.name }))],
+  member: committee.map((m) => ({ "@type": "Person", "@id": personId(m), name: m.name })),
   employee: committee.filter((m) => m.group === "advisor").map((m) => ({ "@type": "Person", "@id": personId(m), name: m.name })),
   contactPoint: { "@type": "ContactPoint", email: site.email, contactType: "general inquiries" }
 };
 
 export const websiteJsonLd = { "@context": "https://schema.org", "@type": "WebSite", "@id": `${site.url}/#website`, name: site.fullName, url: site.url, inLanguage: "en", publisher: { "@id": ORG_ID } };
 
-/** Person entities for the committee page. No contact details are included. */
+/** Person entities for the committee page. No contact details are included. Ratul's full entity is emitted site-wide. */
 export function committeeJsonLd(members: CommitteeMember[]) {
-  return members.map((m) => ({
+  return members.filter((m) => m.id !== "ratul-hasan-ruhan").map((m) => ({
     "@context": "https://schema.org",
     "@type": "Person",
     "@id": personId(m),
@@ -79,6 +97,15 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [{ name: "Home", path: "/" }, ...items].map((it, i) => ({ "@type": "ListItem", position: i + 1, name: it.name, item: `${site.url}${it.path === "/" ? "" : it.path}` }))
+  };
+}
+
+export function faqJsonLd(items: Faq[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${site.url}/about#faq`,
+    mainEntity: items.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } }))
   };
 }
 

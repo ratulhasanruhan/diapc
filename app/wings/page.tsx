@@ -5,7 +5,7 @@ import { wings } from "@/content/wings";
 import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { pageMeta, JsonLd } from "@/lib/seo";
 
-export const metadata = pageMeta({ title: "Wings", description: "DPC wings: focused sub-communities inside DIA Programming Club, led by the AWS Student Builders Group. Proposed wings are open for founding members.", path: "/wings" });
+export const metadata = pageMeta({ title: "Wings", description: "DPC wings: focused sub-communities inside DIA Programming Club, four of them active, led by the AWS Student Builders Group. Proposed wings are open for founding members.", path: "/wings" });
 
 export default function WingsPage() {
   const active = wings.filter((w) => w.status === "active");

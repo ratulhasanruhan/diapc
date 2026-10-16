@@ -21,9 +21,9 @@ export const wings: Wing[] = [
     logo: "/brand/awssbg-mark.svg",
     external: true
   },
-  { slug: "competitive-programming", name: "Competitive Programming", description: "Algorithms, data structures and contest practice.", status: "proposed", accent: "#2454d7", href: "/join?wing=competitive-programming" },
-  { slug: "ai-ml", name: "AI & Data Science", description: "Machine learning, data analysis and research projects.", status: "proposed", accent: "#8b5cf6", href: "/join?wing=ai-ml" },
-  { slug: "web-app-dev", name: "Web & Mobile Development", description: "Full-stack web, mobile apps and modern frameworks.", status: "proposed", accent: "#c23b91", href: "/join?wing=web-app-dev" },
+  { slug: "competitive-programming", name: "Competitive Programming", description: "Algorithms, data structures and contest practice.", status: "active", accent: "#2454d7", href: "/join?wing=competitive-programming" },
+  { slug: "ai-ml", name: "AI & Data Science", description: "Machine learning, data analysis and research projects.", status: "active", accent: "#8b5cf6", href: "/join?wing=ai-ml" },
+  { slug: "web-app-dev", name: "Web & Mobile Development", description: "Full-stack web, mobile apps and modern frameworks.", status: "active", accent: "#c23b91", href: "/join?wing=web-app-dev" },
   { slug: "cybersecurity", name: "Cybersecurity & Systems", description: "Ethical hacking, CTFs, systems and network security.", status: "proposed", accent: "#10b981", href: "/join?wing=cybersecurity" },
   { slug: "research", name: "Research & Innovation", description: "Research, innovation projects and technical writing.", status: "proposed", accent: "#0891b2", href: "/join?wing=research" }
 ];

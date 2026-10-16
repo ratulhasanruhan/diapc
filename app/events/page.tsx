@@ -2,8 +2,10 @@ import { ArrowUpRight } from "lucide-react";
 import PageHero from "@/components/sections/PageHero";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { EventCard, EmptyState, SectionHeading, MeetupLiveLabel } from "@/components/sections/blocks";
-import { getEvents } from "@/lib/events";
-import { eventJsonLd } from "@/lib/jsonld";
+import { getEvents, datePrecision } from "@/lib/events";
+import { toPastViews } from "@/lib/pastEvents";
+import PastEvents from "@/components/sections/PastEvents";
+import { eventJsonLd, breadcrumbJsonLd } from "@/lib/jsonld";
 import { pageMeta, JsonLd } from "@/lib/seo";
 import { site } from "@/content/site";
 
@@ -13,7 +15,7 @@ export default async function EventsPage() {
   const { upcoming, past } = await getEvents();
   return (
     <main>
-      <JsonLd data={[...upcoming, ...past].filter((e) => !e.sample && e.date).map(eventJsonLd)} />
+      <JsonLd data={[breadcrumbJsonLd([{ name: "Events", path: "/events" }]), ...[...upcoming, ...past].filter((e) => !e.sample && datePrecision(e.date) === "day").map(eventJsonLd)]} />
       <PageHero eyebrow="Events" title="Workshops, contests and meetups" intro="Everything DPC and its wings are running. AWS Student Builders Group events sync automatically from Meetup.">
         <div className="mt-8 flex flex-wrap gap-3">
           <a href={site.facebook} target="_blank" rel="noopener noreferrer" className="btn-primary">Follow on Facebook <ArrowUpRight size={16} aria-hidden="true" /></a>
@@ -32,7 +34,7 @@ export default async function EventsPage() {
       <section className="section cv-auto pt-0">
         <SectionHeading eyebrow="Archive" title="Past events" action={{ label: "Photo gallery", href: "/gallery" }} />
         {past.length ? (
-          <div className="grid gap-4 lg:grid-cols-2">{past.map((e) => <ScrollReveal key={e.id}><EventCard event={e} past /></ScrollReveal>)}</div>
+          <PastEvents events={toPastViews(past)} />
         ) : (
           <EmptyState title="No past events yet" body="Our event history starts soon." />
         )}

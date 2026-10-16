@@ -63,14 +63,5 @@ export const events: DpcEvent[] = [
     description: "A DevOps workshop during DIA ICT Fest 2025 at Daffodil International Academy, ending with a full-room group photo.",
     cover: "/events/ict-fest-2025-devops-workshop/cover.webp",
     coverAlt: "Participants of the ICT Fest 2025 DevOps workshop holding up notebooks in a group photo"
-  },
-  {
-    id: "national-ai-build-a-thon-champion",
-    title: "National AI Build-a-thon: Champion",
-    date: "",
-    past: true,
-    description: "Prize-giving at the National AI Build-a-thon, where the champion team received the trophy and certificates.",
-    cover: "/events/national-ai-build-a-thon-champion/cover.webp",
-    coverAlt: "Champion team receiving the National AI Build-a-thon trophy and certificates on stage with guests"
   }
 ];

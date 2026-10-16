@@ -1,22 +1,22 @@
 import PageHero from "@/components/sections/PageHero";
-import ScrollReveal from "@/components/motion/ScrollReveal";
-import { EventGallery, EmptyState } from "@/components/sections/blocks";
+import { EmptyState } from "@/components/sections/blocks";
+import PastEvents from "@/components/sections/PastEvents";
 import { getEvents } from "@/lib/events";
-import { pageMeta } from "@/lib/seo";
+import { toPastViews } from "@/lib/pastEvents";
+import { breadcrumbJsonLd } from "@/lib/jsonld";
+import { pageMeta, JsonLd } from "@/lib/seo";
 
-export const metadata = pageMeta({ title: "Gallery", description: "Photos and recaps from DIA Programming Club events.", path: "/gallery" });
+export const metadata = pageMeta({ title: "Gallery", description: "Photos and recaps from DIA Programming Club events: Coding Fest, ICT Fest, APOAI and more.", path: "/gallery", image: "/events/coding-fest-2026-grand-finale/1.webp" });
 
 export default async function GalleryPage() {
   const { past } = await getEvents();
+  const views = toPastViews(past).filter((v) => v.photos.length > 0);
   return (
     <main>
-      <PageHero eyebrow="Gallery" title="The mission log" intro="Photos and recaps from past DPC events." />
+      <JsonLd data={breadcrumbJsonLd([{ name: "Gallery", path: "/gallery" }])} />
+      <PageHero eyebrow="Gallery" title="The mission log" intro="Photos and recaps from past DPC events. Tap a photo to view it full screen." />
       <section className="section">
-        {past.length ? (
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{past.map((e) => <ScrollReveal key={e.id}><EventGallery event={e} /></ScrollReveal>)}</div>
-        ) : (
-          <EmptyState title="No photos yet" body="Event photos will appear here after our first sessions." />
-        )}
+        {views.length ? <PastEvents events={views} /> : <EmptyState title="No photos yet" body="Event photos will appear here after our first sessions." />}
       </section>
     </main>
   );
