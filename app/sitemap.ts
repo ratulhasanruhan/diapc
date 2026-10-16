@@ -14,9 +14,11 @@ const routes: { path: string; priority: number; freq: "weekly" | "monthly" | "ye
   { path: "/join", priority: 0.7, freq: "monthly" },
   { path: "/collaborate", priority: 0.6, freq: "monthly" },
   { path: "/contact", priority: 0.5, freq: "yearly" },
-  { path: "/constitution", priority: 0.4, freq: "yearly" }
+  { path: "/constitution", priority: 0.4, freq: "yearly" },
+  { path: "/media-kit", priority: 0.4, freq: "yearly" }
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return routes.map((r) => ({ url: `${site.url}${r.path}`, changeFrequency: r.freq, priority: r.priority }));
+  const lastModified = new Date("2026-10-16");
+  return routes.map((r) => ({ url: `${site.url}${r.path}`, lastModified, changeFrequency: r.freq, priority: r.priority }));
 }

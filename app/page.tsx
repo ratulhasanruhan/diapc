@@ -3,14 +3,17 @@ import Link from "next/link";
 import { ArrowUpRight, Mail, CalendarDays } from "lucide-react";
 import AstronautVector from "@/components/illustrations/AstronautVector";
 import ScrollReveal from "@/components/motion/ScrollReveal";
-import { SectionHeading, EventCard, EventGallery, AchievementCard, ProjectCard, CommitteeShowcase, MeetupLiveLabel, LogoWall, WingCard, EmptyState } from "@/components/sections/blocks";
+import { SectionHeading, EventCard, AchievementCard, ProjectCard, MeetupLiveLabel, LogoWall, WingCard, EmptyState } from "@/components/sections/blocks";
 import { site } from "@/content/site";
 import { collaborations } from "@/content/collaborations";
 import { achievements } from "@/content/achievements";
 import { projects } from "@/content/projects";
 import { committee } from "@/content/committee";
+import { CommitteeShowcase } from "@/components/sections/Committee";
 import { wings } from "@/content/wings";
-import { getEvents } from "@/lib/events";
+import { getEvents, datePrecision } from "@/lib/events";
+import { toPastViews } from "@/lib/pastEvents";
+import PastEvents from "@/components/sections/PastEvents";
 import { pageMeta, JsonLd } from "@/lib/seo";
 import { eventJsonLd } from "@/lib/jsonld";
 import { MiniAstronaut, Satellite, RingedPlanet } from "@/components/space/Art";
@@ -32,7 +35,7 @@ export default async function Home() {
   return (
     <main className="overflow-hidden">
       <MotionGate />
-      <JsonLd data={[...upcoming, ...past].filter((e) => !e.sample && e.date).slice(0, 8).map(eventJsonLd)} />
+      <JsonLd data={[...upcoming, ...past].filter((e) => !e.sample && datePrecision(e.date) === "day").slice(0, 8).map(eventJsonLd)} />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-paper px-4 pb-16 pt-28 sm:px-6 sm:pb-24 sm:pt-40">
@@ -131,9 +134,7 @@ export default async function Home() {
         <div className="section">
           <SectionHeading index="04" eyebrow="Past events" title="Moments from the mission log." action={{ label: "Full gallery", href: "/gallery" }} />
           {past.length ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {past.slice(0, 3).map((e, i) => <ScrollReveal key={e.id} delay={i * 0.06}><EventGallery event={e} /></ScrollReveal>)}
-            </div>
+            <PastEvents events={toPastViews(past.slice(0, 3))} compact />
           ) : (
             <EmptyState title="Our story starts here" body="Photos and recaps from DPC events will appear here." />
           )}
@@ -161,13 +162,13 @@ export default async function Home() {
       <section id="projects" className="cv-auto">
         <div className="section">
           <SectionHeading index="06" eyebrow="Projects" title="Things our members ship." action={{ label: "All projects", href: "/projects" }} />
-          <p className="-mt-6 mb-8 text-sm text-muted">Built something? <Link href="/submit/project" className="font-semibold text-brand-blue">Submit a project →</Link></p>
+          {featuredProjects.length > 0 && <p className="-mt-6 mb-8 text-sm text-muted">Built something? <Link href="/submit/project" className="font-semibold text-brand-blue">Submit a project →</Link></p>}
           {featuredProjects.length ? (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {featuredProjects.map((p, i) => <ScrollReveal key={p.id} delay={i * 0.06}><ProjectCard p={p} /></ScrollReveal>)}
             </div>
           ) : (
-            <EmptyState title="First projects are in the works" body="Built something with DPC? Tell us and we'll feature it." action={{ label: "Submit a project", href: "/submit/project" }} />
+            <EmptyState title="Projects coming soon" body="Member projects will be showcased here. Built something with DPC? Submit it and the committee will review it." action={{ label: "Submit a project", href: "/submit/project", primary: true }} />
           )}
         </div>
       </section>
@@ -175,7 +176,7 @@ export default async function Home() {
       {/* COMMITTEE */}
       <section id="committee" className="cv-auto border-y border-line bg-white">
         <div className="section">
-          <SectionHeading index="07" eyebrow="Committee" title="The crew behind DPC." intro="Our advisor and the executive members who keep the club running." action={{ label: "Full committee", href: "/committee" }} />
+          <SectionHeading index="07" eyebrow="Committee" title="The crew behind DPC." intro="Our advisor, president, convener and executive members who keep the club running." action={{ label: "Full committee", href: "/committee" }} />
           <CommitteeShowcase members={committee} limit={8} />
         </div>
       </section>

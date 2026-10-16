@@ -1,5 +1,6 @@
 import PageHero from "@/components/sections/PageHero";
-import { pageMeta } from "@/lib/seo";
+import { pageMeta, JsonLd } from "@/lib/seo";
+import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { site } from "@/content/site";
 import { articles, preamble, constitutionMeta } from "@/content/constitution";
 
@@ -12,6 +13,7 @@ export const metadata = pageMeta({
 export default function ConstitutionPage() {
   return (
     <main>
+      <JsonLd data={breadcrumbJsonLd([{ name: "Constitution", path: "/constitution" }])} />
       <PageHero eyebrow="Governance" title="Constitution" intro={`The governing document of ${site.fullName}. ${site.tagline}.`}>
         <p className="mt-3 font-mono text-xs text-muted">Founded {site.foundingDateLabel} · Last updated {constitutionMeta.lastUpdated}</p>
       </PageHero>

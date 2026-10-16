@@ -50,12 +50,15 @@ export const metadata: Metadata = {
     images: ["/og.png"]
   },
   alternates: { canonical: "/" },
+  category: "education",
+  formatDetection: { telephone: false, email: false, address: false },
+  icons: { icon: [{ url: "/favicon.ico", sizes: "any" }, { url: "/icon.png", type: "image/png", sizes: "256x256" }], apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }] },
   authors: [{ name: site.fullName, url: site.url }],
   creator: site.fullName,
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } }
 };
 
-export const viewport = { themeColor: "#fbfaf7" };
+export const viewport = { themeColor: "#2454d7", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({
   children,

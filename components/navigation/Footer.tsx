@@ -17,6 +17,7 @@ const sections = [
     links: [
       { label: "Committee", href: "/committee" },
       { label: "Resources", href: "/resources" },
+      { label: "Media kit", href: "/media-kit" },
       { label: "Join DPC", href: "/join" },
       { label: "Collaborate", href: "/collaborate" },
     ],

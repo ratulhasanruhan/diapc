@@ -1,6 +1,7 @@
 /**
- * Projects built by DPC members.
- * Entries with `sample: true` are placeholders shown with a "Sample" badge.
+ * Projects built by DPC members. Empty for now: the site shows a "Projects coming soon" state with a Submit button.
+ * Add an entry here after approving a submission (see docs/CONTENT_GUIDE.md).
+ * Put screenshots in /public/projects/ (WebP, 16:10 works best).
  */
 export type Project = {
   id: string;
@@ -13,15 +14,6 @@ export type Project = {
   image?: string;
   members?: string[];
   featured?: boolean;
-  sample?: boolean;
 };
 
-export const projects: Project[] = [
-  {
-    id: "sample-project",
-    title: "Sample project (replace me)",
-    description: "One-line pitch of the project and the problem it solves.",
-    tags: ["Next.js", "Python"],
-    sample: true
-  }
-];
+export const projects: Project[] = [];

@@ -1,4 +1,5 @@
-import { pageMeta } from "@/lib/seo";
+import { pageMeta, JsonLd } from "@/lib/seo";
+import { breadcrumbJsonLd } from "@/lib/jsonld";
 import ScrollReveal from "@/components/motion/ScrollReveal";
 import { BookOpen, ExternalLink } from "lucide-react";
 
@@ -39,6 +40,7 @@ const resourceCategories = [
 export default function ResourcesPage() {
   return (
     <main className="pt-20">
+      <JsonLd data={breadcrumbJsonLd([{ name: "Resources", path: "/resources" }])} />
       <section className="py-24 px-6 text-center relative">
         <div className="absolute inset-0 bg-gradient-to-b from-violet/5 to-transparent pointer-events-none" />
         <div className="relative z-10 max-w-3xl mx-auto">

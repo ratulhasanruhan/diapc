@@ -4,15 +4,9 @@ import ScrollReveal from "@/components/motion/ScrollReveal";
 import { Rocket, ArrowRight, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { postForm } from "@/lib/postForm";
+import { wings as wingList } from "@/content/wings";
 
-const wings = [
-  { id: "aws", label: "AWS Student Builders" },
-  { id: "competitive-programming", label: "Competitive Programming" },
-  { id: "ai-ml", label: "AI & Data Science" },
-  { id: "web-app-dev", label: "Web & Mobile Dev" },
-  { id: "cybersecurity", label: "Cybersecurity" },
-  { id: "research", label: "Research & Innovation" },
-];
+const wings = wingList.map((w) => ({ id: w.slug, label: w.name }));
 
 const benefits = [
   "Access to workshops, bootcamps, and study circles",
