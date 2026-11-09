@@ -1,7 +1,4 @@
-"use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, CalendarDays, ChevronLeft, ChevronRight, MapPin, X } from "lucide-react";
+import { ArrowUpRight, CalendarDays, MapPin } from "lucide-react";
 import PhotoGallery from "@/components/ui/PhotoGallery";
 
 /** Serializable view of a past event (built on the server, rendered here). */
@@ -21,74 +18,7 @@ export type PastEventView = {
   photos: { src: string; alt: string }[];
 };
 
-/** Lightweight lightbox on the native <dialog> element: Esc closes, arrows navigate, no dependencies. */
-function Lightbox({ event, index, onIndex, onClose }: { event: PastEventView; index: number; onIndex: (i: number) => void; onClose: () => void }) {
-  const ref = useRef<HTMLDialogElement>(null);
-  const touch = useRef<number | null>(null);
-  const n = event.photos.length;
-  const go = useCallback((d: number) => onIndex((index + d + n) % n), [index, n, onIndex]);
-
-  useEffect(() => {
-    const dlg = ref.current;
-    if (dlg && !dlg.open) dlg.showModal();
-    document.documentElement.style.overflow = "hidden";
-    return () => {
-      document.documentElement.style.overflow = "";
-    };
-  }, []);
-
-  useEffect(() => {
-    const key = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") go(1);
-      if (e.key === "ArrowLeft") go(-1);
-    };
-    window.addEventListener("keydown", key);
-    return () => window.removeEventListener("keydown", key);
-  }, [go]);
-
-  const p = event.photos[index];
-  return (
-    <dialog
-      ref={ref}
-      onClose={onClose}
-      onClick={(e) => e.target === ref.current && onClose()}
-      aria-label={`${event.title} photos`}
-      className="m-auto h-dvh max-h-none w-screen max-w-none border-0 bg-[#0f1630]/95 p-0 text-white backdrop:bg-black/70"
-    >
-      <div
-        className="relative flex h-full flex-col"
-        onTouchStart={(e) => (touch.current = e.touches[0].clientX)}
-        onTouchEnd={(e) => {
-          if (touch.current === null) return;
-          const dx = e.changedTouches[0].clientX - touch.current;
-          if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
-          touch.current = null;
-        }}
-      >
-        <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <div className="min-w-0">
-            <p className="truncate text-sm font-semibold sm:text-base">{event.title}</p>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-white/70">{event.dateLabel || "Date not recorded"} · {index + 1} / {n}</p>
-          </div>
-          <button type="button" onClick={onClose} aria-label="Close photo viewer" className="flex h-10 w-10 shrink-0 items-center justify-center border border-white/30 hover:bg-white/10"><X size={20} aria-hidden="true" /></button>
-        </div>
-        <div className="relative min-h-0 flex-1">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img key={p.src} src={p.src} alt={p.alt} decoding="async" className="absolute inset-0 h-full w-full object-contain px-2 pb-2 sm:px-16" />
-          {n > 1 && (
-            <>
-              <button type="button" onClick={() => go(-1)} aria-label="Previous photo" className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-white/30 bg-black/40 hover:bg-white/20 sm:left-4"><ChevronLeft aria-hidden="true" /></button>
-              <button type="button" onClick={() => go(1)} aria-label="Next photo" className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-white/30 bg-black/40 hover:bg-white/20 sm:right-4"><ChevronRight aria-hidden="true" /></button>
-            </>
-          )}
-        </div>
-        <p className="px-4 py-3 text-center text-xs leading-5 text-white/80 sm:text-sm">{p.alt}</p>
-      </div>
-    </dialog>
-  );
-}
-
-function EventPhotoCard({ event, featured, onOpen, priority }: { event: PastEventView; featured?: boolean; onOpen: (i: number) => void; priority?: boolean }) {
+function EventPhotoCard({ event, featured, priority }: { event: PastEventView; featured?: boolean; priority?: boolean }) {
   const href = event.recapUrl ?? event.url;
   return (
     <article className={`card flex h-full flex-col overflow-hidden ${featured ? "lg:col-span-2 lg:flex-row" : ""}`}>
@@ -99,7 +29,6 @@ function EventPhotoCard({ event, featured, onOpen, priority }: { event: PastEven
         description={event.description}
         link={href ? { href, label: event.recapUrl ? "View recap" : "Event page" } : undefined}
         badge={<span className="border border-white/80 bg-white/95 px-2.5 py-1 font-mono text-[11px] font-bold tracking-widest text-ink shadow-sm">{event.dateLabel || "Undated"}</span>}
-        onEnlarge={event.photos.length ? onOpen : undefined}
         priority={priority}
         sizes={featured ? "(min-width: 1024px) 560px, 100vw" : "(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"}
         className={featured ? "aspect-[4/3] w-full shrink-0 lg:aspect-auto lg:h-auto lg:min-h-[340px] lg:w-[58%] lg:self-stretch" : "aspect-[4/3] w-full"}
@@ -125,12 +54,8 @@ function EventPhotoCard({ event, featured, onOpen, priority }: { event: PastEven
   );
 }
 
-/** Past events as a year-grouped timeline of photo cards with a lightbox. `compact` skips the year headings (homepage). */
+/** Past events as a year-grouped timeline of photo cards. `compact` skips the year headings (homepage). */
 export default function PastEvents({ events, compact = false, featureFirst = false }: { events: PastEventView[]; compact?: boolean; featureFirst?: boolean }) {
-  const [open, setOpen] = useState<{ id: string; i: number } | null>(null);
-  const active = open ? events.find((e) => e.id === open.id) : undefined;
-  const close = useCallback(() => setOpen(null), []);
-
   const groups: { year: string; items: PastEventView[] }[] = [];
   for (const e of events) {
     const y = e.year || "Undated";
@@ -142,7 +67,7 @@ export default function PastEvents({ events, compact = false, featureFirst = fal
   const grid = (items: PastEventView[], firstFeatured: boolean) => (
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((e, i) => (
-        <EventPhotoCard key={e.id} event={e} featured={firstFeatured && i === 0 && items.length > 1} priority={false} onOpen={(idx) => setOpen({ id: e.id, i: idx })} />
+        <EventPhotoCard key={e.id} event={e} featured={firstFeatured && i === 0 && items.length > 1} priority={false} />
       ))}
     </div>
   );
@@ -166,7 +91,6 @@ export default function PastEvents({ events, compact = false, featureFirst = fal
           ))}
         </div>
       )}
-      {active && open && active.photos.length > 0 && <Lightbox event={active} index={open.i} onIndex={(i) => setOpen({ id: active.id, i })} onClose={close} />}
     </>
   );
 }
