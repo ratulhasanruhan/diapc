@@ -102,7 +102,8 @@ function Lightbox({ event, index, onIndex, onClose }: { event: PastEventView; in
 function EventPhotoCard({ event, featured, onOpen, priority }: { event: PastEventView; featured?: boolean; onOpen: (i: number) => void; priority?: boolean }) {
   const cover = event.photos[0];
   const n = event.photos.length;
-  const mosaic = event.photos.slice(0, 3);
+  const mosaic = event.photos.slice(0, 4);
+  const tallFirst = mosaic.length === 3;
   return (
     <article className={`group card flex h-full flex-col overflow-hidden ${featured ? "lg:col-span-2 lg:flex-row" : ""}`}>
       {mosaic.length > 1 ? (
@@ -112,7 +113,7 @@ function EventPhotoCard({ event, featured, onOpen, priority }: { event: PastEven
               key={photo.src}
               type="button"
               onClick={() => onOpen(index)}
-              className={`relative block w-full cursor-zoom-in overflow-hidden bg-[#eef2ff] ${index === 0 && mosaic.length >= 3 ? "row-span-2 min-h-[300px]" : "aspect-[4/3] min-h-[140px]"}`}
+              className={`relative block w-full cursor-zoom-in overflow-hidden bg-[#eef2ff] ${tallFirst && index === 0 ? "row-span-2 min-h-[300px]" : "aspect-[4/3] min-h-[140px]"}`}
               aria-label={`Open photo ${index + 1} of ${n} from ${event.title}`}
             >
               <Photo

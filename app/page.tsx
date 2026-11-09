@@ -117,22 +117,10 @@ export default async function Home() {
       </section>
 
       {/* EVENTS */}
-      <section id="events" className="scroll-mt-24 border-y-4 border-[#17213d] bg-[#17213d]">
-        <div className="section pb-10 text-white">
-          <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-            <div>
-              <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#f8d9ed]">03 / Events</p>
-              <h2 className="mt-4 max-w-3xl text-4xl text-white sm:text-6xl">Events worth showing up for.</h2>
-              <p className="mt-4 max-w-xl text-base leading-7 text-[#d5dced]">Upcoming sessions and recent workshops, with the photos, titles and dates.</p>
-            </div>
-            <Link href="/events" className="inline-flex shrink-0 items-center gap-1.5 bg-white px-4 py-3 text-sm font-bold text-[#17213d]">
-              All events <ArrowUpRight size={16} aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-        <div id="past-events" className="scroll-mt-24 border-t border-white/10 bg-[#f6f7fb] text-ink">
-          <div className="section">
-            <MeetupLiveLabel className="mb-8" />
+      <section id="events" className="scroll-mt-24 border-y border-line bg-[#eef2ff]/60">
+        <div id="past-events" className="section scroll-mt-24">
+          <SectionHeading index="03" eyebrow="Archive" title="Past events" action={{ label: "Photo gallery", href: "/gallery" }} />
+          <MeetupLiveLabel className="-mt-4 mb-8" />
             {homeUpcoming.length ? (
               <div className="mb-10">
                 <h3 className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.18em] text-brand-magenta">Next up</h3>
@@ -151,17 +139,10 @@ export default async function Home() {
               </div>
             )}
             {homePast.length ? (
-              <div>
-                <div className="mb-5 flex items-end justify-between gap-4">
-                  <h3 className="text-3xl text-ink">Recent events</h3>
-                  <Link href="/gallery" className="inline-flex items-center gap-1 text-sm font-bold text-brand-blue">Full gallery <ArrowUpRight size={15} aria-hidden="true" /></Link>
-                </div>
-                <PastEvents events={homePast} compact featureFirst />
-              </div>
+              <PastEvents events={homePast} compact featureFirst />
             ) : (
               <EmptyState title="Our story starts here" body="Photos and recaps from DPC events will appear here." />
             )}
-          </div>
         </div>
       </section>
 

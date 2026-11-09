@@ -115,20 +115,31 @@ function LinkedCopy({ text, people }: { text: string; people?: { name: string; h
 }
 
 export function AchievementCard({ a }: { a: Achievement }) {
-  const year = a.date ? formatDate(a.date).year : "";
+  const dated = a.date ? formatDate(a.date) : null;
+  const when = dated ? (dated.precision === "day" ? dated.full : dated.year) : "";
+  const shots = a.photos?.length ? a.photos : a.image ? [{ src: a.image, alt: a.imageAlt ?? a.title }] : [];
   return (
     <article className="card card-hover flex h-full flex-col overflow-hidden">
-      {a.image && (
+      {shots.length > 1 ? (
+        <div className="relative grid grid-cols-2 gap-1 bg-[#e7ecf8] p-1">
+          {shots.slice(0, 3).map((photo, index) => (
+            <div key={photo.src} className={`relative min-h-[120px] overflow-hidden bg-[#eef2ff] ${index === 0 ? "row-span-2 min-h-[248px]" : "aspect-[4/3]"}`}>
+              <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 240px, 50vw" className="object-cover" />
+            </div>
+          ))}
+          <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 bg-[#d97706] px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-widest text-white shadow-sm"><Trophy size={13} aria-hidden="true" /> {a.result}</span>
+        </div>
+      ) : shots.length === 1 ? (
         <div className="relative aspect-[16/10] overflow-hidden bg-[#eef2ff]">
-          <Image src={a.image} alt={a.imageAlt ?? a.title} fill sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" className="object-cover" />
+          <Image src={shots[0].src} alt={shots[0].alt} fill sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" className="object-cover" />
           <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 bg-[#d97706] px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-widest text-white shadow-sm"><Trophy size={13} aria-hidden="true" /> {a.result}</span>
         </div>
-      )}
+      ) : null}
       <div className="flex flex-1 flex-col p-6">
-        {!a.image && <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#fff4e0] text-[#d97706]"><Trophy size={20} aria-hidden="true" /></span>}
-        <p className={`font-mono text-[11px] uppercase tracking-widest text-brand-magenta ${a.image ? "" : "mt-6"}`}>{a.result}{a.scope ? ` · ${a.scope}` : ""}</p>
+        {shots.length === 0 && <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#fff4e0] text-[#d97706]"><Trophy size={20} aria-hidden="true" /></span>}
+        <p className={`font-mono text-[11px] uppercase tracking-widest text-brand-magenta ${shots.length ? "" : "mt-6"}`}>{a.result}{a.scope ? ` · ${a.scope}` : ""}</p>
         <h3 className="mt-2 text-xl text-ink">{a.title}</h3>
-        <p className="mt-1 text-sm text-muted">{a.event}{year ? ` · ${year}` : ""}</p>
+        <p className="mt-1 text-sm text-muted">{a.event}{when ? ` · ${when}` : ""}</p>
         {a.description && <p className="mt-3 text-sm leading-6 text-muted"><LinkedCopy text={a.description} people={a.people} /></p>}
         {a.members && a.members.length > 0 && <p className="mt-3 text-xs text-muted">Team: {a.members.join(", ")}</p>}
         {a.link && <a href={a.link} target="_blank" rel="noopener noreferrer" className="mt-auto pt-4 text-sm font-bold text-brand-blue">Details ↗</a>}

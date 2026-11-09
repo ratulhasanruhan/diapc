@@ -45,8 +45,9 @@ export const events: DpcEvent[] = [
     cover: "/events/aws-buildmyfolio-2026/1.webp",
     coverAlt: "AWS BuildMyFolio 2026 participants and guests standing in front of the BuildMyFolio slide at Daffodil International Academy",
     gallery: [
-      { src: "/events/aws-buildmyfolio-2026/2.webp", alt: "A presenter teaching during the AWS BuildMyFolio 2026 workshop, with students at their computers" },
-      { src: "/events/aws-buildmyfolio-2026/3.webp", alt: "A speaker introducing AWS BuildMyFolio 2026 in front of the event slide" }
+      { src: "/events/aws-buildmyfolio-2026/2.webp", alt: "AWS BuildMyFolio poster: Build with AI, deploy on AWS, and showcase your tech superpower. Organized by AWS Student Builders Group in collaboration with DIA Programming Club." },
+      { src: "/events/aws-buildmyfolio-2026/3.webp", alt: "A presenter teaching during the AWS BuildMyFolio 2026 workshop, with students at their computers" },
+      { src: "/events/aws-buildmyfolio-2026/4.webp", alt: "A speaker introducing AWS BuildMyFolio 2026 in front of the event slide" }
     ]
   },
   {
