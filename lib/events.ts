@@ -21,12 +21,29 @@ const key = (e: DpcEvent) => {
   return new Date(p === "year" ? `${e.date}-07-01` : e.date).getTime();
 };
 
+const titleKey = (title: string) => title.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+/** Homepage shows every event it has room for, and never more than this many. */
+export const HOME_EVENT_LIMIT = 9;
+
+/** Prefer our photos when the same event also arrives from Meetup. */
+function withLocalPhotos(event: EventItem, local?: EventItem): EventItem {
+  if (!local?.cover && !local?.gallery?.length) return event;
+  return {
+    ...event,
+    cover: local.cover ?? event.cover,
+    coverAlt: local.coverAlt ?? event.coverAlt,
+    gallery: local.gallery?.length ? local.gallery : event.gallery
+  };
+}
+
 /** Content events + AWS SBG Meetup events, split into upcoming/past. Cached ~1h. Never throws. */
 export async function getEvents(): Promise<{ upcoming: EventItem[]; past: EventItem[] }> {
   "use cache";
   cacheLife("hours");
   const now = Date.now();
   const meetup = await getMeetupEvents();
+  const fromContent: EventItem[] = contentEvents.map((e) => ({ ...e, source: "dpc" as const }));
   const fromMeetup: EventItem[] = [...meetup.upcoming, ...meetup.past].map((m) => ({
     id: `meetup-${m.id}`,
     title: m.title,
@@ -38,9 +55,16 @@ export async function getEvents(): Promise<{ upcoming: EventItem[]; past: EventI
     cover: m.image,
     wing: "AWS SBG",
     rsvps: m.rsvps,
-    source: "meetup"
+    source: "meetup" as const
   }));
-  const all: EventItem[] = [...contentEvents.map((e) => ({ ...e, source: "dpc" as const })), ...fromMeetup];
+  const paired = new Set<string>();
+  const mergedMeetup = fromMeetup.map((event) => {
+    const local = fromContent.find((item) => titleKey(item.title) === titleKey(event.title));
+    if (!local) return event;
+    paired.add(local.id);
+    return withLocalPhotos(event, local);
+  });
+  const all: EventItem[] = [...fromContent.filter((event) => !paired.has(event.id)), ...mergedMeetup];
   const upcoming = all.filter((e) => end(e) >= now).sort((a, b) => key(a) - key(b));
   const past = all.filter((e) => end(e) < now).sort((a, b) => key(b) - key(a));
   return { upcoming, past };
