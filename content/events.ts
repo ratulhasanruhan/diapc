@@ -34,6 +34,22 @@ export type DpcEvent = {
 
 export const events: DpcEvent[] = [
   {
+    id: "aws-buildmyfolio-2026",
+    title: "AWS BuildMyFolio 2026",
+    date: "2026-11-02T10:00:00+06:00",
+    endDate: "2026-11-02T12:00:00+06:00",
+    venue: "Daffodil International Academy (DIA), Dhaka",
+    wing: "AWS SBG",
+    url: "https://www.meetup.com/aws-sbg-at-daffodil-international-academy/events/317219886/",
+    description: "Hands-on portfolio workshop: build with AI, deploy on AWS, and showcase a developer portfolio.",
+    cover: "/events/aws-buildmyfolio-2026/1.webp",
+    coverAlt: "AWS BuildMyFolio 2026 participants and guests standing in front of the BuildMyFolio slide at Daffodil International Academy",
+    gallery: [
+      { src: "/events/aws-buildmyfolio-2026/2.webp", alt: "A presenter teaching during the AWS BuildMyFolio 2026 workshop, with students at their computers" },
+      { src: "/events/aws-buildmyfolio-2026/3.webp", alt: "A speaker introducing AWS BuildMyFolio 2026 in front of the event slide" }
+    ]
+  },
+  {
     id: "coding-fest-2026-grand-finale",
     title: "Coding Fest 2026: Grand Finale",
     date: "2026",

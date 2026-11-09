@@ -11,7 +11,7 @@ import { projects } from "@/content/projects";
 import { committee } from "@/content/committee";
 import { CommitteeShowcase } from "@/components/sections/Committee";
 import { wings } from "@/content/wings";
-import { getEvents, datePrecision } from "@/lib/events";
+import { getEvents, datePrecision, HOME_EVENT_LIMIT } from "@/lib/events";
 import { toPastViews } from "@/lib/pastEvents";
 import PastEvents from "@/components/sections/PastEvents";
 import { pageMeta, JsonLd } from "@/lib/seo";
@@ -30,6 +30,8 @@ const pillars = [
 
 export default async function Home() {
   const { upcoming, past } = await getEvents();
+  const homeUpcoming = upcoming.slice(0, HOME_EVENT_LIMIT);
+  const homePast = toPastViews(past.slice(0, HOME_EVENT_LIMIT - homeUpcoming.length));
   const featuredProjects = [...projects].sort((a, b) => Number(!!b.featured) - Number(!!a.featured)).slice(0, 3);
 
   return (
@@ -114,30 +116,52 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* UPCOMING EVENTS */}
-      <section id="events" className="border-y border-line bg-[#eef2ff]/60">
-        <div className="section">
-          <SectionHeading index="03" eyebrow="Upcoming events" title="Missions in the making." action={{ label: "All events", href: "/events" }} />
-          <MeetupLiveLabel className="-mt-4 mb-8" />
-          {upcoming.length ? (
-            <div className="grid gap-4 lg:grid-cols-2">
-              {upcoming.slice(0, 4).map((e, i) => <ScrollReveal key={e.id} delay={i * 0.06}><EventCard event={e} /></ScrollReveal>)}
+      {/* EVENTS */}
+      <section id="events" className="scroll-mt-24 border-y-4 border-[#17213d] bg-[#17213d]">
+        <div className="section pb-10 text-white">
+          <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+            <div>
+              <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#f8d9ed]">03 / Events</p>
+              <h2 className="mt-4 max-w-3xl text-4xl text-white sm:text-6xl">Events worth showing up for.</h2>
+              <p className="mt-4 max-w-xl text-base leading-7 text-[#d5dced]">Upcoming sessions and recent workshops, with the photos, titles and dates.</p>
             </div>
-          ) : (
-            <EmptyState title="No upcoming events right now" body="New sessions are announced on Facebook and Meetup first. Follow along so you don't miss the next one." action={{ label: "Follow DPC on Facebook", href: site.facebook }} />
-          )}
+            <Link href="/events" className="inline-flex shrink-0 items-center gap-1.5 bg-white px-4 py-3 text-sm font-bold text-[#17213d]">
+              All events <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
         </div>
-      </section>
-
-      {/* PAST EVENTS */}
-      <section id="past-events" className="cv-auto">
-        <div className="section">
-          <SectionHeading index="04" eyebrow="Past events" title="Moments from the mission log." action={{ label: "Full gallery", href: "/gallery" }} />
-          {past.length ? (
-            <PastEvents events={toPastViews(past.slice(0, 3))} compact />
-          ) : (
-            <EmptyState title="Our story starts here" body="Photos and recaps from DPC events will appear here." />
-          )}
+        <div id="past-events" className="scroll-mt-24 border-t border-white/10 bg-[#f6f7fb] text-ink">
+          <div className="section">
+            <MeetupLiveLabel className="mb-8" />
+            {homeUpcoming.length ? (
+              <div className="mb-10">
+                <h3 className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.18em] text-brand-magenta">Next up</h3>
+                <div className="grid gap-4 lg:grid-cols-2">
+                  {homeUpcoming.map((e, i) => <ScrollReveal key={e.id} delay={i * 0.06}><EventCard event={e} /></ScrollReveal>)}
+                </div>
+              </div>
+            ) : (
+              <div className="mb-10 flex flex-col gap-4 border border-[#c7d2fe] bg-white px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-brand-magenta">Next up</p>
+                  <p className="mt-1 text-lg font-semibold text-ink">No upcoming events right now</p>
+                  <p className="mt-1 text-sm text-muted">New sessions are announced on Facebook and Meetup first. Recent events are below.</p>
+                </div>
+                <a href={site.facebook} className="inline-flex shrink-0 items-center gap-1.5 text-sm font-bold text-brand-blue">Follow DPC on Facebook <ArrowUpRight size={15} aria-hidden="true" /></a>
+              </div>
+            )}
+            {homePast.length ? (
+              <div>
+                <div className="mb-5 flex items-end justify-between gap-4">
+                  <h3 className="text-3xl text-ink">Recent events</h3>
+                  <Link href="/gallery" className="inline-flex items-center gap-1 text-sm font-bold text-brand-blue">Full gallery <ArrowUpRight size={15} aria-hidden="true" /></Link>
+                </div>
+                <PastEvents events={homePast} compact featureFirst />
+              </div>
+            ) : (
+              <EmptyState title="Our story starts here" body="Photos and recaps from DPC events will appear here." />
+            )}
+          </div>
         </div>
       </section>
 
@@ -146,7 +170,7 @@ export default async function Home() {
       {/* ACHIEVEMENTS */}
       <section id="achievements" className="cv-auto border-y border-line bg-white">
         <div className="section">
-          <SectionHeading index="05" eyebrow="Achievements" title="Wins worth celebrating." action={{ label: "All achievements", href: "/achievements" }} />
+          <SectionHeading index="04" eyebrow="Achievements" title="Wins worth celebrating." action={{ label: "All achievements", href: "/achievements" }} />
           <p className="-mt-6 mb-8 text-sm text-muted">Won something as a DPC member? <Link href="/submit/achievement" className="font-semibold text-brand-blue">Submit an achievement →</Link></p>
           {achievements.length ? (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -161,7 +185,7 @@ export default async function Home() {
       {/* PROJECTS */}
       <section id="projects" className="cv-auto">
         <div className="section">
-          <SectionHeading index="06" eyebrow="Projects" title="Things our members ship." action={{ label: "All projects", href: "/projects" }} />
+          <SectionHeading index="05" eyebrow="Projects" title="Things our members ship." action={{ label: "All projects", href: "/projects" }} />
           {featuredProjects.length > 0 && <p className="-mt-6 mb-8 text-sm text-muted">Built something? <Link href="/submit/project" className="font-semibold text-brand-blue">Submit a project →</Link></p>}
           {featuredProjects.length ? (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -176,7 +200,7 @@ export default async function Home() {
       {/* COMMITTEE */}
       <section id="committee" className="cv-auto border-y border-line bg-white">
         <div className="section">
-          <SectionHeading index="07" eyebrow="Committee" title="The crew behind DPC." intro="Our advisor, president, convener and executive members who keep the club running." action={{ label: "Full committee", href: "/committee" }} />
+          <SectionHeading index="06" eyebrow="Committee" title="The crew behind DPC." intro="Our advisor, president, convener and executive members who keep the club running." action={{ label: "Full committee", href: "/committee" }} />
           <CommitteeShowcase members={committee} limit={8} />
         </div>
       </section>
@@ -186,7 +210,7 @@ export default async function Home() {
       {/* WINGS */}
       <section id="wings" className="cv-auto">
         <div className="section">
-          <SectionHeading index="08" eyebrow="Wings" title="Find your orbit." intro="Focused sub-communities inside DPC. Active and proposed wings are clearly marked." action={{ label: "All wings", href: "/wings" }} />
+          <SectionHeading index="07" eyebrow="Wings" title="Find your orbit." intro="Focused sub-communities inside DPC. Active and proposed wings are clearly marked." action={{ label: "All wings", href: "/wings" }} />
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {wings.slice(0, 6).map((w, i) => <ScrollReveal key={w.slug} delay={i * 0.05}><WingCard w={w} /></ScrollReveal>)}
           </div>
@@ -201,7 +225,7 @@ export default async function Home() {
         <div className="anim drift-float pointer-events-none absolute right-[4%] top-8 hidden w-24 opacity-90 md:block lg:right-[38%]" aria-hidden="true"><MiniAstronaut className="bob h-auto w-full" visor="#17213d" accent="#ffd27a" /></div>
         <div className="section grid items-end gap-10 md:grid-cols-[1fr_auto]">
           <ScrollReveal>
-            <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#f8d9ed]">09 / Contact</p>
+            <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#f8d9ed]">08 / Contact</p>
             <h2 className="mt-5 max-w-2xl text-5xl sm:text-6xl">Ready to make something real?</h2>
             <p className="mt-5 max-w-lg text-[#fbe7f3]">Questions, collaborations or sponsorships: write to us and a real person from the club will reply.</p>
           </ScrollReveal>

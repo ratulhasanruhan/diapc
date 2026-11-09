@@ -86,6 +86,34 @@ export function EventCard({ event, past = false }: { event: EventItem; past?: bo
   );
 }
 
+function LinkedCopy({ text, people }: { text: string; people?: { name: string; href: string }[] }) {
+  if (!people?.length) return text;
+  const nodes: Array<string | { name: string; href: string }> = [];
+  let rest = text;
+  for (const person of people) {
+    const at = rest.indexOf(person.name);
+    if (at === -1) continue;
+    if (at > 0) nodes.push(rest.slice(0, at));
+    nodes.push(person);
+    rest = rest.slice(at + person.name.length);
+  }
+  if (rest) nodes.push(rest);
+  if (!nodes.some((node) => typeof node !== "string")) return text;
+  return (
+    <>
+      {nodes.map((node, index) =>
+        typeof node === "string" ? (
+          node
+        ) : (
+          <a key={`${node.href}-${index}`} href={node.href} rel="me noopener noreferrer" className="font-semibold text-brand-blue underline decoration-brand-blue/40 underline-offset-2 hover:decoration-brand-blue">
+            {node.name}
+          </a>
+        )
+      )}
+    </>
+  );
+}
+
 export function AchievementCard({ a }: { a: Achievement }) {
   const year = a.date ? formatDate(a.date).year : "";
   return (
@@ -101,7 +129,7 @@ export function AchievementCard({ a }: { a: Achievement }) {
         <p className={`font-mono text-[11px] uppercase tracking-widest text-brand-magenta ${a.image ? "" : "mt-6"}`}>{a.result}{a.scope ? ` · ${a.scope}` : ""}</p>
         <h3 className="mt-2 text-xl text-ink">{a.title}</h3>
         <p className="mt-1 text-sm text-muted">{a.event}{year ? ` · ${year}` : ""}</p>
-        {a.description && <p className="mt-3 text-sm leading-6 text-muted">{a.description}</p>}
+        {a.description && <p className="mt-3 text-sm leading-6 text-muted"><LinkedCopy text={a.description} people={a.people} /></p>}
         {a.members && a.members.length > 0 && <p className="mt-3 text-xs text-muted">Team: {a.members.join(", ")}</p>}
         {a.link && <a href={a.link} target="_blank" rel="noopener noreferrer" className="mt-auto pt-4 text-sm font-bold text-brand-blue">Details ↗</a>}
       </div>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, CalendarDays, ChevronLeft, ChevronRight, Images, MapPin, X } from "lucide-react";
+import { ArrowUpRight, CalendarDays, ChevronLeft, ChevronRight, MapPin, X } from "lucide-react";
 
 /** Serializable view of a past event (built on the server, rendered here). */
 export type PastEventView = {
@@ -102,8 +102,30 @@ function Lightbox({ event, index, onIndex, onClose }: { event: PastEventView; in
 function EventPhotoCard({ event, featured, onOpen, priority }: { event: PastEventView; featured?: boolean; onOpen: (i: number) => void; priority?: boolean }) {
   const cover = event.photos[0];
   const n = event.photos.length;
+  const mosaic = event.photos.slice(0, 3);
   return (
     <article className={`group card flex h-full flex-col overflow-hidden ${featured ? "lg:col-span-2 lg:flex-row" : ""}`}>
+      {mosaic.length > 1 ? (
+        <div className={`grid w-full shrink-0 gap-1 bg-[#e7ecf8] p-1 ${featured ? "lg:w-[58%]" : ""} grid-cols-2`}>
+          {mosaic.map((photo, index) => (
+            <button
+              key={photo.src}
+              type="button"
+              onClick={() => onOpen(index)}
+              className={`relative block w-full cursor-zoom-in overflow-hidden bg-[#eef2ff] ${index === 0 && mosaic.length >= 3 ? "row-span-2 min-h-[300px]" : "aspect-[4/3] min-h-[140px]"}`}
+              aria-label={`Open photo ${index + 1} of ${n} from ${event.title}`}
+            >
+              <Photo
+                src={photo.src}
+                alt={photo.alt}
+                priority={priority && index === 0}
+                sizes={featured ? "(min-width: 1024px) 320px, 50vw" : "(min-width: 1024px) 240px, 50vw"}
+                className="object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      ) : (
       <div className={`relative overflow-hidden bg-[linear-gradient(135deg,#eef2ff,#fdf2f8)] ${featured ? "aspect-[16/10] lg:aspect-auto lg:w-[58%]" : "aspect-[4/3]"}`}>
         {cover ? (
           <button type="button" onClick={() => onOpen(0)} className="absolute inset-0 block h-full w-full cursor-zoom-in" aria-label={`Open photos from ${event.title}`}>
@@ -114,12 +136,8 @@ function EventPhotoCard({ event, featured, onOpen, priority }: { event: PastEven
           <div className="flex h-full items-center justify-center font-mono text-xs uppercase tracking-widest text-[#5d6679]">Photos coming soon</div>
         )}
         <span className="pointer-events-none absolute left-3 top-3 border border-white/80 bg-white/95 px-2.5 py-1 font-mono text-[11px] font-bold tracking-widest text-ink shadow-sm">{event.dateLabel || "Undated"}</span>
-        {n > 1 && (
-          <button type="button" onClick={() => onOpen(0)} className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 bg-white/95 px-2.5 py-1.5 text-xs font-bold text-ink shadow-sm hover:bg-white" aria-label={`View all ${n} photos from ${event.title}`}>
-            <Images size={14} aria-hidden="true" /> {n} photos
-          </button>
-        )}
       </div>
+      )}
       <div className={`flex flex-1 flex-col p-5 sm:p-6 ${featured ? "lg:justify-center lg:p-8" : ""}`}>
         <div className="flex flex-wrap items-center gap-2">
           {event.wing && <span className="font-mono text-[10px] uppercase tracking-widest text-brand-blue">{event.wing}</span>}
@@ -142,7 +160,7 @@ function EventPhotoCard({ event, featured, onOpen, priority }: { event: PastEven
 }
 
 /** Past events as a year-grouped timeline of photo cards with a lightbox. `compact` skips the year headings (homepage). */
-export default function PastEvents({ events, compact = false }: { events: PastEventView[]; compact?: boolean }) {
+export default function PastEvents({ events, compact = false, featureFirst = false }: { events: PastEventView[]; compact?: boolean; featureFirst?: boolean }) {
   const [open, setOpen] = useState<{ id: string; i: number } | null>(null);
   const active = open ? events.find((e) => e.id === open.id) : undefined;
   const close = useCallback(() => setOpen(null), []);
@@ -166,7 +184,7 @@ export default function PastEvents({ events, compact = false }: { events: PastEv
   return (
     <>
       {compact ? (
-        grid(events, false)
+        grid(events, featureFirst)
       ) : (
         <div className="space-y-12">
           {groups.map((g) => (
