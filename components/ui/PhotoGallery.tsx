@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, type ReactNode } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
 
 export type GalleryPhoto = { src: string; alt: string };
 
@@ -31,10 +31,134 @@ function FramePhoto({ src, alt, sizes, priority, hidden }: { src: string; alt: s
   return <Image src={src} alt={hidden ? "" : alt} fill sizes={sizes} priority={priority} className={className} />;
 }
 
+function GalleryModal({
+  photos,
+  index,
+  title,
+  meta,
+  description,
+  link,
+  onIndex,
+  onClose
+}: {
+  photos: GalleryPhoto[];
+  index: number;
+  title: string;
+  meta?: string;
+  description?: ReactNode;
+  link?: { href: string; label: string };
+  onIndex: (i: number) => void;
+  onClose: () => void;
+}) {
+  const ref = useRef<HTMLDialogElement>(null);
+  const touch = useRef<number | null>(null);
+  const n = photos.length;
+  const go = useCallback((d: number) => onIndex((index + d + n) % n), [index, n, onIndex]);
+  const photo = photos[index];
+
+  useEffect(() => {
+    const dlg = ref.current;
+    if (dlg && !dlg.open) dlg.showModal();
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.documentElement.style.overflow = "";
+    };
+  }, []);
+
+  useEffect(() => {
+    const key = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") go(1);
+      if (e.key === "ArrowLeft") go(-1);
+    };
+    window.addEventListener("keydown", key);
+    return () => window.removeEventListener("keydown", key);
+  }, [go]);
+
+  return (
+    <dialog
+      ref={ref}
+      onClose={onClose}
+      onClick={(e) => e.target === ref.current && onClose()}
+      aria-label={`${title} photos`}
+      className="m-auto h-dvh max-h-none w-screen max-w-none border-0 bg-[#0f1630] p-0 text-white backdrop:bg-black/70"
+    >
+      <div
+        className="flex h-full flex-col lg:flex-row"
+        onTouchStart={(e) => (touch.current = e.touches[0].clientX)}
+        onTouchEnd={(e) => {
+          if (touch.current === null) return;
+          const dx = e.changedTouches[0].clientX - touch.current;
+          if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+          touch.current = null;
+        }}
+      >
+        <div className="relative min-h-0 flex-1">
+          <div className="absolute left-0 right-0 top-0 z-10 flex items-center justify-between gap-3 px-4 py-3 sm:px-5">
+            <p className="font-mono text-[11px] uppercase tracking-widest text-white/70">
+              {index + 1} / {n}
+            </p>
+            <button type="button" onClick={onClose} aria-label="Close" className="flex h-10 w-10 items-center justify-center border border-white/30 hover:bg-white/10 lg:hidden">
+              <X size={20} aria-hidden="true" />
+            </button>
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img key={photo.src} src={photo.src} alt={photo.alt} decoding="async" className="absolute inset-0 h-full w-full object-contain px-3 pb-16 pt-14 sm:px-16" />
+          {n > 1 && (
+            <>
+              <button type="button" onClick={() => go(-1)} aria-label="Previous photo" className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-white/30 bg-black/40 hover:bg-white/20 sm:left-4">
+                <ChevronLeft aria-hidden="true" />
+              </button>
+              <button type="button" onClick={() => go(1)} aria-label="Next photo" className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-white/30 bg-black/40 hover:bg-white/20 sm:right-4">
+                <ChevronRight aria-hidden="true" />
+              </button>
+            </>
+          )}
+          {n > 1 && (
+            <div className="absolute inset-x-0 bottom-0 flex gap-2 overflow-x-auto px-3 py-3" role="group" aria-label="All photos">
+              {photos.map((shot, i) => (
+                <button
+                  key={shot.src}
+                  type="button"
+                  aria-label={`Show photo ${i + 1} of ${n}`}
+                  aria-current={i === index ? "true" : undefined}
+                  onClick={() => onIndex(i)}
+                  className={`h-14 w-20 shrink-0 overflow-hidden border-2 ${i === index ? "border-white" : "border-transparent opacity-70 hover:opacity-100"}`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={shot.src} alt="" className="h-full w-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <aside className="flex max-h-[42dvh] w-full shrink-0 flex-col overflow-y-auto border-t border-white/15 bg-[#121a36] px-5 py-5 sm:px-6 lg:max-h-none lg:w-[380px] lg:border-l lg:border-t-0">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="font-mono text-[11px] uppercase tracking-widest text-white/60">{meta || "Details"}</p>
+              <h2 className="mt-2 text-2xl leading-tight text-white">{title}</h2>
+            </div>
+            <button type="button" onClick={onClose} aria-label="Close details" className="hidden h-10 w-10 shrink-0 items-center justify-center border border-white/30 hover:bg-white/10 lg:flex">
+              <X size={20} aria-hidden="true" />
+            </button>
+          </div>
+          {photo.alt && <p className="mt-4 text-sm leading-6 text-white/90">{photo.alt}</p>}
+          {description && <div className="mt-4 text-sm leading-6 text-white/75">{description}</div>}
+          {link && (
+            <a href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined} rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined} className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#9db7ff]">
+              {link.label} <ArrowUpRight size={15} aria-hidden="true" />
+            </a>
+          )}
+        </aside>
+      </div>
+    </dialog>
+  );
+}
+
 /**
  * Still frame for one photo, crossfading carousel for several.
- * Autoplay pauses while the frame is hovered, focused, or pinned open, and never runs for reduced motion.
- * Hover, focus, or the Details button reveals the caption already used on the card.
+ * Autoplay pauses while the modal is open and never runs for reduced motion.
+ * Clicking a photo opens a modal with that image, the rest of the set, and the details.
  */
 export default function PhotoGallery({
   photos,
@@ -43,7 +167,6 @@ export default function PhotoGallery({
   description,
   link,
   badge,
-  onEnlarge,
   className = "aspect-[4/3] w-full",
   sizes,
   priority = false
@@ -54,7 +177,6 @@ export default function PhotoGallery({
   description?: ReactNode;
   link?: { href: string; label: string };
   badge?: ReactNode;
-  onEnlarge?: (index: number) => void;
   className?: string;
   sizes: string;
   priority?: boolean;
@@ -62,19 +184,14 @@ export default function PhotoGallery({
   const reduced = useReducedMotion();
   const many = photos.length > 1;
   const [index, setIndex] = useState(0);
-  const [hover, setHover] = useState(false);
-  const [focusWithin, setFocusWithin] = useState(false);
-  const [pinned, setPinned] = useState(false);
+  const [modal, setModal] = useState(false);
   const active = Math.min(index, Math.max(photos.length - 1, 0));
-  const engaged = hover || focusWithin || pinned;
-  const paused = engaged || reduced;
-  const open = engaged;
 
   useEffect(() => {
-    if (!many || paused) return;
+    if (!many || modal || reduced) return;
     const id = window.setInterval(() => setIndex((i) => (i + 1) % photos.length), ADVANCE_MS);
     return () => window.clearInterval(id);
-  }, [many, paused, photos.length, active]);
+  }, [many, modal, reduced, photos.length, active]);
 
   if (!photos.length) {
     return (
@@ -87,56 +204,51 @@ export default function PhotoGallery({
   const go = (dir: number) => setIndex((i) => (i + dir + photos.length) % photos.length);
 
   return (
-    <div
-      className={`relative overflow-hidden bg-[#e7ecf8] ${className}`}
-      role="region"
-      aria-roledescription="carousel"
-      aria-label={title}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      onFocusCapture={() => setFocusWithin(true)}
-      onBlurCapture={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocusWithin(false);
-      }}
-      onClick={(e) => {
-        if ((e.target as HTMLElement).closest("a, button")) return;
-        setPinned((p) => !p);
-      }}
-      onKeyDown={(e) => {
-        if (!many) return;
-        if (e.key === "ArrowRight") {
-          e.preventDefault();
-          go(1);
-        }
-        if (e.key === "ArrowLeft") {
-          e.preventDefault();
-          go(-1);
-        }
-      }}
-    >
-      {photos.map((photo, i) => (
-        <div
-          key={photo.src}
-          className={`absolute inset-0 transition-opacity duration-700 ease-in-out motion-reduce:transition-none ${i === active ? "opacity-100" : "pointer-events-none opacity-0"}`}
-          aria-hidden={i !== active}
-        >
-          <FramePhoto src={photo.src} alt={photo.alt} sizes={sizes} priority={priority && i === 0} hidden={i !== active} />
-        </div>
-      ))}
+    <>
+      <div
+        className={`relative overflow-hidden bg-[#e7ecf8] ${className}`}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={title}
+        onKeyDown={(e) => {
+          if (!many) return;
+          if (e.key === "ArrowRight") {
+            e.preventDefault();
+            go(1);
+          }
+          if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            go(-1);
+          }
+        }}
+      >
+        {photos.map((photo, i) => (
+          <div
+            key={photo.src}
+            className={`absolute inset-0 transition-opacity duration-700 ease-in-out motion-reduce:transition-none ${i === active ? "opacity-100" : "pointer-events-none opacity-0"}`}
+            aria-hidden={i !== active}
+          >
+            <FramePhoto src={photo.src} alt={photo.alt} sizes={sizes} priority={priority && i === 0} hidden={i !== active} />
+          </div>
+        ))}
 
-      {badge && <div className="absolute left-3 top-3 z-20">{badge}</div>}
+        <button
+          type="button"
+          onClick={() => setModal(true)}
+          aria-label={`Open photos and details for ${title}`}
+          className="absolute inset-0 z-10 cursor-zoom-in"
+        />
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-16 bg-gradient-to-t from-[#0f1630]/50 to-transparent" aria-hidden="true" />
+        {badge && <div className="pointer-events-none absolute left-3 top-3 z-20">{badge}</div>}
 
-      {many && (
-        <p className="absolute right-3 top-3 z-20 bg-white/95 px-2 py-1 font-mono text-[10px] font-bold tracking-widest text-ink shadow-sm">
-          {active + 1} / {photos.length}
-        </p>
-      )}
+        {many && (
+          <p className="pointer-events-none absolute right-3 top-3 z-20 bg-white/95 px-2 py-1 font-mono text-[10px] font-bold tracking-widest text-ink shadow-sm">
+            {active + 1} / {photos.length}
+          </p>
+        )}
 
-      <div className="absolute inset-x-3 bottom-3 z-20 flex items-center justify-between gap-3">
-        {many ? (
-          <div className="flex items-center gap-1" role="group" aria-label="Choose a photo">
+        {many && (
+          <div className="absolute inset-x-3 bottom-3 z-20 flex items-center gap-1" role="group" aria-label="Choose a photo">
             {photos.map((photo, i) => (
               <button
                 key={photo.src}
@@ -150,42 +262,21 @@ export default function PhotoGallery({
               </button>
             ))}
           </div>
-        ) : (
-          <span />
         )}
-        <button
-          type="button"
-          aria-expanded={open}
-          aria-label={open ? `Hide details for ${title}` : `Show details for ${title}`}
-          onClick={() => setPinned((p) => !p)}
-          className="border border-white/80 bg-white/95 px-2.5 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-ink shadow-sm hover:bg-white"
-        >
-          {pinned ? "Hide" : "Details"}
-        </button>
       </div>
 
-      <div
-        aria-hidden={!open}
-        className={`absolute inset-x-2 bottom-14 z-10 max-h-[calc(100%-5.75rem)] overflow-hidden border border-white/80 bg-white/95 p-3 text-ink shadow-lg transition-opacity duration-300 motion-reduce:transition-none ${open ? "opacity-100" : "pointer-events-none opacity-0"}`}
-      >
-        <p className="line-clamp-2 text-sm font-semibold leading-5">{title}</p>
-        {meta && <p className="mt-1 font-mono text-[10px] uppercase tracking-widest text-[#5d6679]">{meta}</p>}
-        {description && <div className="mt-2 line-clamp-2 text-xs leading-5 text-muted">{description}</div>}
-        {(link || onEnlarge) && (
-          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
-            {link && (
-              <a href={link.href} tabIndex={open ? 0 : -1} target={link.href.startsWith("http") ? "_blank" : undefined} rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined} className="inline-flex items-center gap-1 text-xs font-bold text-brand-blue">
-                {link.label} <ArrowUpRight size={13} aria-hidden="true" />
-              </a>
-            )}
-            {onEnlarge && (
-              <button type="button" tabIndex={open ? 0 : -1} onClick={() => onEnlarge(active)} className="text-xs font-bold text-ink underline-offset-2 hover:underline">
-                View photo
-              </button>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
+      {modal && (
+        <GalleryModal
+          photos={photos}
+          index={active}
+          title={title}
+          meta={meta}
+          description={description}
+          link={link}
+          onIndex={setIndex}
+          onClose={() => setModal(false)}
+        />
+      )}
+    </>
   );
 }

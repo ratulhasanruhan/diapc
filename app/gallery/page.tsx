@@ -14,7 +14,7 @@ export default async function GalleryPage() {
   return (
     <main>
       <JsonLd data={breadcrumbJsonLd([{ name: "Gallery", path: "/gallery" }])} />
-      <PageHero eyebrow="Gallery" title="The mission log" intro="Photos and recaps from past DPC events. Photos with more than one image advance on their own. Hover a photo, or press Details, to read the caption." />
+      <PageHero eyebrow="Gallery" title="The mission log" intro="Photos and recaps from past DPC events. Photos with more than one image advance on their own. Click a photo to open it, with the rest of the set and the details." />
       <section className="section">
         {views.length ? <PastEvents events={views} /> : <EmptyState title="No photos yet" body="Event photos will appear here after our first sessions." />}
       </section>
