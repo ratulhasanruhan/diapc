@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, CalendarDays, ChevronLeft, ChevronRight, MapPin, X } from "lucide-react";
+import PhotoGallery from "@/components/ui/PhotoGallery";
 
 /** Serializable view of a past event (built on the server, rendered here). */
 export type PastEventView = {
@@ -20,17 +20,6 @@ export type PastEventView = {
   recapUrl?: string;
   photos: { src: string; alt: string }[];
 };
-
-const isRemote = (src: string) => src.startsWith("http");
-
-function Photo({ src, alt, sizes, priority = false, className = "" }: { src: string; alt: string; sizes: string; priority?: boolean; className?: string }) {
-  return isRemote(src) ? (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img src={src} alt={alt} loading={priority ? "eager" : "lazy"} decoding="async" className={`absolute inset-0 h-full w-full ${className}`} />
-  ) : (
-    <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className={className} />
-  );
-}
 
 /** Lightweight lightbox on the native <dialog> element: Esc closes, arrows navigate, no dependencies. */
 function Lightbox({ event, index, onIndex, onClose }: { event: PastEventView; index: number; onIndex: (i: number) => void; onClose: () => void }) {
@@ -100,45 +89,21 @@ function Lightbox({ event, index, onIndex, onClose }: { event: PastEventView; in
 }
 
 function EventPhotoCard({ event, featured, onOpen, priority }: { event: PastEventView; featured?: boolean; onOpen: (i: number) => void; priority?: boolean }) {
-  const cover = event.photos[0];
-  const n = event.photos.length;
-  const mosaic = event.photos.slice(0, 4);
-  const tallFirst = mosaic.length === 3;
+  const href = event.recapUrl ?? event.url;
   return (
-    <article className={`group card flex h-full flex-col overflow-hidden ${featured ? "lg:col-span-2 lg:flex-row" : ""}`}>
-      {mosaic.length > 1 ? (
-        <div className={`grid w-full shrink-0 gap-1 bg-[#e7ecf8] p-1 ${featured ? "lg:w-[58%]" : ""} grid-cols-2`}>
-          {mosaic.map((photo, index) => (
-            <button
-              key={photo.src}
-              type="button"
-              onClick={() => onOpen(index)}
-              className={`relative block w-full cursor-zoom-in overflow-hidden bg-[#eef2ff] ${tallFirst && index === 0 ? "row-span-2 min-h-[300px]" : "aspect-[4/3] min-h-[140px]"}`}
-              aria-label={`Open photo ${index + 1} of ${n} from ${event.title}`}
-            >
-              <Photo
-                src={photo.src}
-                alt={photo.alt}
-                priority={priority && index === 0}
-                sizes={featured ? "(min-width: 1024px) 320px, 50vw" : "(min-width: 1024px) 240px, 50vw"}
-                className="object-cover"
-              />
-            </button>
-          ))}
-        </div>
-      ) : (
-      <div className={`relative overflow-hidden bg-[linear-gradient(135deg,#eef2ff,#fdf2f8)] ${featured ? "aspect-[16/10] lg:aspect-auto lg:w-[58%]" : "aspect-[4/3]"}`}>
-        {cover ? (
-          <button type="button" onClick={() => onOpen(0)} className="absolute inset-0 block h-full w-full cursor-zoom-in" aria-label={`Open photos from ${event.title}`}>
-            <Photo src={cover.src} alt={cover.alt} priority={priority} sizes={featured ? "(min-width: 1024px) 560px, 100vw" : "(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"} className="object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
-            <span className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0f1630]/55 to-transparent" aria-hidden="true" />
-          </button>
-        ) : (
-          <div className="flex h-full items-center justify-center font-mono text-xs uppercase tracking-widest text-[#5d6679]">Photos coming soon</div>
-        )}
-        <span className="pointer-events-none absolute left-3 top-3 border border-white/80 bg-white/95 px-2.5 py-1 font-mono text-[11px] font-bold tracking-widest text-ink shadow-sm">{event.dateLabel || "Undated"}</span>
-      </div>
-      )}
+    <article className={`card flex h-full flex-col overflow-hidden ${featured ? "lg:col-span-2 lg:flex-row" : ""}`}>
+      <PhotoGallery
+        photos={event.photos}
+        title={event.title}
+        meta={event.dateLabel || "Date not recorded"}
+        description={event.description}
+        link={href ? { href, label: event.recapUrl ? "View recap" : "Event page" } : undefined}
+        badge={<span className="border border-white/80 bg-white/95 px-2.5 py-1 font-mono text-[11px] font-bold tracking-widest text-ink shadow-sm">{event.dateLabel || "Undated"}</span>}
+        onEnlarge={event.photos.length ? onOpen : undefined}
+        priority={priority}
+        sizes={featured ? "(min-width: 1024px) 560px, 100vw" : "(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"}
+        className={featured ? "aspect-[4/3] w-full shrink-0 lg:aspect-auto lg:h-auto lg:min-h-[340px] lg:w-[58%] lg:self-stretch" : "aspect-[4/3] w-full"}
+      />
       <div className={`flex flex-1 flex-col p-5 sm:p-6 ${featured ? "lg:justify-center lg:p-8" : ""}`}>
         <div className="flex flex-wrap items-center gap-2">
           {event.wing && <span className="font-mono text-[10px] uppercase tracking-widest text-brand-blue">{event.wing}</span>}
