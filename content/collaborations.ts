@@ -21,5 +21,6 @@ const CLOUDCAMP_CLUB_LINK = "https://cloudcampbd.com/sign-in?signup=1&ref=CLUB-2
 export const collaborations: Collaboration[] = [
   { name: "AWS Student Builders Group, DIA", logo: "/partners/awssbg-wordmark-light.webp", alt: "AWS Student Builders Group", url: "https://aws.diapc.dev", type: "Wing", dark: true },
   { name: "CloudCamp Bangladesh", logo: "/partners/cloudcamp-bangladesh.webp", alt: "CloudCamp Bangladesh", url: CLOUDCAMP_CLUB_LINK, type: "Collaboration" },
-  { name: "AI Builders Congress", logo: "/partners/ai-builders-congress.webp", alt: "AI Builders Congress", url: CLOUDCAMP_CLUB_LINK, type: "Collaboration", dark: true }
+  { name: "AI Builders Congress", logo: "/partners/ai-builders-congress.webp", alt: "AI Builders Congress", url: CLOUDCAMP_CLUB_LINK, type: "Collaboration", dark: true },
+  { name: "Bangladesh Software Testing Board", logo: "/partners/bstb.webp", alt: "BSTB, Bangladesh Software Testing Board", url: "https://bstb-bd.org/", type: "Partner", dark: true }
 ];
